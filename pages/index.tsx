@@ -8,6 +8,7 @@ const Home = () => {
             isBasket={true}
             isAvatar={true}
             isName={true}
+            isBottom={true}
         />
     </div>
   );
