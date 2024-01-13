@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import SideBar from "../../../shared/adminComponents/SideBar/SideBar";
 
 const AdminProducts: NextPage = () => {
   return (
@@ -10,7 +11,7 @@ const AdminProducts: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Welcome to Admin Products Page</h1>
+      <SideBar/>
     </div>
   );
 };
