@@ -1,4 +1,6 @@
-import type { NextPage } from "next";
+import Image from "next/image";
+import Header from "../../shared/components/Header/index";
+
 import Head from "next/head";
 
 const NotFound = () => {
@@ -10,7 +12,17 @@ const NotFound = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>404</h1>
+      <Header />
+
+      <main className="flex p-[30px]">
+          <Image
+            src="/client/404/404.svg"
+            alt="404"
+            width={1373}
+            height={727}
+            className="w-full h-[727px] object-contain"
+          />
+      </main>
     </div>
   );
 };
