@@ -1,6 +1,6 @@
 const Header = () => {
   return (
-    <div className="bg-[#27283c] flex items-center justify-between mx-[19px] h-16 px-6 rounded-b-xl">
+    <div className="bg-[#27283c] mb-[16px] flex items-center justify-between h-16 px-6 rounded-b-xl">
       <div className="w-[92px] h-8 text-center"><span className="text-neutral-100 text-[28px] font-extrabold font-['Mukta'] leading-normal tracking-wide">Foody</span><span className="text-yellow-500 text-[28px] font-extrabold font-['Mukta'] leading-normal tracking-wide">.</span></div>
 
       <div className="flex items-center gap-x-[30px]">

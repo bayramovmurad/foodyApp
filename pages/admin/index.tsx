@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Dashboard from "./Dashboard";
 import Header from "../../shared/adminComponents/Header/Header";
+import SideBar from "../../shared/adminComponents/SideBar/SideBar";
 
 const AdminDashboard: NextPage = () => {
   return (
@@ -12,7 +13,7 @@ const AdminDashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header/>
-      <Dashboard/>
+      <SideBar/>
     </div>
   );
 };
