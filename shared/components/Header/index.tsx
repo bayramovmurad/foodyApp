@@ -60,7 +60,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                     t('about')
                                 }
                             </li>
-                            <li className="cursor-pointer text-[#828282] hover:text-[#D63626]">
+                            <li onClick={() => push("/client/works")} className="cursor-pointer text-[#828282] hover:text-[#D63626]">
                                 {
                                     t('howitworks')
                                 }

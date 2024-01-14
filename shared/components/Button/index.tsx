@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface ButtonTypes {
-    value: string,
+    value: string | number,
     color: string,
     size: string,
     background: string,

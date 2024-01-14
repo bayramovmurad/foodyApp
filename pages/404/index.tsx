@@ -1,6 +1,7 @@
-import Image from "next/image";
 import Header from "../../shared/components/Header/index";
+import Footer from "../../shared/components/Footer";
 
+import Image from "next/image";
 import Head from "next/head";
 
 const NotFound = () => {
@@ -12,7 +13,13 @@ const NotFound = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <Header
+          isLogin={true}
+          isBasket={true}
+          isAvatar={true}
+          isName={false}
+          isBottom={false}
+      />
 
       <main className="flex p-[30px]">
           <Image
@@ -23,6 +30,10 @@ const NotFound = () => {
             className="w-full h-[727px] object-contain"
           />
       </main>
+
+      <Footer
+          isTop={false}
+      />
     </div>
   );
 };
