@@ -14,7 +14,7 @@ const Footer = ({ isTop }:FooterTypes) => {
         {
           isTop ? (
             <div className="flex justify-center">
-              <div className="flex justify-between absolute w-full top-[-70%] max-w-[1066px] bg-[#272727] rounded-[50px] pt-[77px] pr-[41px] pb-[62px] pl-[51px]">
+              <div className="flex justify-between absolute w-full top-[-90%] max-w-[1066px] bg-[#272727] rounded-[50px] pt-[77px] pr-[41px] pb-[62px] pl-[51px]">
                   <Image
                       src="/client/pizza/pizza.svg" 
                       alt="" 

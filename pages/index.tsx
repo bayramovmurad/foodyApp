@@ -18,7 +18,7 @@ const Home = () => {
           />
         </div>
 
-        <main className="p-[30px] mb-[400px]">
+        <main className="p-[30px] mb-[300px]">
             <section className="bg-white pt-[50px] w-full flex justify-center" id="features">
                 <div className="flex w-full flex-col justify-center items-center text-center max-w-[1440px] ">
                   <Title
