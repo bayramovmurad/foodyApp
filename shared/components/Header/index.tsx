@@ -130,7 +130,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
 
                         {
                             isAvatar ? (
-                                <img src="/client/avatar/avatar.svg" alt="" />
+                                <img onClick={() => push("/client/profile")} className="cursor-pointer" src="/client/avatar/avatar.svg" alt="" />
                             ) : <></>
                         }
 
