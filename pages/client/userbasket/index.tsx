@@ -2,7 +2,7 @@ import Sidebar from '../../../shared/components/Sidebar/index'
 import Header from "../../../shared/components/Header/index"
 import Footer from '../../../shared/components/Footer/index'
 
-const Profile = () => {
+const userBasket = () => {
   return (
     <div className="bg-white">
         <div className="p-[30px]">
@@ -27,4 +27,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default userBasket;
