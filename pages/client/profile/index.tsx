@@ -1,3 +1,4 @@
+import FormTitle from '../../../shared/components/FormTitle/index'
 import Sidebar from '../../../shared/components/Sidebar/index'
 import Header from "../../../shared/components/Header/index"
 import Footer from '../../../shared/components/Footer/index'
@@ -15,8 +16,16 @@ const Profile = () => {
           />
         </div>
 
-        <main className="p-[30px] flex justify-start">
-              <Sidebar />
+        <main className="p-[30px] flex justify-center">
+              <div className="max-w-[1440px] w-full flex gap-4">
+                <Sidebar />
+
+                <div className="content bg-[#F3F4F6] py-[42px] px-9 w-full">
+                    <FormTitle
+                        value={"Profile"}
+                    />
+                </div>
+              </div>
         </main>
        
 
