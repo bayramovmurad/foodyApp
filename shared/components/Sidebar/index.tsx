@@ -8,13 +8,11 @@ const Sidebar = () => {
 
     useEffect(() => {
         const path = asPath.split('/')[2];
-        console.log(path);
-        
         setSelectedItem(path);
     }, [asPath]);
 
     const handleSelect = (item: string) => {
-        router.push(`/client/${item.toLowerCase()}`);
+        router.push(`/client/${item}`);
     };
   return (
     <div className="bg-[#F3F4F6] w-[325px] h-[515px] flex flex-col pt-[45px] gap-[12px] px-[45px] rounded">
