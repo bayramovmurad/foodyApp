@@ -1,6 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import SideBar from "../../../shared/adminComponents/SideBar/SideBar";
+import Header from "../../../shared/adminComponents/Header/Header";
+import OrderComponent from "../../../shared/adminComponents/OrderComponent/OrderComponent";
 
 const AdminOrders: NextPage = () => {
   return (
@@ -11,7 +13,22 @@ const AdminOrders: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <SideBar/>
+      <div className="px-[19px] min-h-screen bg-[#1E1E30]">
+        <Header />
+        <div className='flex gap-x-4 '>
+          <SideBar />
+          <div className="flex flex-col w-full">
+            <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
+              <h3 className="text-[#C7C7C7] text-xl font-semibold">Orders</h3>
+             
+            </div>
+            <div className="flex gap-x-10  gap-y-10 flex-wrap">
+              <OrderComponent />
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
