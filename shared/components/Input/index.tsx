@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, ChangeEvent } from "react";
 
 interface InputTypes {
     type: string,
@@ -6,12 +6,12 @@ interface InputTypes {
     name: string,
     placeholder: string,
     value: string,
-    onInputChange: 
+    onInputChange: (name: string, value: string) => void,
 }
 
-const InputComponent = ({ type , placeholder , id , value , name , onInputChange }:InputTypes) => {
+const InputComponent: FC<InputTypes> = ({ type , placeholder , id , value , name , onInputChange }) => {
 
-    const handleChange = (e:string) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
         
         onInputChange(name, inputValue);
@@ -32,4 +32,4 @@ const InputComponent = ({ type , placeholder , id , value , name , onInputChange
     )
 }
 
-export default InputComponent
+export default InputComponent;
