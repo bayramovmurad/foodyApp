@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.5",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.12",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "date-fns": "^2.30.0",

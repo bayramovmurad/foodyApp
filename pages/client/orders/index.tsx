@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import FormTitle from '../../../shared/components/FormTitle/index';
 import Sidebar from '../../../shared/components/Sidebar/index';
 import Header from "../../../shared/components/Header/index";
@@ -25,50 +25,87 @@ const data: OrderData[] = [
       contact: "994-51-410-3130",
       paymentMethod: "Cash On Delivery",
       address: "29 Eve Street, 543 Evenue Road, Ny 87876 ",
+    },
+    {
+      id: 9178,
+      amount: 249.7,
+      time: "25 Dec 2021",
+      contact: "994-51-410-3130",
+      paymentMethod: "Cash On Delivery",
+      address: "29 Eve Street, 543 Evenue Road, Ny 87876 ",
+    },
+    {
+      id: 9179,
+      amount: 249.7,
+      time: "25 Dec 2021",
+      contact: "994-51-410-3130",
+      paymentMethod: "Cash On Delivery",
+      address: "29 Eve Street, 543 Evenue Road, Ny 87876 ",
+    },
+    {
+      id: 9200,
+      amount: 249.7,
+      time: "25 Dec 2021",
+      contact: "994-51-410-3130",
+      paymentMethod: "Cash On Delivery",
+      address: "29 Eve Street, 543 Evenue Road, Ny 87876 ",
     }
 ]
 
 const Orders: FC<OrdersProps> = () => {
-  return (
-    <div className="bg-white">
-        <div className="p-[30px]">
-          <Header
-              isLogin={true}
-              isBasket={true}
-              isAvatar={true}
-              isName={true}
-              isBottom={false}
-          />
-        </div>
+    const [activeData,setActiveData] = useState(data)
+    const deleteOrder = (id: number | string): void => {
+        setActiveData(activeData.filter((item) => item.id !== id))
+    }
 
-        <main className="p-[30px] flex justify-center">
-              <div className="max-w-[1440px] w-full flex gap-4">
-                <Sidebar />
+    return (
+      <div className="bg-white">
+          <div className="p-[30px]">
+            <Header
+                isLogin={true}
+                isBasket={true}
+                isAvatar={true}
+                isName={true}
+                isBottom={false}
+            />
+          </div>
 
-                <div className="content bg-[#F3F4F6] py-[42px] px-9 w-full">
-                    <FormTitle
-                        value={"Your Orders"}
-                    />
+          <main className="p-[30px] flex justify-center">
+                <div className="max-w-[1440px] w-full flex gap-4">
+                  <Sidebar />
 
-                    <div className='w-full h-full'>
-                        <Thead
-                            items={["ID","Time","Delivery Address","Amount","Payment Method","Contact"]}
-                        />
+                  <div className="content bg-[#F3F4F6] py-[42px] px-9 w-full">
+                      <FormTitle
+                          value={"Your Orders"}
+                      />
 
-                        <TBody
-                            data={data}
-                        />
-                    </div>
+                      <table className='w-full mt-[60px]'>
+                          <Thead
+                              items={["ID","Time","Delivery Address","Amount","Payment Method","Contact",""]}
+                          />
+
+                          
+                          <tbody className='bg-white'>
+                              {
+                                activeData.map((item: any) => (
+                                    <TBody
+                                        item={item}
+                                        deleteOrder={deleteOrder}
+                                    />
+                                ))
+                              }
+                          </tbody>
+                      </table>
+                  </div>
                 </div>
-              </div>
-        </main>
-       
+          </main>
+        
 
-        <Footer
-            isTop={false}
-        />
-    </div>
-  );
+          <Footer
+              isTop={false}
+          />
+      </div>
+    );
 };
 
 export default Orders;
