@@ -3,7 +3,7 @@ import Sidebar from '../../../shared/components/Sidebar/index'
 import Header from "../../../shared/components/Header/index"
 import Footer from '../../../shared/components/Footer/index'
 
-const Checkout = () => {
+const userBasket = () => {
   return (
     <div className="bg-white">
         <div className="p-[30px]">
@@ -22,7 +22,7 @@ const Checkout = () => {
 
                 <div className="content bg-[#F3F4F6] py-[42px] px-9 w-full">
                     <FormTitle
-                        value={"Checkout"}
+                        value={"Basket"}
                     />
                 </div>
               </div>
@@ -36,4 +36,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default userBasket;

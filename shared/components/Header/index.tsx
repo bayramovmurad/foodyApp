@@ -122,7 +122,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
 
                         {
                             isBasket ? (
-                                <div className="w-[40px] h-[40px] rounded-[100px] bg-[#EB5757] cursor-pointer flex justify-center pt-[1px]">
+                                <div onClick={() => push("/client/basket")} className="w-[40px] h-[40px] rounded-[100px] bg-[#EB5757] cursor-pointer flex justify-center pt-[1px]">
                                     <img className="w-[32px] h-[32px]" src="/client/basket/basket.svg" alt="" />
                                 </div>
                             ) : <></>
@@ -130,7 +130,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
 
                         {
                             isAvatar ? (
-                                <img src="/client/avatar/avatar.svg" alt="" />
+                                <img onClick={() => push("/client/profile")} className="cursor-pointer" src="/client/avatar/avatar.svg" alt="" />
                             ) : <></>
                         }
 
