@@ -1,5 +1,6 @@
 import Title from "../Title";
 import Button from "../Button";
+import Language from "../Language";
 import Description from "../Description";
 import OutlineButton from "../OutlineButton ";
 
@@ -55,7 +56,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                     t('restaurants')
                                 }
                             </li>
-                            <li className="cursor-pointer text-[#828282] hover:text-[#D63626]">
+                            <li onClick={() => push("/client/about")} className="cursor-pointer text-[#828282] hover:text-[#D63626]">
                                 {
                                     t('about')
                                 }
@@ -65,7 +66,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                     t('howitworks')
                                 }
                             </li>
-                            <li className="cursor-pointer text-[#828282] hover:text-[#D63626]">
+                            <li onClick={() => push("/client/fags")} className="cursor-pointer text-[#828282] hover:text-[#D63626]">
                                 {
                                     t('faq')
                                 }
@@ -82,31 +83,8 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                         />
 
                     
-                        <div onClick={handleActive} className="relative cursor-pointer">
-                                <p>
-                                    <img 
-                                        src={i18n.language == "az" ? "/mate/language/az.svg" : "/mate/language/eng.svg"} 
-                                        className="w-[41px] h-[41px]"
-                                        alt="error"
-                                    />
-                                </p>
-
-                                {
-                                    isActive ? (
-                                        <div className={`flex flex-col absolute py-1 bg-white ${isActive ? "top-[50px] px-1" : ''}`}>
-                                            {languages.map(lng => (
-                                                <div className="cursor-pointer" key={lng} onClick={() => changeLanguage(lng)}>
-                                                    <img 
-                                                        src={lng == "az" ? "/mate/language/az.svg" : "/mate/language/eng.svg"} 
-                                                        className="w-[41px] h-[41px]"
-                                                        alt="error"
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ) : <></>
-                                }
-                        </div>
+                        
+                        <Language />
 
                         {
                             !isLogin ? (
