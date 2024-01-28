@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 @import './input/input.css';
+@import './admin/input/input.css';
+
 
 html,
 body {

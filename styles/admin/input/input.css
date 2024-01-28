@@ -1,0 +1,11 @@
+.login input {
+    width: 100%;
+    border-radius: 4px;
+    background: #5A5B70 !important;
+    color: #C7C7C7;
+    font-size: 18px;
+}
+
+.login input::placeholder {
+    color: #C7C7C7;
+}
