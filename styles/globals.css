@@ -5,7 +5,6 @@
 @import './input/input.css';
 @import './admin/input/input.css';
 
-
 html,
 body {
   padding: 0;
@@ -23,5 +22,17 @@ a {
   box-sizing: border-box;
 }
 
+tspan {
+  fill: white;
+}
+
+line {
+  stroke: white !important;
+}
+
+.MuiChartsLegend-mark {
+  rx: 100%;
+  ry: 100%;
+}
 
 @import './client/input.css';
