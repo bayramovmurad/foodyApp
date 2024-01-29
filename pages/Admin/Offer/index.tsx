@@ -2,9 +2,40 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import SideBar from "../../../shared/adminComponents/SideBar/SideBar";
 import Header from "../../../shared/adminComponents/Header/Header";
-import OfferComponent from "../../../shared/adminComponents/OfferComponent/OfferComponent"
+import Button from "../../../shared/components/Button";
+import { useState } from "react";
+import RightMenu from "../../../shared/adminComponents/RightMenu";
+import OfferComponent from "../../../shared/adminComponents/OfferComponent/OfferComponent";
+
+const OfferData = [
+  {
+    "id": 9117,
+    "name": "Pizza",
+    "slug": "yummy-pizza",
+    "path": "/adminImg/CategoryPage/Pizza.svg",
+  },
+  {
+    "id": 9118,
+    "name": "Pizza",
+    "slug": "yummy-pizza",
+    "path": "/adminImg/CategoryPage/Pizza.svg",
+  },
+  {
+    "id": 9119,
+    "name": "Pizza",
+    "slug": "yummy-pizza",
+    "path": "/adminImg/CategoryPage/Pizza.svg",
+  }
+]
 
 const AdminOffers: NextPage = () => {
+  const [isMenu, setIsMenu] = useState<boolean>(false)
+
+  //! Add Category
+
+  const addOffer = (): void => {
+    setIsMenu(!isMenu)
+  }
   return (
     <div>
       <Head>
@@ -13,24 +44,62 @@ const AdminOffers: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="px-[19px] min-h-screen bg-[#1E1E30]">
+        <RightMenu headTitle={"Add Offer"} callBack={addOffer} right={isMenu ? "0%" : "-100%"} />
+
         <Header />
+
         <div className='flex gap-x-4 '>
           <SideBar />
           <div className="flex flex-col w-full">
             <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
               <h3 className="text-[#C7C7C7] text-xl font-semibold">Orders</h3>
 
+              <Button
+                value={"+ Add Offer"}
+                color={"#FFF"}
+                size={"14px"}
+                background={"#C035A2"}
+                width={"168px"}
+                height={"35px"}
+                isDisabled={false}
+                radius={"14px"}
+                weight={600}
+                callBack={addOffer}
+              />
             </div>
-            <div className="flex gap-x-10  gap-y-10 flex-wrap">
-              <OfferComponent/>
 
+            <div className="flex gap-x-10  gap-y-10 flex-wrap">
+              <div className="w-full">
+                <table className="border-collapse bg-white w-full">
+                  <thead>
+                    <tr>
+                      <th className=" border-t p-5">ID</th>
+                      <th className=" border-t p-5">Image</th>
+                      <th className=" border-t p-5">Name</th>
+                      <th className=" border-t p-5">Slug</th>
+                      <th className=" border-t p-5"></th>
+                    </tr>
+                  </thead>
+                  {
+                    <tbody>
+                      {
+                        OfferData.map((detail) => (
+                          <OfferComponent
+                            detail={detail}
+                          />
+                        ))
+                      }
+                    </tbody>
+                  }
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-      
-    
+
+
   );
 };
 

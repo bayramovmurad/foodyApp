@@ -1,15 +1,13 @@
-import React, { FC } from 'react';
-
-interface CategoryComponentProps {
+interface OfferComponentProps {
     detail: {
-        id: string;
+        id: number | string;
         path: string;
         name: string;
         slug: string;
     };
 }
 
-const CategoryComponent: FC<CategoryComponentProps> = ({ detail }) => {
+const OfferComponent = ({ detail }: OfferComponentProps) => {
     return (
         <tr>
             <td className="border-t text-center  p-1 max-w-[290px] overflow-x-auto whitespace-nowrap">
@@ -34,4 +32,4 @@ const CategoryComponent: FC<CategoryComponentProps> = ({ detail }) => {
     );
 }
 
-export default CategoryComponent;
+export default OfferComponent;

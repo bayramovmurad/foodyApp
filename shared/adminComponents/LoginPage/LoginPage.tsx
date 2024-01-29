@@ -10,6 +10,7 @@ interface FormDataTypes {
 }
 
 const LoginPage = () => {
+    const [isDisabled, setIsDisabled] = useState(true)
     const [formData, setFormData] = useState<FormDataTypes>({
         username: "",
         password: "",
@@ -21,6 +22,14 @@ const LoginPage = () => {
             [name]: value,
         }));
     };
+
+    useEffect(() => {
+        if (formData.username == "" || formData.password == "") {
+            setIsDisabled(true)
+        } else {
+            setIsDisabled(false)
+        }
+    }, [formData])
 
     const saveData = () => {
         console.log(formData);
@@ -45,7 +54,7 @@ const LoginPage = () => {
                             background={"#C035A2"}
                             width={"100%"}
                             height={"53px"}
-                            isDisabled={false}
+                            isDisabled={isDisabled}
                             radius={"4px"}
                             weight={600}
                             callBack={saveData}
@@ -64,10 +73,3 @@ const LoginPage = () => {
     )
 }
 export default LoginPage
-
-
-
-
-
-
-

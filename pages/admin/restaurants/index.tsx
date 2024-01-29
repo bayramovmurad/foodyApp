@@ -3,9 +3,81 @@ import Head from "next/head";
 import SideBar from "../../../shared/adminComponents/SideBar/SideBar";
 import Header from "../../../shared/adminComponents/Header/Header";
 import RestaurantComponent from "../../../shared/adminComponents/RestaurantComponent/RestaurantComponent";
+import Dropdown from "../../../shared/adminComponents/Dropdown";
+import { useState } from "react";
+import RightMenu from "../../../shared/adminComponents/RightMenu";
+import Button from "../../../shared/components/Button";
 
+
+interface Restaurants {
+  id: number;
+  name: string;
+  restaurantName: string;
+  path: string;
+}
+
+const Restaurants: Restaurants[] = [
+  {
+    id: 1,
+    name: 'Marqarita',
+    restaurantName: 'Papa Johns',
+    path: '/adminImg/ProductsPage/Pizza.svg',
+  },
+  {
+    id: 2,
+    name: 'Marqarita',
+    restaurantName: 'Mc Donalds',
+    path: '/adminImg/ProductsPage/Pizza.svg',
+  },
+  {
+    id: 3,
+    name: 'Marqarita',
+    restaurantName: 'Burger King',
+    path: '/adminImg/ProductsPage/Pizza.svg',
+  },
+  {
+    id: 4,
+    name: 'Marqarita',
+    restaurantName: 'Mc Donalds',
+    path: '/adminImg/ProductsPage/Pizza.svg',
+  },
+  {
+    id: 5,
+    name: 'Marqarita',
+    restaurantName: 'Burger King',
+    path: '/adminImg/ProductsPage/Pizza.svg',
+  }
+  ,
+  {
+    id: 6,
+    name: 'Marqarita',
+    restaurantName: 'Kfc',
+    path: '/adminImg/ProductsPage/Pizza.svg',
+  }
+];
 
 const AdminRestaurants: NextPage = () => {
+  const [isMenu, setIsMenu] = useState<boolean>(false)
+  const [activeData, setActiveData] = useState<Restaurants[]>(Restaurants);
+
+  //! Delete
+
+  const deleteRestaurants = (id: number | string): void => {
+    setActiveData(activeData.filter((item) => item.id !== id));
+  };
+
+  //! Filter Restaurant
+
+  const filterRestaurants = (title: string): void => {
+    console.log(title);
+  }
+
+  //! Add Restaurant
+
+  const addRestaurant = (): void => {
+    setIsMenu(!isMenu)
+  }
+
   return (
     <div>
       <Head>
@@ -14,49 +86,57 @@ const AdminRestaurants: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="px-[19px] min-h-screen bg-[#1E1E30]">
-        <Header
-         />
-        <div className='flex gap-x-4'>
-          <SideBar/>
+      <div className="px-[19px] min-h-screen relative bg-[#1E1E30]">
+        <RightMenu headTitle={"Add Restaurant"} callBack={addRestaurant} right={isMenu ? "0%" : "-100%"} />
+
+        <Header />
+
+        <div className='flex gap-x-4 justify-between'>
+          <SideBar />
+
           <div className="flex flex-col w-full">
             <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
-              <h3 className="text-[#C7C7C7] text-xl font-semibold">Products</h3>
-            <div className="flex gap-x-10">
-                <div className="flex justify-between items-center w-[199px] h-[35px] bg-[#5A5B70] rounded-[14px] px-[18px] py-[4px]">
-                  <span className="text-[#C7C7C7] text-[14px] font-semibold">Restaurant Type</span>
-                  <img src="/adminImg/RestaurantPage/ArrowDown.svg" alt="" />
-                </div>
-                <div className="w-[168px] h-[35px] bg-fuchsia-700 rounded-[14px] shadow border-2 border-fuchsia-700 flex items-center p-2">
-                  <img src="/adminImg/RestaurantPage/Plus.svg" alt="Plus" />
-                  <span className="w-[137px] h-5 text-center text-white text-sm font-bold tracking-tight">ADD RESTAURANT </span>
-                </div>
+              <h3 className="text-[#C7C7C7] text-xl font-semibold">
+                Products
+              </h3>
+
+              <div className="flex gap-x-10">
+                <Dropdown
+                  filterItems={filterRestaurants}
+                  items={["Papa Johns", "Kfc", "Mc Donalds", "Burger King"]}
+                  className={"flex bg-[#5A5B70] rounded-[14px] px-[18px] py-2 relative w-[199px] transition-all h-[35px]"}
+                />
+
+                <Button
+                  value={"+ Add Restaurant"}
+                  color={"#FFF"}
+                  size={"14px"}
+                  background={"#C035A2"}
+                  width={"168px"}
+                  height={"35px"}
+                  isDisabled={false}
+                  radius={"14px"}
+                  weight={600}
+                  callBack={addRestaurant}
+                />
+              </div>
             </div>
+
+            <div className="flex gap-x-10 gap-y-10 flex-wrap justify-between">
+              {
+                activeData.map((item) => (
+                  <RestaurantComponent
+                    detail={item}
+                    deleteProduct={deleteRestaurants}
+                  />
+                ))
+              }
             </div>
-          <div className="flex gap-x-10 gap-y-10 flex-wrap">
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
-            <RestaurantComponent />
           </div>
-         
         </div>
       </div>
     </div>
-    </div>
- 
+
   );
 };
 
