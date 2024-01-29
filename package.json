@@ -15,7 +15,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.12",
     "@mui/x-charts": "^6.19.1",
     "@mui/x-data-grid": "^6.19.2",
-    "axios": "^1.4.0",
+    "axios": "^1.6.7",
     "bcrypt": "^5.1.0",
     "chart": "^0.1.2",
     "date-fns": "^2.30.0",

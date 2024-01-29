@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import Label from '../../components/Label'
+import Input from '../../components/Input'
+import Button from '../../components/Button';
+import Dropdown from '../Dropdown';
 
 interface MenuTypes {
     right: string,
@@ -6,10 +10,38 @@ interface MenuTypes {
     callBack: any
 }
 
+interface FormDataTypes {
+  name: string;
+  description: string;
+  price: string;
+}
+
 const RightMenu = ({ right , callBack , headTitle }: MenuTypes) => {
+    const [activeRestaurant,setActiveRestaurant] = useState<string>("")
     const [isActive,setIsActive] = useState(false)
+    const [formData, setFormData] = useState<FormDataTypes>({
+        name: "",
+        description: "",
+        price: "",
+    });
+
+    const handleInputChange = (name: string, value: string) => {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+    };
+    
+    const saveData = () => {
+        
+    }
+
+    const filterProduct = (title: string): void => {
+        setActiveRestaurant(title)
+    }
+
     return (
-      <div style={{ right: isActive ? "-100%" : right }} className="fixed w-[70vw] z-10 bg-[#38394E] py-[25px] px-[25px]  transition-all">
+      <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
             <button onClick={callBack} className="absolute left-[-30px] top-[50px]">
                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="27" height="27" rx="13.5" fill="#C74FEB"/>
@@ -29,6 +61,90 @@ const RightMenu = ({ right , callBack , headTitle }: MenuTypes) => {
                   headTitle
                 }
             </p>
+
+            <div className='flex justify-between mt-[10px]'>
+                <p className='text-[#C7C7C7] text-lg not-italic font-medium leading-6'>
+                  Upload your product image
+                </p>
+
+                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>
+                    <input className='hidden' id='productInput' type="file" />
+
+                    <label htmlFor="productInput" className='cursor-pointer'>
+                      <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_135_286)">
+                            <path d="M48.375 25.1C46.675 16.475 39.1 10 30 10C22.775 10 16.5 14.1 13.375 20.1C5.85 20.9 0 27.275 0 35C0 43.275 6.725 50 15 50H47.5C54.4 50 60 44.4 60 37.5C60 30.9 54.875 25.55 48.375 25.1ZM35 32.5V42.5H25V32.5H17.5L29.125 20.875C29.625 20.375 30.4 20.375 30.9 20.875L42.5 32.5H35Z" fill="#EC5CF8"/>
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_135_286">
+                              <rect width="60" height="60" fill="white"/>
+                            </clipPath>
+                          </defs>
+                      </svg>
+
+                      <p className='text-[#C7C7C7] text-lg not-italic font-medium leading-6'>
+                        upload
+                      </p>
+                    </label>
+                </div>
+            </div>
+
+            <div className='flex justify-between mt-[50px] adminAddProduct'>
+                <p className='text-[#C7C7C7] text-lg not-italic font-medium leading-6'>
+                  Add your Product description and necessary information
+                </p>
+
+                <div className='rounded-[14px] bg-[#43445A] py-[20px] px-[25px] gap-5 max-w-[536px] w-full flex flex-col justify-center items-center'>
+                      <div className='flex flex-col w-full'>
+                          <Label value={"Name"} forId={"name"} />
+                          <Input type={"text"} id={"name"} name={"name"} placeholder={""} value={formData.name} onInputChange={handleInputChange} />
+                      </div>
+                      <div className='flex flex-col w-full'>
+                          <Label value={"Description"} forId={"description"} />
+                          <Input type={"text"} id={"description"} name={"description"} placeholder={""} value={formData.description} onInputChange={handleInputChange} />
+                      </div>
+                      <div className='flex flex-col w-full'>
+                          <Label value={"Price"} forId={"price"} />
+                          <Input type={"text"} id={"price"} name={"price"} placeholder={""} value={formData.price} onInputChange={handleInputChange} />
+                      </div>
+                      <div className='w-full'>
+                        <Label value={"Restaurants"} forId="" />
+                        
+                        <Dropdown
+                          filterItems={filterProduct}
+                          items={["Papa Johns", "Kfc", "Mc Donalds", "Burger King"]}
+                          className={"flex bg-[#5A5B70] rounded-[14px] h-[46px] mt-2 px-[18px] py-2 relative w-full"}
+                        />
+                      </div>
+                </div>
+            </div>
+
+            <div className="bottom border-t border-[#43445A] h-[74px] px-[50px] w-full flex gap-10 absolute bottom-0 items-center justify-center">
+                <Button
+                    value={"Cancel"}
+                    color={"#FFF"}
+                    size={"18px"}
+                    background={"#43445A"}
+                    width={"100%"}
+                    height={"50px"}
+                    isDisabled={false}
+                    radius={"14px"}
+                    weight={700}
+                    callBack={callBack}
+                />
+                <Button
+                    value={"Create  Product"}
+                    color={"#FFF"}
+                    size={"18px"}
+                    background={"#C035A2"}
+                    width={"100%"}
+                    height={"50px"}
+                    isDisabled={false}
+                    radius={"14px"}
+                    weight={700}
+                    callBack={saveData}
+                />
+            </div>
       </div>
     )
 }

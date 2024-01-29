@@ -1,79 +1,46 @@
-import React, { FC, useState } from 'react';
-import { NextPage } from 'next';
-import Head from 'next/head';
+
+import ProductsComponent from '../../../shared/adminComponents/ProductsComponent/ProductsComponent';
 import SideBar from '../../../shared/adminComponents/SideBar/SideBar';
 import Header from '../../../shared/adminComponents/Header/Header';
-import ProductsComponent from '../../../shared/adminComponents/ProductsComponent/ProductsComponent';
 import Dropdown from '../../../shared/adminComponents/Dropdown';
 
+import { getProductsAdmin , deleteProductAdmin } from '../../../services/index'
+import React, { FC, useEffect, useState } from 'react';
+import { NextPage } from 'next';
+import Head from 'next/head';
 
 interface Product {
   id: number;
   name: string;
-  restaurantName: string;
+  description: string;
   price: number;
-  path: string;
+  img_url: string;
 }
 
-const Product: Product[] = [
-  {
-    id: 1,
-    name: 'Marqarita',
-    restaurantName: 'Papa Johns',
-    price: 16,
-    path: '/adminImg/ProductsPage/Pizza.svg',
-  },
-  {
-    id: 2,
-    name: 'Marqarita',
-    restaurantName: 'Mc Donalds',
-    price: 1116,
-    path: '/adminImg/ProductsPage/Pizza.svg',
-  },
-  {
-    id: 3,
-    name: 'Marqarita',
-    restaurantName: 'Burger King',
-    price: 1236,
-    path: '/adminImg/ProductsPage/Pizza.svg',
-  },
-  {
-    id: 4,
-    name: 'Marqarita',
-    restaurantName: 'Mc Donalds',
-    price: 126,
-    path: '/adminImg/ProductsPage/Pizza.svg',
-  },
-  {
-    id: 5,
-    name: 'Marqarita',
-    restaurantName: 'Burger King',
-    price: 312,
-    path: '/adminImg/ProductsPage/Pizza.svg',
-  }
-  ,
-  {
-    id: 6,
-    name: 'Marqarita',
-    restaurantName: 'Kfc',
-    price: 20,
-    path: '/adminImg/ProductsPage/Pizza.svg',
-  }
-];
-
 const AdminProducts: NextPage = () => {
-  const [activeData, setActiveData] = useState<Product[]>(Product);
+  const [activeData, setActiveData] = useState<Product[]>([]);
 
-  const deleteProduct = (id: number | string): void => {
-    setActiveData(activeData.filter((item) => item.id !== id));
+  const renderData = async () => {
+      const data = await getProductsAdmin()
+      console.log(data);
+      
+      setActiveData(data?.data.result.data);
+  }
+
+  const deleteProduct = async (id: number | string) => {
+      // const response = await deleteProductAdmin(id)
+      // console.log(response);
   };
 
   const filterProduct = (title: Product): void => {
-    // let newData = activeData.filter((item) => item.restaurantName == title)
-    // setActiveData(newData)
-    console.log(title);
-    
+      // let newData = activeData.filter((item) => item.restaurantName == title)
+      // setActiveData(newData)
+      console.log(title);
   }
+
+  useEffect(() => {
+    renderData()
+  },[])
 
   return (
     <div>
@@ -96,12 +63,15 @@ const AdminProducts: NextPage = () => {
               />
             </div>
             <div className="flex gap-x-10 gap-y-10 flex-wrap justify-between">
-              {activeData.map((item) => (
-                <ProductsComponent
-                  detail={item}
-                  deleteProduct={deleteProduct}
-                />
-              ))}
+              {
+                activeData?.map((item) => (
+                  <ProductsComponent
+                    key={item.id}
+                    detail={item}
+                    deleteProduct={deleteProduct}
+                  />
+                ))
+              }
             </div>
           </div>
         </div>

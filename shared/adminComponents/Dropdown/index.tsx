@@ -40,7 +40,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) =>
 
             {
                 isActiveDropdown ? (
-                    <div className='absolute top-[50px] w-[199px] left-0 bg-[#5A5B70] px-[12px] rounded-[14px] py-2 cursor-pointer'>
+                    <div className='absolute top-[50px] w-full left-0 bg-[#5A5B70] px-[12px] rounded-[14px] py-2 cursor-pointer'>
                         {
                             data.map((item) => (
                                 <p onClick={() => setActiveItem(item) || setIsActiveDropdown(false)} className='text-[#F2F2F2DE] mb-1'>

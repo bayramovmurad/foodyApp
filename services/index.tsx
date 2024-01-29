@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { baseUrl } from "../constants/base/baseUrl";
 
 import axios from "axios";
@@ -18,3 +17,13 @@ export const getProductsAdmin = async () => {
         console.log({ error })
     }
 };
+
+// export const deleteProductAdmin = async (id: number | string) => {
+//     try{
+//         console.log(id);
+//         const response = await instanceAxios.delete(`api/products/${id}`);
+//         return response;
+//     } catch(error){
+//         console.log({ error })
+//     }
+// };

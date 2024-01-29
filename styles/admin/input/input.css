@@ -9,3 +9,13 @@
 .login input::placeholder {
     color: #C7C7C7;
 }
+
+.adminAddProduct input{
+    border-radius: 14px;
+    background: #5A5B70;
+    color: #F2F2F2;
+}
+
+.adminAddProduct label{
+    color: #C7C7C7;
+}

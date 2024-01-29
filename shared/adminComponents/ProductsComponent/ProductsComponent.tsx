@@ -3,9 +3,9 @@ import Modal from '../../components/Modal';
 
 interface ProductsComponentProps {
   detail: {
-    path: string;
+    img_url: string;
     name: string;
-    restaurantName: string;
+    description: string;
     price: number;
     id: string;
   };
@@ -34,9 +34,9 @@ const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }
     <div>
       {
         <div className="bg-white rounded-md w-[196px] h-[273px] flex p-[15px] flex-col">
-          <img src={detail.path} alt="" />
+          <img src={detail.img_url} alt="" />
           <p className="text-left text-gray-800 text-lg font-medium leading-normal tracking-tight">{detail.name}</p>
-          <span className="text-left font-semibold  text-neutral-400 text-sm">{detail.restaurantName}</span>
+          <span className="text-left font-semibold  text-neutral-400 text-sm">{detail.description}</span>
           <div className="flex justify-between">
             <span className="text-teal-500">
               {
@@ -47,6 +47,7 @@ const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }
               <img src="/adminImg/ProductsPage/Pen.svg" alt="" />
               <img
                 onClick={() => deleteItem(detail.id)}
+                className='cursor-pointer'
                 src="/adminImg/ProductsPage/Bin.svg"
                 alt=""
               />

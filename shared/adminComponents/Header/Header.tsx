@@ -1,6 +1,6 @@
-import Button from "../../components/Button"
 import Language from "../../components/Language"
-import RightMenu from '../../adminComponents/RightMenu/index'
+import Button from "../../components/Button"
+import RightMenu from "../RightMenu"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
