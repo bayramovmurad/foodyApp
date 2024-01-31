@@ -4,11 +4,8 @@ import Input from '../../components/Input'
 import Button from '../../components/Button';
 import Dropdown from '../Dropdown';
 
-import { getRestuarants , createProduct } from '../../../services/index'
+import { getRestuarants , updateProduct } from '../../../services/index'
 import { ToastContainer, toast } from 'react-toastify';
-import { fileStorage } from '../../../server/configs/firebase'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { v4 } from 'uuid'
 
 interface MenuTypes {
     right: string,
@@ -20,11 +17,13 @@ interface FormDataTypes {
   name: string;
   description: string;
   price: string;
+  activeEditId: any;
+  activeData: any;
 }
 
-const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
+const EditMenuProduct: React.FC<MenuTypes> = ({ right , callBack , headTitle , activeEditId , activeData }) => {
     //! States
-    const [img,setImg] = useState()
+    const [productDetail, setProductDetail] = useState<any>()
     const [activeRestaurantId,setActiveRestaurantId] = useState<string>("")
     const [restaurants, setRestaurants] = useState<string[]>([]);
     const [isActive,setIsActive] = useState<boolean>(false)
@@ -32,8 +31,8 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
         name: "",
         description: "",
         price: "",
+        activeEditId: ""
     });
-
 
     //! Input OnChange Function
 
@@ -47,15 +46,6 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
       []
     );
 
-    const handleUpload = (e) => {
-      const images = ref(imgDB, `Images/${v4()}`)
-      uploadBytes(images, e.target.files[0]).then(data => {
-          getDownloadURL(data.ref).then(val => {
-              setImg(val)
-          })
-      })
-  }
-
     //! Filter Function
 
     const filterProduct = async (title:string) => {
@@ -67,7 +57,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     //! Save object Function
 
     const saveData = async () => {
-      if(formData.name == "" || formData.description == "" || img == "" || activeRestaurantId == "" || formData.price == ""){
+      if(formData.name == "" || formData.description == "" || activeRestaurantId == "" || formData.price == ""){
         toast.warning("Formu Doldurun !")
       }else{
         const productData = {
@@ -77,11 +67,8 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
             "rest_id": activeRestaurantId,
             "price": formData.price
         }
-
-        const data = await createProduct(productData)
-        if(data?.status == 201){
-          toast.success("data elave olundu")
-        }
+        const data = await updateProduct(activeEditId,productData)
+        console.log(data);
       }
     }
 
@@ -100,6 +87,22 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     useEffect(() => {
       renderRestaurants(); 
     },[])
+
+    //! Render Product Detail
+    
+    useEffect(() => {
+      let productInfo = activeData.filter((item:any) => item.id == activeEditId);
+      setProductDetail(productInfo[0]);
+
+      if (productInfo[0]) {
+          setFormData({
+              name: productInfo[0].name || "",
+              description: productInfo[0].description || "",
+              price: productInfo[0].price || "",
+              activeEditId: activeEditId
+          });
+      }
+      }, [activeData, activeEditId]);
 
     return (
       <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
@@ -130,7 +133,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
                 </p>
 
                 <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>
-                    <input accept=“.jpg,.jpeg,.png” type=“file” onChange={(e) => handleUpload(e)} className='hidden' id='productInput' type="file" />
+                    <input className='hidden' id='productInput' type="file" />
 
                     <label htmlFor="productInput" className='cursor-pointer'>
                       <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -153,7 +156,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
 
             <div className='flex justify-between mt-[50px] adminAddProduct'>
                 <p className='text-[#C7C7C7] text-lg not-italic font-medium leading-6'>
-                  Add your Product description and necessary information
+                    Edit your Product description and necessary information
                 </p>
 
                 <div className='rounded-[14px] bg-[#43445A] py-[20px] px-[25px] gap-5 max-w-[536px] w-full flex flex-col justify-center items-center'>
@@ -195,7 +198,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
                     callBack={callBack}
                 />
                 <Button
-                    value={"Create  Product"}
+                    value={"Update  Product"}
                     color={"#FFF"}
                     size={"18px"}
                     background={"#C035A2"}
@@ -211,4 +214,4 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     )
 }
 
-export default RightMenu
+export default EditMenuProduct

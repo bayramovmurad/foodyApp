@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './spinner/spinner.css';
 @import './input/input.css';
 @import './admin/input/input.css';
 

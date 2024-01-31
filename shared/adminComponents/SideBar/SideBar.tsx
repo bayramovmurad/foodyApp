@@ -23,9 +23,9 @@ const SideBar: FC = () => {
         <div key={item} className="w-64 h-10 relative flex items-center" onClick={() => handleSelect(item)}>
           <div className={selectedItem === item ? "w-[216px] h-10 top-0 absolute opacity-10 bg-[#fff] rounded" : ""} />
           <div className="w-6 h-6 absolute" />
-          <div className="w-[143px] h-[18px] pl-[14px] absolute">
+          <div className="w-[143px] pl-[14px] absolute">
             <span className="flex gap-x-6 text-white">
-              <img src={`/adminImg/SideBar/${item}.svg`} alt={item} />
+              <img className="w-6 h-6" src={`/adminImg/SideBar/${item}.svg`} alt={item} />
               <span className="font-semibold">{item}</span>
             </span>
           </div>

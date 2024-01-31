@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBahWVO9-ReueJfK5xlrRe-2qJ35M2QzRw",
-  authDomain: "foody-24f44.firebaseapp.com",
-  projectId: "foody-24f44",
-  storageBucket: "foody-24f44.appspot.com",
-  messagingSenderId: "945488838376",
-  appId: "1:945488838376:web:d3c63ffcf3a7203842d35d"
+  apiKey: "AIzaSyBkUTsl7QZbeof8BZfrMz03NQjmG_LGxJQ",
+  authDomain: "foodyapp-a959a.firebaseapp.com",
+  projectId: "foodyapp-a959a",
+  storageBucket: "foodyapp-a959a.appspot.com",
+  messagingSenderId: "467538371653",
+  appId: "1:467538371653:web:11fd1c14acdf308939ef2c"
 };
 
 const app = initializeApp(firebaseConfig);

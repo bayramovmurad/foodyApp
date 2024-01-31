@@ -12,7 +12,7 @@ interface ProductsComponentProps {
   deleteProduct: (id: string) => void;
 }
 
-const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }) => {
+const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct , editProduct }) => {
   const [isMenu, setIsMenu] = useState<boolean>(false)
   const [deleteModal, setDeleteModal] = useState<boolean>(false)
 
@@ -34,7 +34,7 @@ const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }
     <div>
       {
         <div className="bg-white rounded-md w-[196px] h-[273px] flex p-[15px] flex-col">
-          <img src={detail.img_url} alt="" />
+          <img src={detail.img_url} className='w-[160px] h-[158px] object-cover' alt="" />
           <p className="text-left text-gray-800 text-lg font-medium leading-normal tracking-tight">{detail.name}</p>
           <span className="text-left font-semibold  text-neutral-400 text-sm">{detail.description}</span>
           <div className="flex justify-between">
@@ -44,7 +44,13 @@ const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }
               }
             </span>
             <div className="flex justify-between">
-              <img src="/adminImg/ProductsPage/Pen.svg" alt="" />
+              <img 
+                  onClick={() => editProduct(detail.id)}
+                  alt=""
+                  src="/adminImg/ProductsPage/Pen.svg" 
+                  className='cursor-pointer'
+              />
+              
               <img
                 onClick={() => deleteItem(detail.id)}
                 className='cursor-pointer'
@@ -75,15 +81,3 @@ const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }
 }
 
 export default ProductsComponent;
-
-
-
-
-
-
-
-
-
-
-
-

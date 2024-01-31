@@ -26,7 +26,7 @@ export async function handlerProductGET(req, res, col) {
 
     res.status(200).json(response(data));
   } catch (error) {
-    res.status(500).json({ error: "Something went wrong" });
+    res.status(500).json({ error: "sad went wrong" });
   }
 }
 
