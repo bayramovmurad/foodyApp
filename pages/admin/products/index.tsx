@@ -12,7 +12,7 @@ import Dropdown from '../../../shared/adminComponents/Dropdown';
 import { getProducts, deleteProduct, getRestuarants } from '../../../services/index';
 
 interface Product {
-  id: number;
+  id: number | string;
   name: string;
   description: string;
   price: number;
