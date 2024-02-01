@@ -7,7 +7,7 @@ interface ProductsComponentProps {
     name: string;
     description: string;
     price: number;
-    id: number | string;
+    id: string;
   };
   deleteProduct: (id: string) => void;
 }

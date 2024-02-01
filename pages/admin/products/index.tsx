@@ -12,7 +12,7 @@ import Dropdown from '../../../shared/adminComponents/Dropdown';
 import { getProducts, deleteProduct, getRestuarants } from '../../../services/index';
 
 interface Product {
-  id: number | string;
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -32,6 +32,8 @@ const AdminProducts: NextPage = () => {
     try {
       setIsLoading(true);
       const data = await getProducts();
+      console.log(data?.data.result.data);
+      
       setActiveData(data?.data.result.data);
     } catch (err) {
       console.error(err);
