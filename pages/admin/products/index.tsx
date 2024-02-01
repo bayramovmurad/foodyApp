@@ -9,7 +9,7 @@ import SideBar from '../../../shared/adminComponents/SideBar/SideBar';
 import Header from '../../../shared/adminComponents/Header/Header';
 import Dropdown from '../../../shared/adminComponents/Dropdown';
 
-import { getProducts, deleteProduct, getRestaurants } from '../../../services/index';
+import { getProducts, deleteProduct, getRestuarants } from '../../../services/index';
 
 interface Product {
   id: number;
@@ -56,7 +56,7 @@ const AdminProducts: NextPage = () => {
   //! Filter Products
   const filterProduct = async (title: Product): Promise<void> => {
     try {
-      const data = await getRestaurants();
+      const data = await getRestuarants();
       const restaurant = data?.data.result.data.find((item: any) => item.name === title);
 
       if (restaurant) {
@@ -81,7 +81,7 @@ const AdminProducts: NextPage = () => {
   //! Render Restaurants
   const renderRestaurants = async (): Promise<void> => {
     try {
-      const data = await getRestaurants();
+      const data = await getRestuarants();
       const restaurant = data?.data.result.data.map((item: any) => item.name);
       setRestaurants(restaurant);
     } catch (err) {
