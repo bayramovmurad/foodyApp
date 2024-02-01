@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 interface CategoryComponentProps {
     detail: {
-        id: string;
+        id: number;
         path: string;
         name: string;
         slug: string;

@@ -68,7 +68,9 @@ const EditMenuProduct: React.FC<MenuTypes> = ({ right , callBack , headTitle , a
             "price": formData.price
         }
         const data = await updateProduct(activeEditId,productData)
-        console.log(data);
+        if(data?.status == 200 || data?.status == 201){
+          toast.success("Update olundu")
+        }
       }
     }
 

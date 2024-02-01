@@ -47,14 +47,9 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
       []
     );
 
-    const handleUpload = (e) => {
-      const images = ref(imgDB, `Images/${v4()}`)
-      uploadBytes(images, e.target.files[0]).then(data => {
-          getDownloadURL(data.ref).then(val => {
-              setImg(val)
-          })
-      })
-  }
+    const handleUpload = () => {
+      alert("a")
+    }
 
     //! Filter Function
 
@@ -67,7 +62,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     //! Save object Function
 
     const saveData = async () => {
-      if(formData.name == "" || formData.description == "" || img == "" || activeRestaurantId == "" || formData.price == ""){
+      if(formData.name == "" || formData.description == "" || activeRestaurantId == "" || formData.price == ""){
         toast.warning("Formu Doldurun !")
       }else{
         const productData = {
@@ -79,7 +74,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
         }
 
         const data = await createProduct(productData)
-        if(data?.status == 201){
+        if(data?.status == 200 || data?.status == 201){
           toast.success("data elave olundu")
         }
       }
@@ -100,6 +95,38 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     useEffect(() => {
       renderRestaurants(); 
     },[])
+
+    //! Upload Image 
+    const handleNewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setSelectedFile(file);
+        setNewImg(URL.createObjectURL(file));
+        const randomId = `${new Date().getTime()}_${Math.floor(
+          Math.random() * 1000
+        )}`;
+        const imageRef = ref(fileStorage, `images/${file.name + randomId}`);
+        uploadBytes(imageRef, file)
+          .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((downloadURL) => {
+                setNewProduct((prevProduct) => ({
+                  ...prevProduct,
+                  img_url: downloadURL,
+                }));
+                console.log("Dosyanın Firebase Storage URL'si: ", downloadURL);
+              })
+              .catch((error) => {
+                console.error("Download URL alınırken bir hata oluştu: ", error);
+              });
+          })
+          .catch((error) => {
+            console.error("Dosya yüklenirken bir hata oluştu: ", error);
+          });
+      } else {
+        console.error("No file selected");
+      }
+    };
 
     return (
       <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
@@ -130,7 +157,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
                 </p>
 
                 <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>
-                    <input accept=“.jpg,.jpeg,.png” type=“file” onChange={(e) => handleUpload(e)} className='hidden' id='productInput' type="file" />
+                    <input onChange={handleInputChange} className='hidden' id='productInput' type="file" />
 
                     <label htmlFor="productInput" className='cursor-pointer'>
                       <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
