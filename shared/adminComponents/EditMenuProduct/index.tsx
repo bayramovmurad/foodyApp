@@ -21,7 +21,15 @@ interface FormDataTypes {
   activeData: any;
 }
 
-const EditMenuProduct: React.FC<MenuTypes> = ({ right , callBack , headTitle , activeEditId , activeData }) => {
+interface EditMenuProductProps {
+  activeData: Product[];
+  activeEditId: string;
+  headTitle: string;
+  callBack: () => void;
+  right: string;
+}
+
+const EditMenuProduct: React.FC<EditMenuProductProps> = ({ right , callBack , headTitle , activeEditId , activeData }) => {
     //! States
     const [productDetail, setProductDetail] = useState<any>()
     const [activeRestaurantId,setActiveRestaurantId] = useState<string>("")
