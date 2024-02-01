@@ -8,7 +8,6 @@ import { getRestuarants , createProduct } from '../../../services/index'
 import { ToastContainer, toast } from 'react-toastify';
 import { fileStorage } from '../../../server/configs/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { v4 } from 'uuid'
 
 interface MenuTypes {
     right: string,
@@ -24,7 +23,9 @@ interface FormDataTypes {
 
 const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     //! States
-    const [img,setImg] = useState()
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [newImg, setNewImg] = useState<string | null>(null);
+    const [IMG,setIMG] = useState("")
     const [activeRestaurantId,setActiveRestaurantId] = useState<string>("")
     const [restaurants, setRestaurants] = useState<string[]>([]);
     const [isActive,setIsActive] = useState<boolean>(false)
@@ -46,10 +47,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
       },
       []
     );
-
-    const handleUpload = () => {
-      alert("a")
-    }
+    
 
     //! Filter Function
 
@@ -60,7 +58,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     }
 
     //! Save object Function
-
+    
     const saveData = async () => {
       if(formData.name == "" || formData.description == "" || activeRestaurantId == "" || formData.price == ""){
         toast.warning("Formu Doldurun !")
@@ -68,7 +66,7 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
         const productData = {
             "name": formData.name,
             "description": formData.description,
-            "img_url": "string",
+            "img_url": IMG,
             "rest_id": activeRestaurantId,
             "price": formData.price
         }
@@ -97,37 +95,39 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     },[])
 
     //! Upload Image 
-    const handleNewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file) {
-        setSelectedFile(file);
-        setNewImg(URL.createObjectURL(file));
-        const randomId = `${new Date().getTime()}_${Math.floor(
-          Math.random() * 1000
-        )}`;
-        const imageRef = ref(fileStorage, `images/${file.name + randomId}`);
-        uploadBytes(imageRef, file)
-          .then((snapshot) => {
-            getDownloadURL(snapshot.ref)
-              .then((downloadURL) => {
-                setNewProduct((prevProduct) => ({
-                  ...prevProduct,
-                  img_url: downloadURL,
-                }));
-                console.log("Dosyanın Firebase Storage URL'si: ", downloadURL);
-              })
-              .catch((error) => {
-                console.error("Download URL alınırken bir hata oluştu: ", error);
-              });
-          })
-          .catch((error) => {
-            console.error("Dosya yüklenirken bir hata oluştu: ", error);
-          });
-      } else {
-        console.error("No file selected");
-      }
-    };
 
+    // const handleNewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //   alert("a")
+    //   const file = e.target.files?.[0];
+    //   if (file) {
+    //     setSelectedFile(file);
+    //     setNewImg(URL.createObjectURL(file));
+    //     const randomId = `${new Date().getTime()}_${Math.floor(
+    //       Math.random() * 1000
+    //     )}`;
+    //     const imageRef = ref(fileStorage, `images/${file.name + randomId}`);
+    //     uploadBytes(imageRef, file)
+    //       .then((snapshot) => {
+    //         getDownloadURL(snapshot.ref)
+    //           .then((downloadURL) => {
+    //             console.log(downloadURL);
+                
+    //             // setIMG(downloadURL)
+    //           })
+    //           .catch((error) => {
+    //             console.error("Download URL alınırken bir hata oluştu: ", error);
+    //           });
+    //       })
+    //       .catch((error) => {
+    //         console.error("Dosya yüklenirken bir hata oluştu: ", error);
+    //       });
+    //   } else {
+    //     console.error("No file selected");
+    //   }
+    // };
+    // useEffect(() => {
+    //   console.log("IMG state:", IMG);
+    // }, [IMG]);
     return (
       <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
             <ToastContainer />
@@ -157,25 +157,25 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
                 </p>
 
                 <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>
-                    <input onChange={handleInputChange} className='hidden' id='productInput' type="file" />
+                      <input  className='hidden' id='productInput' type="file" />
 
-                    <label htmlFor="productInput" className='cursor-pointer'>
-                      <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g clipPath="url(#clip0_135_286)">
-                            <path d="M48.375 25.1C46.675 16.475 39.1 10 30 10C22.775 10 16.5 14.1 13.375 20.1C5.85 20.9 0 27.275 0 35C0 43.275 6.725 50 15 50H47.5C54.4 50 60 44.4 60 37.5C60 30.9 54.875 25.55 48.375 25.1ZM35 32.5V42.5H25V32.5H17.5L29.125 20.875C29.625 20.375 30.4 20.375 30.9 20.875L42.5 32.5H35Z" fill="#EC5CF8"/>
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_135_286">
-                              <rect width="60" height="60" fill="white"/>
-                            </clipPath>
-                          </defs>
-                      </svg>
+                      <label htmlFor="productInput" className='cursor-pointer'>
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clipPath="url(#clip0_135_286)">
+                              <path d="M48.375 25.1C46.675 16.475 39.1 10 30 10C22.775 10 16.5 14.1 13.375 20.1C5.85 20.9 0 27.275 0 35C0 43.275 6.725 50 15 50H47.5C54.4 50 60 44.4 60 37.5C60 30.9 54.875 25.55 48.375 25.1ZM35 32.5V42.5H25V32.5H17.5L29.125 20.875C29.625 20.375 30.4 20.375 30.9 20.875L42.5 32.5H35Z" fill="#EC5CF8"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_135_286">
+                                <rect width="60" height="60" fill="white"/>
+                              </clipPath>
+                            </defs>
+                        </svg>
 
-                      <p className='text-[#C7C7C7] text-lg not-italic font-medium leading-6'>
-                        upload
-                      </p>
-                    </label>
-                </div>
+                        <p className='text-[#C7C7C7] text-lg not-italic font-medium leading-6'>
+                          upload
+                        </p>
+                      </label>
+                  </div>
             </div>
 
             <div className='flex justify-between mt-[50px] adminAddProduct'>
