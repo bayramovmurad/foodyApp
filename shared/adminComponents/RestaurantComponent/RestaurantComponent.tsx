@@ -12,6 +12,8 @@ interface ProductsComponentProps {
 }
 
 const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }) => {
+  
+  
   const [isMenu, setIsMenu] = useState<boolean>(false)
   const [deleteModal, setDeleteModal] = useState<boolean>(false)
 
@@ -35,11 +37,11 @@ const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct
         <div className="w-[247px] h-[83px bg-white rounded-md flex p-3 items-center" >
           <div className="flex gap-x-[15px]">
             <div>
-              <img className='max-w-[65px] max-h-[57px]' src={detail.path} alt="" />
+              <img className='max-w-[65px] max-h-[57px]' src={detail.img_url} alt="" />
             </div>
             <div>
               <p className="text-gray-800 text-lg font-medium leading-normal tracking-tight">{detail.name}</p>
-              <span className="font-semibold  text-neutral-400 text-sm">{detail.restaurantName}</span>
+              <span className="font-semibold  text-neutral-400 text-sm">{detail.address}</span>
             </div>
           </div>
           <div className="flex flex-col ml-auto gap-y-4">

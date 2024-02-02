@@ -54,3 +54,14 @@ export const getRestuarants = async () => {
         console.log(error)
     }
 };
+
+
+export const deleteRestuarant = async (id:string | number) => {
+    try {
+        const res = await instanceAxios.delete(`/api/restuarants/${id}`);
+        return res
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
