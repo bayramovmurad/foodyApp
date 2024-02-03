@@ -5,39 +5,64 @@ import ProductsComponent from "../../../shared/adminComponents/ProductsComponent
 import Header from "../../../shared/adminComponents/Header/Header";
 import CategoryComponent from "../../../shared/adminComponents/CategoryComponent/CategoryComponent";
 import Button from "../../../shared/components/Button";
+import EditCategory from "../../../shared/adminComponents/EditCategory";
 
-import { useState } from "react";
-import RightMenu from "../../../shared/adminComponents/RightMenu";
+import { useEffect, useState } from "react";
+import AddCategory from "../../../shared/adminComponents/AddCategory";
+import { getCategory , deleteCategory } from '../../../services/index'
+import { toast } from "react-toastify";
 
-const CategoryData = [
-  {
-    "id": 9117,
-    "name": "Pizza",
-    "slug": "yummy-pizza",
-    "path": "/adminImg/CategoryPage/Pizza.svg",
-  },
-  {
-    "id": 9118,
-    "name": "Pizza",
-    "slug": "yummy-pizza",
-    "path": "/adminImg/CategoryPage/Pizza.svg",
-  },
-  {
-    "id": 9119,
-    "name": "Pizza",
-    "slug": "yummy-pizza",
-    "path": "/adminImg/CategoryPage/Pizza.svg",
-  }
-]
+interface CategoryData {
+  id: string | number;
+  name: string;
+  slug: string;
+  path: string;
+}
 
 const AdminCategory: NextPage = () => {
+  const [categoryData,setCategory] = useState<CategoryData[]>([])
   const [isMenu, setIsMenu] = useState<boolean>(false)
+  const [isEditMenu, setIsEditMenu] = useState<boolean>(false)
+  const [activeData, setActiveData] = useState<CategoryData | null>(null);
+  const [activeEditId, setActiveEditId] = useState<string>('');
+
+  const renderCategory = async () => {
+      const response = await getCategory()
+      setCategory(response?.data.result.data);
+  }
+
+  useEffect(() => {
+    renderCategory()
+  },[])
 
   //! Add Category
 
   const addCategory = (): void => {
     setIsMenu(!isMenu)
   }
+
+  const editCategory = async (id: string) => {
+      isEditCategory()
+      setActiveEditId(id);
+      const response = await getCategory()
+      const item = response?.data.result.data.filter((item:any) => item.id == id)
+      setActiveData(item[0])
+  };
+
+  const isEditCategory = (): void => {
+    setIsEditMenu(!isEditMenu);
+  };
+
+  //! Delete Category
+
+  const deleteCategoryFunction = async (id: number | string) => {
+    const res: any = await deleteCategory(id);
+    
+    if (res?.status == 200 || res?.status == 201 || res?.status == 204) {
+      toast.success("category silindi")
+      renderCategory()
+    }
+  }; 
 
   return (
     <div>
@@ -48,7 +73,8 @@ const AdminCategory: NextPage = () => {
       </Head>
 
       <div className="px-[19px] min-h-screen bg-[#1E1E30]">
-        <RightMenu headTitle={"Add Category"} callBack={addCategory} right={isMenu ? "0%" : "-100%"} />
+        <EditCategory activeData={activeData} activeEditId={activeEditId} headTitle={'Edit Category'} callBack={isEditCategory} right={isEditMenu ? '0%' : '-100%'} />
+        <AddCategory headTitle={"Add Category"} callBack={addCategory} right={isMenu ? "0%" : "-100%"} />
 
         <Header />
 
@@ -78,7 +104,7 @@ const AdminCategory: NextPage = () => {
                 <table className="border-collapse bg-white w-full">
                   <thead>
                     <tr>
-                      <th className="border-t p-5">ID</th>
+                      <th className="border-t p-5 w-[237px]">ID</th>
                       <th className="border-t p-5">Image</th>
                       <th className="border-t p-5">Name</th>
                       <th className="border-t p-5">Slug</th>
@@ -88,9 +114,13 @@ const AdminCategory: NextPage = () => {
                   {
                     <tbody>
                       {
-                        CategoryData.map((detail) => (
+                        categoryData.map((detail,index) => (
                           <CategoryComponent
                             detail={detail}
+                            index={index}
+                            deleteCategory={deleteCategoryFunction}
+                            editCategory={editCategory}
+                            key={index}
                           />
                         ))
                       }
