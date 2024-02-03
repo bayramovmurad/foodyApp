@@ -5,7 +5,7 @@ import Header from "../../../shared/adminComponents/Header/Header";
 import RestaurantComponent from "../../../shared/adminComponents/RestaurantComponent/RestaurantComponent";
 import Dropdown from "../../../shared/adminComponents/Dropdown";
 import { useEffect, useState } from "react";
-import RightMenu from "../../../shared/adminComponents/RightMenu";
+import AddRestaurant from "../../../shared/adminComponents/AddRestaurant/index";
 import Button from "../../../shared/components/Button";
 import axios from "axios";
 import { deleteRestuarant, getRestuarants } from "../../../services";
@@ -50,7 +50,7 @@ const AdminRestaurants: NextPage = () => {
   //! Add Restaurant
 
   const addRestaurant = (): void => {
-    setIsMenu(!isMenu)
+    setIsMenu(!isMenu);
   }
 
   // ! Render Restaurant 
@@ -83,7 +83,7 @@ const AdminRestaurants: NextPage = () => {
         </Head>
 
         <div className="px-[19px] min-h-screen relative bg-[#1E1E30]">
-          <RightMenu headTitle={"Add Restaurant"} callBack={addRestaurant} right={isMenu ? "0%" : "-100%"} />
+          <AddRestaurant headTitle={"Add Restaurant"} callBack={addRestaurant} right={isMenu ? "0%" : "-100%"} />
 
           <Header />
 
