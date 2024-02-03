@@ -12,8 +12,6 @@ interface ProductsComponentProps {
 }
 
 const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }) => {
-  
-  
   const [isMenu, setIsMenu] = useState<boolean>(false)
   const [deleteModal, setDeleteModal] = useState<boolean>(false)
 
@@ -31,6 +29,7 @@ const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct
       setDeleteModal(!deleteModal)
     }
   }
+
   return (
     <div>
       {

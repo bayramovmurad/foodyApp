@@ -38,7 +38,6 @@ const AdminRestaurants: NextPage = () => {
       toast.success("it is okay")
     }
     console.log(id);
-
   };
 
   //! Filter Restaurant
