@@ -24,6 +24,7 @@ const AdminProducts: NextPage = () => {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [activeData, setActiveData] = useState<Product[]>([]);
+  const [globalData, setGlobalData] = useState<Product[]>([]);
   const [restaurants, setRestaurants] = useState<string[]>([]);
   const [activeEditId, setActiveEditId] = useState<string>('');
 
@@ -32,9 +33,8 @@ const AdminProducts: NextPage = () => {
     try {
       setIsLoading(true);
       const data = await getProducts();
-      console.log(data?.data.result.data);
-      
       setActiveData(data?.data.result.data);
+      setGlobalData(data?.data.result.data);
     } catch (err) {
       console.error(err);
     } finally {
@@ -48,10 +48,12 @@ const AdminProducts: NextPage = () => {
 
   //! Delete Products
   const deleteProductHandler = async (id: number | string): Promise<void> => {
+    setIsLoading(false)
     const response: any = await deleteProduct(id);
     if (response.status === 204) {
       toast.success('Product Silindi');
       renderProducts();
+      setIsLoading(false)
     }
   };
 
@@ -62,7 +64,7 @@ const AdminProducts: NextPage = () => {
       const restaurant = data?.data.result.data.find((item: any) => item.name === title);
 
       if (restaurant) {
-        let newData = activeData.filter((item: any) => item.rest_id === restaurant.id);
+        let newData = globalData.filter((item: any) => item.rest_id === restaurant.id);
         setActiveData(newData);
       }
     } catch (error) {
