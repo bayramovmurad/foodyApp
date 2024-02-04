@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, ChangeEvent } from 'react'
 import Label from '../../components/Label'
 import Input from '../../components/Input'
 import Button from '../../components/Button';
@@ -51,11 +51,10 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             const categoryData = {
                 "name": formData.name,
                 "slug": formData.slug,
-                "img_url": IMG
+                "img_url": "sa"
             }
             
             const data = await createCategory(categoryData)
-            console.log(data);
             if (data?.status == 200 || data?.status == 201) {
                 toast.success("data elave olundu")
             }
@@ -64,30 +63,31 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
 
     //! Upload Image 
 
-    const handleNewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleNewImg = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const randomId = `${new Date().getTime()}_${Math.floor(
-                Math.random() * 1000
-            )}`;
-            const imageRef = ref(fileStorage, `images/${file.name + randomId}`);
-            uploadBytes(imageRef, file)
-                .then((snapshot) => {
-                    getDownloadURL(snapshot.ref)
-                        .then((downloadURL) => {
-                            setIMG(downloadURL)
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                        });
+          const randomId = `${new Date().getTime()}_${Math.floor(Math.random() * 1000)}`;
+          const imageRef = ref(fileStorage, `images/${file.name + randomId}`);
+          uploadBytes(imageRef, file)
+            .then((snapshot) => {
+              getDownloadURL(snapshot.ref)
+                .then((downloadURL) => {
+                  setIMG(downloadURL);
+                  console.log(downloadURL);
+
                 })
                 .catch((error) => {
-                    console.error(error);
+                  console.error(error);
                 });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         } else {
-            console.error("No file selected");
+          console.error('No file selected');
         }
     };
+
 
     return (
         <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
@@ -118,7 +118,7 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
 
                     <img 
                         src={IMG}
-                        alt='"dsa'
+                        alt='dsa'
                         className='w-[120px] h-[120px] mt-2'
                     />
                 </p>
@@ -176,7 +176,7 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                     callBack={callBack}
                 />
                 <Button
-                    value={"Create  Product"}
+                    value={"Create  Category"}
                     color={"#FFF"}
                     size={"18px"}
                     background={"#C035A2"}

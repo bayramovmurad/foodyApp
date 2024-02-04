@@ -79,7 +79,6 @@ const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle,
           getDownloadURL(snapshot.ref)
             .then((downloadURL) => {
               setIMG(downloadURL);
-              console.log(downloadURL);
             })
             .catch((error) => {
               console.error('Download URL alınırken bir hata oluştu: ', error);
@@ -170,7 +169,7 @@ const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle,
           callBack={callBack}
         />
         <Button
-          value={'Update  Product'}
+          value={'Update  Category'}
           color={'#FFF'}
           size={'18px'}
           background={'#C035A2'}
