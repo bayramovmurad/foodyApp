@@ -9,37 +9,37 @@ const instanceAxios = axios.create({
 
 //! Products 
 export const getProducts = async () => {
-    try{
+    try {
         const response = await instanceAxios.get(`/api/products`);
         return response;
-    } catch(error){
+    } catch (error) {
         console.log({ error })
     }
 };
 
 export const deleteProduct = async (id: number | string) => {
-    try{
+    try {
         const response = await instanceAxios.delete(`/api/products/${id}`);
         return response;
-    } catch(error){
+    } catch (error) {
         console.log({ error })
     }
 };
 
-export const createProduct = async (data:any) => {
-    try{
-        const response = await instanceAxios.post(`/api/products`,data);
+export const createProduct = async (data: any) => {
+    try {
+        const response = await instanceAxios.post(`/api/products`, data);
         return response;
-    } catch(error){
+    } catch (error) {
         console.log({ error })
     }
 }
 
-export const updateProduct = async (id:string|number,data:any) => {
-    try{
-        const response = await instanceAxios.put(`/api/products/${id}`,data);
+export const updateProduct = async (id: string | number, data: any) => {
+    try {
+        const response = await instanceAxios.put(`/api/products/${id}`, data);
         return response;
-    } catch(error){
+    } catch (error) {
         console.log({ error })
     }
 }
@@ -47,61 +47,111 @@ export const updateProduct = async (id:string|number,data:any) => {
 //! Restaurants
 
 export const getRestuarants = async () => {
-    try{
+    try {
         const response = await instanceAxios.get(`/api/restuarants`);
         return response;
-    } catch(error){
+    } catch (error) {
         console.log(error)
     }
 };
 
 
-export const deleteRestuarant = async (id:string | number) => {
+export const deleteRestuarant = async (id: string | number) => {
     try {
         const res = await instanceAxios.delete(`/api/restuarants/${id}`);
         return res
     } catch (error) {
         console.log(error);
-        
+
     }
 }
-
 
 //! Category
 
 export const getCategory = async () => {
-    try{
+    try {
         const response = await instanceAxios.get(`/api/category`);
         return response;
-    } catch(error){
+    } catch (error) {
         console.log(error)
     }
 };
 
-export const deleteCategory = async (id:string | number) => {
+export const deleteCategory = async (id: string | number) => {
     try {
         const res = await instanceAxios.delete(`/api/category/${id}`);
         return res
     } catch (error) {
         console.log(error);
-        
+
     }
 }
 
-export const createCategory = async (data:any) => {
-    try{
-        const response = await instanceAxios.post(`/api/category`,data);
+export const createCategory = async (data: any) => {
+    try {
+        const response = await instanceAxios.post(`/api/category`, data);
         return response;
-    } catch(error){
+    } catch (error) {
         console.log({ error })
     }
 }
 
-export const updateCategory = async (id:string | number,data:any) => {
-    try{
-        const response = await instanceAxios.put(`/api/category/${id}`,data);
+export const updateCategory = async (id: string | number, data: any) => {
+    try {
+        const response = await instanceAxios.put(`/api/category/${id}`, data);
         return response;
-    } catch(error){
+    } catch (error) {
         console.log({ error })
     }
 }
+
+
+//! Offers
+
+export const getOffers = async () => {
+    try {
+        const response = await instanceAxios.get(`/api/offer`);
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const deleteOffer = async (id: string | number) => {
+    try {
+        const res = await instanceAxios.delete(`/api/offer/${id}`);
+        return res
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+export const createOffer = async (data: any) => {
+    try {
+        const response = await instanceAxios.post(`/api/offer`, data);
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
+export const updateOffer = async (id: string | number, data: any) => {
+    try {
+        const response = await instanceAxios.put(`/api/offer/${id}`, data);
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
