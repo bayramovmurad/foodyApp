@@ -144,9 +144,11 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                         }
 
                         {
-                            isName ? (
+                            isToken ? (
                                 <p className="text-[#333] fs-normal font-medium">
-                                    Admin
+                                    {
+                                        isFullName
+                                    }
                                 </p>
                             ) : <></>
                         }
