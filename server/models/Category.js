@@ -1,8 +1,8 @@
 export class Category {
-  constructor(name, img_url) {
+  constructor(name, img_url , slug) {
     this.name = name;
     this.img_url = img_url;
-    this.slug = name?.split(" ")?.join("-").toLowerCase();
+    this.slug = slug;
   }
 
   toPlainObject() {

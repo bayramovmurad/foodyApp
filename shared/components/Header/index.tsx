@@ -4,7 +4,7 @@ import Language from "../Language";
 import Description from "../Description";
 import OutlineButton from "../OutlineButton ";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router";
 
@@ -18,9 +18,12 @@ interface headerTypes {
 
 export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:headerTypes) => {
     const { push } = useRouter()
-    const [isActive, setIsActive] = useState(false);
     const { t, i18n } = useTranslation();
     const activeLanguage = i18n.language; 
+
+    const [isActive, setIsActive] = useState(false);
+    const [isToken, setIsToken] = useState(false);
+    const [isFullName, setIsFullName] = useState("");
 
     const handleActive = () => {
         setIsActive(!isActive);
@@ -32,6 +35,30 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
     };
 
     const languages = ['en', 'az'].filter(lng => lng !== activeLanguage)
+
+    const [isActiveName, setIsActiveName] = useState(""); // Varsayılan değer olarak boş bir dize
+
+    useEffect(() => {
+        const localItem: any = localStorage?.getItem("token");
+        const localUser: any = localStorage?.getItem("userInformation");
+
+        let parsedItem = JSON.parse(localItem);
+        let parsedUser = JSON.parse(localUser);
+        let fullName = parsedUser?.fullname;
+        let str = " ";
+        str += parsedUser?.fullname?.split(" ")[0]?.[0] ?? ''; // ?? işareti ile undefined durumu kontrol ediliyor
+        str += parsedUser?.fullname?.split(" ")[1]?.[0] ?? ''; // ?? işareti ile undefined durumu kontrol ediliyor
+        let avatar = str.toUpperCase();
+
+        setIsFullName(fullName);
+        setIsActiveName(avatar);
+
+        if (parsedItem?.access_token) {
+            setIsToken(true);
+        } else {
+            setIsActiveName("default value");
+        }
+    }, [isToken]);
 
     return (
         <header className="flex flex-col  rounded-s bg-[#f3f4f6] ">
@@ -87,7 +114,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                         <Language />
 
                         {
-                            !isLogin ? (
+                            !isToken ? (
                                 <button className="bg-[#D63626] hover:bg-[#a93c3c] flex justify-center items-center text-center py-[6.96px] px-[18px] text-white  rounded-[30px] ml-[27px]">
                                     {
                                         t("signup")
@@ -99,7 +126,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                         }
 
                         {
-                            isBasket ? (
+                            isToken ? (
                                 <div onClick={() => push("/client/basket")} className="w-[40px] h-[40px] rounded-[100px] bg-[#EB5757] cursor-pointer flex justify-center pt-[1px]">
                                     <img className="w-[32px] h-[32px]" src="/client/basket/basket.svg" alt="" />
                                 </div>
@@ -107,8 +134,12 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                         }
 
                         {
-                            isAvatar ? (
-                                <img onClick={() => push("/client/profile")} className="cursor-pointer" src="/client/avatar/avatar.svg" alt="" />
+                            isToken ? (
+                                <div onClick={() => push("/client/profile")} className="cursor-pointerm rounded-full w-10 h-10 text-lg text-white text-center flex justify-center items-center shadow-md bg-[#D63626] font-semibold hover:scale-95 transition-all duration-500">
+                                    {
+                                        isActiveName
+                                    }
+                                </div>  
                             ) : <></>
                         }
 
