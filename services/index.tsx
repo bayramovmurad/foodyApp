@@ -146,12 +146,22 @@ export const updateOffer = async (id: string | number, data: any) => {
 }
 
 
+//! Client Register 
 
+export const register = async (form: any) => {
+    try {
+        const response = await instanceAxios.post(`/api/auth/signup`, form);
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}
 
-
-
-
-
-
-
-
+export const login = async (form: any) => {
+    try {
+        const response = await instanceAxios.post(`/api/auth/signin`, form);
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}

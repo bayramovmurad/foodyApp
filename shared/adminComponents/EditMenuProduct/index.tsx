@@ -219,7 +219,6 @@ const EditMenuProduct: React.FC<EditMenuProductProps> = ({ right, callBack, head
               filterItems={filterProduct}
               items={restaurants}
               className={'flex bg-[#5A5B70] rounded-[14px] h-[46px] mt-2 px-[18px] py-2 relative w-full'}
-              defaultItem={activeRestaurantName}
             />
           </div>
         </div>

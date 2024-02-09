@@ -19,6 +19,7 @@ const AdminOffers: NextPage = () => {
   const [isEditMenu, setIsEditMenu] = useState<boolean>(false)
   const [activeData, setActiveData] = useState(null);
   const [activeEditId, setActiveEditId] = useState<string>('');
+  
   const renderOffers = async () => {
     const response = await getOffers()
     console.log(response?.data.result.data);

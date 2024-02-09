@@ -52,9 +52,9 @@ export async function handlerCategoryPUT(req, res, col) {
   try {
     const { id } = req.query;
 
-    const { name, img_url } = req.body;
+    const { name, img_url , slug } = req.body;
 
-    if (!name || !id || !img_url) {
+    if (!name || !id || !img_url || !slug) {
       res
         .status(404)
         .json(
@@ -63,7 +63,7 @@ export async function handlerCategoryPUT(req, res, col) {
       return;
     }
 
-    const category = new Category(name, img_url).toPlainObject();
+    const category = new Category(name, img_url, slug).toPlainObject();
 
     const data = await uptData(col, id, category);
     res.status(200).json({ message: "Success", data });

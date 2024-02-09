@@ -33,7 +33,7 @@ const AdminCategory: NextPage = () => {
 
   useEffect(() => {
     renderCategory()
-  },[])
+  },[isMenu, isEditMenu])
 
   //! Add Category
 

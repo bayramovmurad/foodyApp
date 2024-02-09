@@ -8,16 +8,18 @@ import Image from "next/image";
 import { useState } from "react";
 import Button from "../../../shared/components/Button";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { login } from "../../../services";
 
 interface FormDataTypes {
-  username: string;
+  email: string;
   password: string;
 }
 
 const Login: NextPage = () => {
     const { push } = useRouter()
     const [formData, setFormData] = useState<FormDataTypes>({
-        username: "",
+        email: "",
         password: "",
     });
 
@@ -29,9 +31,29 @@ const Login: NextPage = () => {
     };
 
 
-    const saveData = () => {
-        console.log(formData);
-    }
+    const saveData = async () => {
+      if (Object.values(formData).some(value => value === '')) {
+        toast.warning("Formu Doldurun");
+      } else {
+        const response:any = await login(formData);
+        console.log(response);
+        
+        if (response?.status === 200) {
+          const tokenObj = {
+            access_token: response.data.user.access_token,
+            refresh_token: response.data.user.refresh_token,
+          };
+          localStorage.setItem("token", JSON.stringify(tokenObj));
+          localStorage.setItem("userInformation", JSON.stringify(response?.data.user))  
+    
+          toast.success("Login Olundu");
+  
+          setTimeout(() => {
+            push("/");
+          }, 1400);
+        }
+      }
+    };
 
     return (
       <div>
@@ -78,12 +100,12 @@ const Login: NextPage = () => {
 
                     <div className="w-full">
                           <div className='customInput flex flex-col justify-start text-left'>
-                              <Label value={"Username"} forId={"Username"} />
-                              <Input type={"text"} id={"Username"} name={"username"} placeholder={"rahimlisarkhan"} value={formData.username} onInputChange={handleInputChange} />
+                              <Label value={"Email"} forId={"email"} />
+                              <Input type={"text"} id={"email"} name={"email"} placeholder={"Enter Email"} value={formData.email} onInputChange={handleInputChange} />
                           </div>
                           <div className='customInput flex flex-col justify-start text-left mt-5 mb-[72px]'>
                               <Label value={"Password"} forId={"Password"} />
-                              <Input type={"text"} id={"Password"} name={"password"} placeholder={"adminadmin"} value={formData.password} onInputChange={handleInputChange} />
+                              <Input type={"text"} id={"Password"} name={"password"} placeholder={"Enter Password"} value={formData.password} onInputChange={handleInputChange} />
                           </div>
 
                           <Button

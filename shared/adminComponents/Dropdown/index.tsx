@@ -4,21 +4,12 @@ interface DropdownProps {
   className: string;
   items: string[];
   filterItems: any;
-  defaultItem?: string;
-  setDefaultItem?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems, defaultItem, setDefaultItem }) => {
+const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) => {
   const [isActiveDropdown, setIsActiveDropdown] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string>('Select');
   const ref = useRef(null);
-
-  useEffect(() => {
-    console.log(defaultItem ? defaultItem : 'Select');
-    if (setDefaultItem) {
-      setDefaultItem(defaultItem ? defaultItem : 'Select');
-    }
-  }, [defaultItem, setDefaultItem]);
 
   const handleActive = () => {
     setIsActiveDropdown(!isActiveDropdown);
@@ -57,7 +48,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems, defa
   return (
     <div className={className} ref={ref}>
       <div onClick={handleActive} className="flex justify-between items-center w-full cursor-pointer">
-        <p className="text-[#F2F2F2DE] text-[14px]">{defaultItem ? defaultItem : activeItem}</p>
+        <p className="text-[#F2F2F2DE] text-[14px]">{activeItem}</p>
 
         {isActiveDropdown ? (
           <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
