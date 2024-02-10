@@ -11,25 +11,19 @@ import { getOffers } from "../services";
 
 
 const Home = () => {
-    // const [data, setData] = useState([]);
-    // const [loading, setLoading] = useState(false);
-    // useEffect(() => {
-        
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    //           const getOfferData = async () => {
-    //               const res = await getOffers();
-    //               console.log(res);
-    //               setLoading(false)
-    //           }
-    //           getOfferData();
-            
+    const getOfferData = async () => {
+        const res = await getOffers();
+        setData(res?.data.result.data);
+    }
+
+    useEffect(() => {
+        getOfferData();
+    }, []);
+    console.log(data);
     
-
-    // }, []);
-
-    // if (loading) {
-    //     return <div>'loadinggg'</div>
-    // }
     return (
         <div className="bg-white">
             <div className="p-[30px]">
@@ -138,86 +132,36 @@ const Home = () => {
                 </section>
 
                 <section className="bg-white py-[150px] w-full flex justify-center items-center flex-col gap-[80px]">
-                    <div className="max-w-[1440px] flex justify-between">
-                        <div className="flex flex-col gap-[30px] mt-[30px]">
-                            <Title
-                                value="Menu That Always Make You Fall In Love"
-                                size={"50px"}
-                                weight={900}
-                                color={"#181617"}
-                                mwidth={"653px"}
-                            />
+                    {
+                        data.map((item:any) => (
+                            <div className="max-w-[1440px] flex justify-between w-full">
+                                <div className="flex flex-col gap-[30px] mt-[30px]">
+                                    <Title
+                                        value={item.name}
+                                        size={"50px"}
+                                        weight={900}
+                                        color={"#181617"}
+                                        mwidth={"653px"}
+                                    />
 
-                            <Description
-                                value="Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
-                                mwidth={"499px"}
-                                size={"22px"}
-                                weight={400}
-                                color={"#828282"}
-                            />
-                        </div>
+                                    <Description
+                                        value={item.description}
+                                        mwidth={"499px"}
+                                        size={"22px"}
+                                        weight={400}
+                                        color={"#828282"}
+                                    />
+                                </div>
 
-                        <Image
-                            src="/client/kfc/kfc.svg"
-                            alt='kfc'
-                            width={636}
-                            height={676}
-                        />
-                    </div>
-
-                    <div className="max-w-[1440px] flex justify-between">
-                        <Image
-                            src="/client/pizza/pizza2.svg"
-                            alt='kfc'
-                            width={636}
-                            height={676}
-                        />
-
-                        <div className="flex flex-col gap-[30px] mt-[30px]">
-                            <Title
-                                value="Yummy Always Papa John’s Pizza.Agree?"
-                                size={"50px"}
-                                weight={900}
-                                color={"#181617"}
-                                mwidth={"653px"}
-                            />
-
-                            <Description
-                                value="Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
-                                mwidth={"499px"}
-                                size={"22px"}
-                                weight={400}
-                                color={"#828282"}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="max-w-[1440px] flex justify-between">
-                        <div className="flex flex-col gap-[30px] mt-[30px]">
-                            <Title
-                                value="Do You Like French Fries? Mmm..."
-                                size={"50px"}
-                                weight={900}
-                                color={"#181617"}
-                                mwidth={"653px"}
-                            />
-
-                            <Description
-                                value="Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
-                                mwidth={"499px"}
-                                size={"22px"}
-                                weight={400}
-                                color={"#828282"}
-                            />
-                        </div>
-
-                        <Image
-                            src="/client/fries/fries.svg"
-                            alt='kfc'
-                            width={667}
-                            height={681}
-                        />
-                    </div>
+                                <img
+                                    src={item.img_url}
+                                    alt='kfc'
+                                    width={636}
+                                    height={676}
+                                />
+                            </div>
+                        ))
+                    }
                 </section>
 
                 <section className="bg-white pt-[50px] w-full flex justify-center" id="features">

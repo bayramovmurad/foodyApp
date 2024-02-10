@@ -31,7 +31,6 @@ const AdminProducts: NextPage = () => {
   //! render Products
   const renderProducts = async (): Promise<void> => {
     try {
-      setIsLoading(true);
       const data = await getProducts();
       setActiveData(data?.data.result.data);
       setGlobalData(data?.data.result.data);
@@ -44,7 +43,7 @@ const AdminProducts: NextPage = () => {
 
   useEffect(() => {
     renderProducts();
-  }, []);
+  }, [isMenu]);
 
   //! Delete Products
   const deleteProductHandler = async (id: number | string): Promise<void> => {

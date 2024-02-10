@@ -22,7 +22,6 @@ const AdminOffers: NextPage = () => {
   
   const renderOffers = async () => {
     const response = await getOffers()
-    console.log(response?.data.result.data);
     setOffers(response?.data.result.data);
   }
 
