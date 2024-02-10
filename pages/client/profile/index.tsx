@@ -42,7 +42,7 @@ const Profile: FC = () => {
     let saveData = (e: any) => {
         e.preventDefault();
         
-        console.log("work");
+        console.log(formData);
     };
 
     return (

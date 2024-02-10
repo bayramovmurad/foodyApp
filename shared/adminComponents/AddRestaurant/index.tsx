@@ -31,7 +31,8 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     const [isActive, setIsActive] = useState<boolean>(false)
     const [formData, setFormData] = useState<FormDataTypes>({
         name: "",
-        description: "",
+        cuisine: "",
+        delivery_min: "",
         price: "",
     });
 
@@ -60,12 +61,12 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     //! Save object Function
 
     const saveData = async () => {
-        if (formData.name == "" || formData.description == "" || activeRestaurantId == "" || formData.price == "") {
+        if (formData.name == "" || formData.price == "" || activeRestaurantId == "" || formData.cuisine == "") {
             toast.warning("Formu Doldurun !")
         } else {
             const productData = {
                 "name": formData.name,
-                "description": formData.description,
+                "description": formData.cuisine,
                 "img_url": IMG,
                 "rest_id": activeRestaurantId,
                 "price": formData.price
@@ -185,12 +186,20 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                         <Input type={"text"} id={"name"} name={"name"} placeholder={""} value={formData.name} onInputChange={handleInputChange} />
                     </div>
                     <div className='flex flex-col w-full'>
-                        <Label value={"Description"} forId={"description"} />
-                        <Input type={"text"} id={"description"} name={"description"} placeholder={""} value={formData.description} onInputChange={handleInputChange} />
+                        <Label value={"Cuisine"} forId={"cusine"} />
+                        <Input type={"text"} id={"cusine"} name={"cuisine"} placeholder={""} value={formData.cuisine} onInputChange={handleInputChange} />
                     </div>
                     <div className='flex flex-col w-full'>
                         <Label value={"Price"} forId={"price"} />
                         <Input type={"number"} id={"price"} name={"price"} placeholder={""} value={formData.price} onInputChange={handleInputChange} />
+                    </div>
+                    <div className='flex flex-col w-full'>
+                        <Label value={"Delivery Min"} forId={"deliveryMIN"} />
+                        <Input type={"number"} id={"deliveryMIN"} name={"delivery_min"} placeholder={""} value={formData.delivery_min} onInputChange={handleInputChange} />
+                    </div>
+                    <div className='flex flex-col w-full'>
+                        <Label value={"Delivery Min"} forId={"deliveryMIN"} />
+                        <Input type={"number"} id={"deliveryMIN"} name={"delivery_min"} placeholder={""} value={formData.delivery_min} onInputChange={handleInputChange} />
                     </div>
                     <div className='w-full'>
                         <Label value={"Restaurants"} forId="" />

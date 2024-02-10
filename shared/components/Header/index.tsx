@@ -178,17 +178,19 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                 />
 
                                 <div className="flex gap-[39px] mt-[42px]">
-                                    <Button
-                                        value={t('register')}
-                                        color={"#FFF"}
-                                        size={"25px"}
-                                        background={"#D63626"}
-                                        width={"220px"}
-                                        height={"70px"}
-                                        isDisabled={false}
-                                        radius={"30px"}
-                                        weight={500}
-                                    />
+                                    <div className="" onClick={() => push("/client/register")}>
+                                        <Button
+                                            value={t('register')}
+                                            color={"#FFF"}
+                                            size={"25px"}
+                                            background={"#D63626"}
+                                            width={"220px"}
+                                            height={"70px"}
+                                            isDisabled={false}
+                                            radius={"30px"}
+                                            weight={500}
+                                        />
+                                    </div>
 
                                     <OutlineButton
                                         value={t('order')}

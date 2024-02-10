@@ -20,9 +20,6 @@ interface Restaurants {
   path: string;
 }
 
-
-
-
 const AdminRestaurants: NextPage = () => {
   const [isMenu, setIsMenu] = useState<boolean>(false)
   const [data, setData] = useState([]);
@@ -32,10 +29,10 @@ const AdminRestaurants: NextPage = () => {
 
   const deleteRestaurants = async (id: number | string) => {
     const res = await deleteRestuarant(id);
-    console.log(res);
     
     if (res?.status == 200 || res?.status == 201 || res?.status == 204) {
       toast.success("it is okay")
+      renderRestaurant()
     }
     console.log(id);
   };
@@ -66,11 +63,8 @@ const AdminRestaurants: NextPage = () => {
       setData(res.data?.result.data)
     } catch (error) {
       console.log(error);
-
     }
   }
- 
-
 
     return (
       <div>

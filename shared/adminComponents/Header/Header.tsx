@@ -47,7 +47,7 @@ const Header = () => {
 
           <div className="flex gap-x-2 items-center">
             <img className="rounded-full" src="/adminImg/Header/User.svg" alt="" />
-              <p className="text-white font-semibold">Admin</p>
+              <p className="text-white font-semibold">admin</p>
           </div>
         </div>
 

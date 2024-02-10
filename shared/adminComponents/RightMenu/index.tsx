@@ -150,6 +150,11 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
             <div className='flex justify-between mt-[10px]'>
                 <p className='text-[#C7C7C7] text-lg not-italic font-medium leading-6'>
                   Upload your product image
+                  <img
+                      src={IMG}
+                      alt='image'
+                      className=''
+                  />
                 </p>
 
                 <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>

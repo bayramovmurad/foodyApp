@@ -31,14 +31,14 @@ export async function handlerCategoryGETID(req, res, col) {
 
 export async function handlerCategoryPOST(req, res, col) {
   try {
-    const { name, img_url } = req.body;
+    const { name, img_url , slug } = req.body;
 
-    if (!name || !img_url) {
+    if (!name || !img_url || !slug) {
       res.status(404).json("Your fields are empty!");
       return;
     }
 
-    const category = new Category(name, img_url).toPlainObject();
+    const category = new Category(name, img_url , slug).toPlainObject();
 
     const data = await addData(col, category);
     res.status(201).json(data);

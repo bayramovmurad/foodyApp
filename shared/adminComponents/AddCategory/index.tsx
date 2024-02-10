@@ -51,10 +51,12 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             const categoryData = {
                 "name": formData.name,
                 "slug": formData.slug,
-                "img_url": "sa"
+                "img_url": "image"
             }
             
             const data = await createCategory(categoryData)
+            console.log(data);
+            
             if (data?.status == 200 || data?.status == 201) {
                 toast.success("data elave olundu")
             }
@@ -73,8 +75,6 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
               getDownloadURL(snapshot.ref)
                 .then((downloadURL) => {
                   setIMG(downloadURL);
-                  console.log(downloadURL);
-
                 })
                 .catch((error) => {
                   console.error(error);
