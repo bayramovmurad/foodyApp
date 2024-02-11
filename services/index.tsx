@@ -179,11 +179,15 @@ export const profileClient = async (data: any) => {
     }
 }
 
-// export const profileClient = async (data:any) => {
-//     try {
-//         const response = await instanceAxios.put(`/api/user`,data);
-//         return response
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+
+// ! basket client
+
+export const addBasket = async (data: any) => {
+    try {
+        const response = await instanceAxios.post(`/api/basket/add`, data);
+        return response;
+    } catch (error) {
+        console.log("a");
+        console.log({ error })
+    }
+}
