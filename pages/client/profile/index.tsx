@@ -46,14 +46,13 @@ const Profile: FC = () => {
     e.preventDefault();
     const userInformation: any = localStorage.getItem("userInformation");
     const parseData = JSON.parse(userInformation);
-   
 
-    const data = {
-      "name": parseData.fullname,
-      "username": formData.username,
-      "img_url": "string",
-      "phone":formData.number,
-      "fullname": formData.fullname
+    let data = {
+        email: "string@gmail.com",
+        username: "string",
+        img_url: "string",
+        phone: 98312,
+        fullname: "string"
     }
     const res = await profileClient(data)
     console.log(res);

@@ -6,7 +6,13 @@ import Footer from '../../../shared/components/Footer/index'
 import Image from "next/image";
 import { useEffect, useState } from 'react';
 import { getProducts , getRestuarants } from '../../../services/index'
+
+import { useGlobalStore } from '../../../provider/provider';
+import { useRouter } from 'next/router';
+
 const Restaurants = () => {
+    const { push } = useRouter()
+    const { setActiveProduct } = useGlobalStore();
     const [originalData,setOriginalData] = useState([])
     const [productsData,setProductsData] = useState([])
     const [restaurantsData,setRestaurantsData] = useState([])
@@ -38,6 +44,15 @@ const Restaurants = () => {
     const filterRestaurants = (title: string | null) => {
         let item = originalData.filter((item:any) => item.rest_id == title)
         setProductsData(item)
+    }
+
+    const sendRestaurant = (detail:any) => {
+        try {
+            setActiveProduct((prev:any) => [...prev,detail])
+            push("/client/basket")
+        }catch (err) { 
+            console.log({ err });
+        }
     }
 
     return (
@@ -81,6 +96,7 @@ const Restaurants = () => {
                         {
                             productsData?.map((item) => (
                                 <RestaurantCard
+                                    callBack={sendRestaurant}
                                     key={item.id}
                                     detail={item}
                                 />  

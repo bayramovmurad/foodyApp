@@ -3,8 +3,12 @@ import Button from "../../../shared/components/Button";
 import Header from "../../../shared/components/Header/index";
 import Footer from '../../../shared/components/Footer/index'
 import Image from "next/image";
+import { useGlobalStore } from '../../../provider/provider';
 
 const Basket = () => {
+  const { activeProduct } = useGlobalStore()
+  console.log(activeProduct);
+  
   return (
     <div className="bg-white">
         <div className="p-[30px]">
@@ -80,96 +84,36 @@ const Basket = () => {
                         <p className='text-[#4F4F4F] text-center text-[25px] font-bold mb-[40px]'>
                           Products
                         </p>
-                        <div className="basketItem border-t border-b border-[#E0E0E0] flex justify-between py-[22px] px-[40px]">
-                            <div className='flex gap-[36px]'>
-                                <Image 
-                                    src="/client/miniFood/pizza.svg" 
-                                    alt="" 
-                                    width={57}
-                                    height={53}
-                                />
-                                <div className='flex flex-col gap-[7px]'>
-                                  <p className='text-[#4F4F4F] font-medium text-[18px]'>
-                                    Papa John’s Pizza Restaurant
-                                  </p>
-                                  <p className='text-[#828282] font-bold text-[14px]'>
-                                    Prepared with a patty, a slice of cheese and special sauce
-                                  </p>
+                            <div className="basketItem border-t border-b border-[#E0E0E0] flex justify-between py-[22px] px-[40px]">
+                                <div className='flex gap-[36px]'>
+                                    <Image 
+                                        src="/client/miniFood/pizza.svg" 
+                                        alt="" 
+                                        width={57}
+                                        height={53}
+                                    />
+                                    <div className='flex flex-col gap-[7px]'>
+                                      <p className='text-[#4F4F4F] font-medium text-[18px]'>
+                                        Papa John’s Pizza Restaurant
+                                      </p>
+                                      <p className='text-[#828282] font-bold text-[14px]'>
+                                        Prepared with a patty, a slice of cheese and special sauce
+                                      </p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className='flex gap-[30px] items-center'>
-                                <p className='text-[#333] text-[12px] font-medium'>
-                                  <span className='text-[#828282] text-[16px] font-medium'>From</span> $7.90
-                                </p>
+                                <div className='flex gap-[30px] items-center'>
+                                    <p className='text-[#333] text-[12px] font-medium'>
+                                      <span className='text-[#828282] text-[16px] font-medium'>From</span> $7.90
+                                    </p>
 
-                                <button className='w-[40px] h-[40px] border-[#BDBDBD] border-[2px] rounded-[50%] flex items-center justify-center'>
-                                    <span className='text-[#BDBDBD] text-[25px] mt-[-3px]'>
-                                      +
-                                    </span>
-                                </button>
-                            </div>
-                        </div>  
-                        <div className="basketItem border-t border-b border-[#E0E0E0] flex justify-between py-[22px] px-[40px]">
-                            <div className='flex gap-[36px]'>
-                                <Image 
-                                    src="/client/miniFood/pizza.svg" 
-                                    alt="" 
-                                    width={57}
-                                    height={53}
-                                />
-                                <div className='flex flex-col gap-[7px]'>
-                                  <p className='text-[#4F4F4F] font-medium text-[18px]'>
-                                    Papa John’s Pizza Restaurant
-                                  </p>
-                                  <p className='text-[#828282] font-bold text-[14px]'>
-                                    Prepared with a patty, a slice of cheese and special sauce
-                                  </p>
+                                    <button className='w-[40px] h-[40px] border-[#BDBDBD] border-[2px] rounded-[50%] flex items-center justify-center'>
+                                        <span className='text-[#BDBDBD] text-[25px] mt-[-3px]'>
+                                          +
+                                        </span>
+                                    </button>
                                 </div>
-                            </div>
-
-                            <div className='flex gap-[30px] items-center'>
-                                <p className='text-[#333] text-[12px] font-medium'>
-                                  <span className='text-[#828282] text-[16px] font-medium'>From</span> $7.90
-                                </p>
-
-                                <button className='w-[40px] h-[40px] border-[#BDBDBD] border-[2px] rounded-[50%] flex items-center justify-center'>
-                                    <span className='text-[#BDBDBD] text-[25px] mt-[-3px]'>
-                                      +
-                                    </span>
-                                </button>
-                            </div>
-                        </div>  
-                        <div className="basketItem border-t border-b border-[#E0E0E0] flex justify-between py-[22px] px-[40px]">
-                            <div className='flex gap-[36px]'>
-                                <Image 
-                                    src="/client/miniFood/pizza.svg" 
-                                    alt="" 
-                                    width={57}
-                                    height={53}
-                                />
-                                <div className='flex flex-col gap-[7px]'>
-                                  <p className='text-[#4F4F4F] font-medium text-[18px]'>
-                                    Papa John’s Pizza Restaurant
-                                  </p>
-                                  <p className='text-[#828282] font-bold text-[14px]'>
-                                    Prepared with a patty, a slice of cheese and special sauce
-                                  </p>
-                                </div>
-                            </div>
-
-                            <div className='flex gap-[30px] items-center'>
-                                <p className='text-[#333] text-[12px] font-medium'>
-                                  <span className='text-[#828282] text-[16px] font-medium'>From</span> $7.90
-                                </p>
-
-                                <button className='w-[40px] h-[40px] border-[#BDBDBD] border-[2px] rounded-[50%] flex items-center justify-center'>
-                                    <span className='text-[#BDBDBD] text-[25px] mt-[-3px]'>
-                                      +
-                                    </span>
-                                </button>
-                            </div>
-                        </div>  
+                            </div> 
                     </div>
 
                     <div className="checkoutBox max-w-[397px] w-full py-[10px] px-[12px] bg-[#F3F4F6] rounded">

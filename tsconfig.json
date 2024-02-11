@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "config/i18n/i18n.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "config/i18n/i18n.js", "provider/provider.jsx"],
   "exclude": ["node_modules"]
 }
