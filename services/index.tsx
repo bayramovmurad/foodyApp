@@ -44,6 +44,18 @@ export const updateProduct = async (id: string | number, data: any) => {
     }
 }
 
+// ! Client Profile
+
+export const profileClient = async (data:any) => {
+    try {
+        const response = await instanceAxios.put(`/api/user`,data);
+        return response
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
+
 //! Restaurants
 
 export const getRestuarants = async () => {
