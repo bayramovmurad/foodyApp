@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../Button';
 
-function TimeAgo({ timestamp }) {
+function TimeAgo(timestamp:any) {
   const date = new Date(timestamp);
   const now = new Date();
   const differenceInMilliseconds = now - date;
@@ -10,9 +10,9 @@ function TimeAgo({ timestamp }) {
   return <div>{differenceInHours} hours ago</div>;
 }
 
-const RestaurantCard = ({ detail }) => {
+const RestaurantCard = ({ detail , callBack }) => {
   return (
-    <div className="w-[235px] pt-[18px] pb-[25px] px-[16px] flex flex-col justify-center cursor-pointer" style={{boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}}>
+    <div onClick={() => callBack(detail)} className="w-[235px] pt-[18px] pb-[25px] px-[16px] flex flex-col justify-center cursor-pointer" style={{boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}}>
       <img 
         src={detail.img_url} 
         alt="" 
