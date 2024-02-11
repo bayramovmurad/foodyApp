@@ -44,7 +44,7 @@ const Profile: FC = () => {
 
   let saveData = async (e: any) => {
     e.preventDefault();
-    const userInformation: any = localStorage.getItem("userInformation");
+    const userInformation: any = localStorage?.getItem("userInformation");
     const parseData = JSON.parse(userInformation);
 
     let data = {
