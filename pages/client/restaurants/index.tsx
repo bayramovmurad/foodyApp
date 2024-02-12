@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 
 const Restaurants = () => {
     const { push } = useRouter()
-    const { setActiveProduct } = useGlobalStore();
+    const { setActiveRestaurant } = useGlobalStore();
     const [originalData,setOriginalData] = useState([])
     const [categoryData,setCategoryData] = useState([])
     const [restaurantsData,setRestaurantsData] = useState([])
@@ -21,7 +21,6 @@ const Restaurants = () => {
     const renderCategory = async () => {
         const response = await getCategory()
         setCategoryData(response?.data.result.data);
-        setOriginalData(response?.data.result.data)
     }
 
     useEffect(() => {
@@ -36,24 +35,25 @@ const Restaurants = () => {
     const renderRestaurant = async () => {
         const response = await getRestuarants()
         setRestaurantsData(response?.data.result.data);
+        setOriginalData(response?.data.result.data)
     }
 
 
     const filterRestaurants = (title: string | null) => {
-        // let item = originalData.filter((item:any) => item.rest_id == title)
-        // setProductsData(item)
+        let item = originalData.filter((item:any) => item.category_id == title)
+        console.log(originalData);
+        
+        setRestaurantsData(item)
     }
 
     const sendRestaurant = (detail:any) => {
-        // try {
-        //     setActiveProduct((prev:any) => [...prev,detail])
-        //     push("/client/basket")
-        // }catch (err) { 
-        //     console.log({ err });
-        // }
+        try {
+            setActiveRestaurant((prev:any) => [...prev,detail])
+            push("/client/basket")
+        }catch (err) { 
+            console.log({ err });
+        }
     }
-    console.log(restaurantsData,"renderRestaurant");
-    console.log(categoryData,"categoryData");
     
     return (
         <div className="bg-white">
@@ -70,7 +70,7 @@ const Restaurants = () => {
             <main className="p-[30px] flex justify-center">
                 <div className='max-w-[1440px] w-full flex gap-[40px]'>
                     <div className="left max-w-[251px] w-full py-[40px] pl-[25px] pr-[25px] bg-[#F3F4F6] flex flex-col gap-[25px]">
-                        <p className=' font-bold text-[18px]' onClick={() => setProductsData(originalData)}>
+                        <p className=' font-bold text-[18px]' onClick={() => setRestaurantsData(originalData)}>
                             All Data
                         </p>
                         {

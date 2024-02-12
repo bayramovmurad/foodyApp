@@ -8,11 +8,9 @@ import { addBasket } from '../../../services';
 
 
 const Basket = () => {
-  const { activeProduct } = useGlobalStore()
-  console.log(activeProduct);
+  const { activeRestaurant } = useGlobalStore()
 
-
-
+  console.log(activeRestaurant);
   const addBasketItem = async (id:any) => {
       const basketObj = {
         product_id: id,
@@ -98,7 +96,7 @@ const Basket = () => {
                 Products
               </p>
               {
-                activeProduct.map((item) =>
+                activeRestaurant.map((item) =>
                   <div className="basketItem border-t border-b border-[#E0E0E0] flex justify-between py-[22px] px-[40px]">
                     <div className='flex gap-[36px]'>
                       <img

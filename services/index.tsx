@@ -67,6 +67,15 @@ export const deleteRestuarant = async (id: string | number) => {
     }
 }
 
+export const createRestaurant = async (data: any) => {
+    try {
+        const response = await instanceAxios.post(`/api/restuarants`, data);
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
 //! Category
 
 export const getCategory = async () => {
