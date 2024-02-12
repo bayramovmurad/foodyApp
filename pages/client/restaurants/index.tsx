@@ -5,7 +5,7 @@ import Footer from '../../../shared/components/Footer/index'
 
 import Image from "next/image";
 import { useEffect, useState } from 'react';
-import { getProducts , getRestuarants } from '../../../services/index'
+import { getCategory , getRestuarants } from '../../../services/index'
 
 import { useGlobalStore } from '../../../provider/provider';
 import { useRouter } from 'next/router';
@@ -14,19 +14,18 @@ const Restaurants = () => {
     const { push } = useRouter()
     const { setActiveProduct } = useGlobalStore();
     const [originalData,setOriginalData] = useState([])
-    const [productsData,setProductsData] = useState([])
+    const [categoryData,setCategoryData] = useState([])
     const [restaurantsData,setRestaurantsData] = useState([])
 
         
-    const renderProducts = async () => {
-        const response = await getProducts()
-        console.log(response);
-        setProductsData(response?.data.result.data);
+    const renderCategory = async () => {
+        const response = await getCategory()
+        setCategoryData(response?.data.result.data);
         setOriginalData(response?.data.result.data)
     }
 
     useEffect(() => {
-        renderProducts()
+        renderCategory()
     },[])
 
     useEffect(() => {
@@ -36,28 +35,26 @@ const Restaurants = () => {
 
     const renderRestaurant = async () => {
         const response = await getRestuarants()
-        console.log(response);
         setRestaurantsData(response?.data.result.data);
     }
 
 
     const filterRestaurants = (title: string | null) => {
-        let item = originalData.filter((item:any) => item.rest_id == title)
-        setProductsData(item)
+        // let item = originalData.filter((item:any) => item.rest_id == title)
+        // setProductsData(item)
     }
 
     const sendRestaurant = (detail:any) => {
-
-        try {
-            setActiveProduct((prev:any) => [...prev,detail])
-            push("/client/basket")
-            console.log(detail);
-            
-        }catch (err) { 
-            console.log({ err });
-        }
+        // try {
+        //     setActiveProduct((prev:any) => [...prev,detail])
+        //     push("/client/basket")
+        // }catch (err) { 
+        //     console.log({ err });
+        // }
     }
-
+    console.log(restaurantsData,"renderRestaurant");
+    console.log(categoryData,"categoryData");
+    
     return (
         <div className="bg-white">
             <div className="p-[30px]">
@@ -77,7 +74,7 @@ const Restaurants = () => {
                             All Data
                         </p>
                         {
-                            restaurantsData?.map((item:any) => (
+                            categoryData?.map((item:any) => (
                                 <div key={item.id} onClick={() => filterRestaurants(item.id)} className="filterItem flex gap-[17px] cursor-pointer">
                                     <Image
                                         src="/client/minifood/pizza.svg"
@@ -97,7 +94,7 @@ const Restaurants = () => {
 
                     <div className="cardBody grid grid-cols-4 gap-[40px]">
                         {
-                            productsData?.map((item) => (
+                            restaurantsData?.map((item) => (
                                 <RestaurantCard
                                     callBack={sendRestaurant}
                                     key={item.id}
