@@ -48,7 +48,7 @@ const Restaurants = () => {
 
     const sendRestaurant = (detail:any) => {
         try {
-            setActiveRestaurant((prev:any) => [...prev,detail])
+            setActiveRestaurant(detail)
             push("/client/basket")
         }catch (err) { 
             console.log({ err });
