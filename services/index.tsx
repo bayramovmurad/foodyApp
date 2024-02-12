@@ -7,6 +7,8 @@ const instanceAxios = axios.create({
     },
 });
 
+
+
 //! Products 
 export const getProducts = async () => {
     try {
@@ -191,9 +193,13 @@ export const profileClient = async (data: any) => {
 
 // ! basket client
 
-export const addBasket = async (data: any) => {
+export const addBasket = async (data: any, token) => {
     try {
-        const response = await instanceAxios.post('/api/basket/add', data);
+        const response = await instanceAxios.post('/api/basket/add', data, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
         return response;
     } catch (error) {
         console.log({ error })
