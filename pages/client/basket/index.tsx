@@ -14,13 +14,12 @@ const Basket = () => {
 
 
   const addBasketItem = async (id:any) => {
-    const basketObj = {
-      "product_id": id,
-    }
-   
-    const res = await addBasket(basketObj);
-    console.log(res);
-    
+      const basketObj = {
+        product_id: id,
+      }
+      console.log(basketObj);
+      const res = await addBasket(basketObj);
+      console.log(res);
   }
 
   return (

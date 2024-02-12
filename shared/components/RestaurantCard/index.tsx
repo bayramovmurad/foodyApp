@@ -24,7 +24,7 @@ const RestaurantCard = ({ detail , callBack }) => {
       </p>
 
       <p className="text-[#828282] text-[16px] font-normal mt-1">
-        {detail.description}
+        {detail.cuisine}
       </p>
 
       <div className='w-full flex justify-between mt-[12px] items-center'>
