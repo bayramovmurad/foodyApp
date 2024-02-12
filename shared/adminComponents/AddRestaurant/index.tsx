@@ -4,7 +4,7 @@ import Input from '../../components/Input'
 import Button from '../../components/Button';
 import Dropdown from '../Dropdown';
 
-import { getRestuarants, createProduct } from '../../../services/index'
+import { createRestaurant , getCategory } from '../../../services/index'
 import { ToastContainer, toast } from 'react-toastify';
 import { fileStorage } from '../../../server/configs/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -23,10 +23,8 @@ interface FormDataTypes {
 
 const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     //! States
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [newImg, setNewImg] = useState<string | null>(null);
     const [IMG, setIMG] = useState("")
-    const [activeRestaurantId, setActiveRestaurantId] = useState<string>("")
+    const [activeCategoryId, setActiveCategoryId] = useState<string>("")
     const [restaurants, setRestaurants] = useState<string[]>([]);
     const [isActive, setIsActive] = useState<boolean>(false)
     const [formData, setFormData] = useState<FormDataTypes>({
@@ -34,6 +32,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
         cuisine: "",
         delivery_min: "",
         price: "",
+        address: ""
     });
 
 
@@ -53,37 +52,42 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     //! Filter Function
 
     const filterProduct = async (title: string) => {
-        const data = await getRestuarants()
+        const data = await getCategory()
         const restaurant = data?.data.result.data.filter((item: any) => item.name == title)
-        setActiveRestaurantId(restaurant[0].id)
+        setActiveCategoryId(restaurant[0].id)
     }
 
     //! Save object Function
 
     const saveData = async () => {
-        if (formData.name == "" || formData.price == "" || activeRestaurantId == "" || formData.cuisine == "") {
+        if (formData.name == "") {
             toast.warning("Formu Doldurun !")
         } else {
-            const productData = {
+            const restaurantData = {
                 "name": formData.name,
-                "description": formData.cuisine,
-                "img_url": IMG,
-                "rest_id": activeRestaurantId,
-                "price": formData.price
+                "category_id": activeCategoryId,
+                "img_url": "string",
+                "cuisine": formData.cuisine,
+                "address": formData.address,
+                "delivery_min": formData.delivery_min,
+                "delivery_price": formData.price
             }
+            console.log(restaurantData);
+            
 
-            const data = await createProduct(productData)
+            const data = await createRestaurant(restaurantData)
+            console.log(data);
             if (data?.status == 200 || data?.status == 201) {
                 toast.success("data elave olundu")
             }
         }
     }
 
-    //! Render Restaurants Function
+    //! Render Category Function
 
-    const renderRestaurants = async () => {
+    const renderCategory = async () => {
         try {
-            const data = await getRestuarants();
+            const data = await getCategory();
             const restaurantNames = data?.data.result.data.map((item: any) => item.name);
             setRestaurants(restaurantNames);
         } catch (error) {
@@ -92,7 +96,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     }
 
     useEffect(() => {
-        renderRestaurants();
+        renderCategory();
     }, [])
 
     //! Upload Image 
@@ -100,8 +104,6 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     const handleNewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            setSelectedFile(file);
-            setNewImg(URL.createObjectURL(file));
             const randomId = `${new Date().getTime()}_${Math.floor(
                 Math.random() * 1000
             )}`;
@@ -126,7 +128,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     };
 
     return (
-        <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
+        <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0 overflow-x-scroll  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
             <ToastContainer />
             <button onClick={callBack} className="absolute left-[-30px] top-[50px]">
                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -180,7 +182,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                     Add your Product description and necessary information
                 </p>
 
-                <div className='rounded-[14px] bg-[#43445A] py-[20px] px-[25px] gap-5 max-w-[536px] w-full flex flex-col justify-center items-center'>
+                <div className='rounded-[14px] bg-[#43445A] py-[20px] overflow-y-scroll h-[610px] px-[25px] gap-5 max-w-[536px] w-full flex flex-col justify-center items-center'>
                     <div className='flex flex-col w-full'>
                         <Label value={"Name"} forId={"name"} />
                         <Input type={"text"} id={"name"} name={"name"} placeholder={""} value={formData.name} onInputChange={handleInputChange} />
@@ -190,19 +192,19 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                         <Input type={"text"} id={"cusine"} name={"cuisine"} placeholder={""} value={formData.cuisine} onInputChange={handleInputChange} />
                     </div>
                     <div className='flex flex-col w-full'>
-                        <Label value={"Price"} forId={"price"} />
-                        <Input type={"number"} id={"price"} name={"price"} placeholder={""} value={formData.price} onInputChange={handleInputChange} />
+                        <Label value={"Delivery Price"} forId={"price"} />
+                        <Input type={"text"} id={"price"} name={"price"} placeholder={""} value={formData.price} onInputChange={handleInputChange} />
                     </div>
                     <div className='flex flex-col w-full'>
                         <Label value={"Delivery Min"} forId={"deliveryMIN"} />
-                        <Input type={"number"} id={"deliveryMIN"} name={"delivery_min"} placeholder={""} value={formData.delivery_min} onInputChange={handleInputChange} />
+                        <Input type={"text"} id={"deliveryMIN"} name={"delivery_min"} placeholder={""} value={formData.delivery_min} onInputChange={handleInputChange} />
                     </div>
                     <div className='flex flex-col w-full'>
-                        <Label value={"Delivery Min"} forId={"deliveryMIN"} />
-                        <Input type={"number"} id={"deliveryMIN"} name={"delivery_min"} placeholder={""} value={formData.delivery_min} onInputChange={handleInputChange} />
+                        <Label value={"Address"} forId={"address"} />
+                        <Input type={"text"} id={"address"} name={"address"} placeholder={""} value={formData.address} onInputChange={handleInputChange} />
                     </div>
                     <div className='w-full'>
-                        <Label value={"Restaurants"} forId="" />
+                        <Label value={"Category"} forId="" />
 
                         <Dropdown
                             filterItems={filterProduct}
@@ -227,7 +229,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                     callBack={callBack}
                 />
                 <Button
-                    value={"Create  Product"}
+                    value={"Create  Restaurant"}
                     color={"#FFF"}
                     size={"18px"}
                     background={"#C035A2"}

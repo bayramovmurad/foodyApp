@@ -34,7 +34,6 @@ const AdminRestaurants: NextPage = () => {
       toast.success("it is okay")
       renderRestaurant()
     }
-    console.log(id);
   };
 
   //! Filter Restaurant
@@ -52,14 +51,12 @@ const AdminRestaurants: NextPage = () => {
   // ! Render Restaurant 
 
   useEffect(() => {
-
     renderRestaurant();
-
   }, [])
 
   const renderRestaurant = async () => {
     try {
-      const res = await getRestuarants();
+      const res:any = await getRestuarants();
       setData(res.data?.result.data)
     } catch (error) {
       console.log(error);

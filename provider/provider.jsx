@@ -10,12 +10,12 @@ export const useGlobalStore = () => {
 }
 
 const Provider = ({ children }) => {
-    const [activeProduct,setActiveProduct] = useState([])
+    const [activeRestaurant,setActiveRestaurant] = useState([])
     const Component = globalContext.Provider
     
     const values = {
-        activeProduct,
-        setActiveProduct,
+        activeRestaurant,
+        setActiveRestaurant,
     }
 
 
