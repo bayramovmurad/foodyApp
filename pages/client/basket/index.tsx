@@ -4,20 +4,36 @@ import Header from "../../../shared/components/Header/index";
 import Footer from '../../../shared/components/Footer/index'
 import Image from "next/image";
 import { useGlobalStore } from '../../../provider/provider';
-import { addBasket } from '../../../services';
+import { addBasket, getProducts } from '../../../services';
+import { useEffect, useState } from 'react';
 
 
 const Basket = () => {
-  const { activeRestaurant } = useGlobalStore()
+  const { activeRestaurant } = useGlobalStore();
+  const [data, setData] = useState([])
 
-  console.log(activeRestaurant);
-  const addBasketItem = async (id:any) => {
-      const basketObj = {
-        product_id: id,
-      }
-      console.log(basketObj);
-      const res = await addBasket(basketObj);
-      console.log(res);
+console.log(activeRestaurant);
+
+  useEffect(() => {
+    getProductDetail()
+  }, [])
+
+  const getProductDetail = async () => {
+    const res = await getProducts();
+
+
+    const filterData = res?.data.result.data.filter((item: any) => item.rest_id == activeRestaurant[0]?.id);
+    // setData(filterData);
+    // console.log(filterData);
+  };
+
+
+  const addBasketItem = async (id: any) => {
+    const basketObj = {
+      product_id: id,
+    }
+    const res = await addBasket(basketObj);
+
   }
 
   return (
@@ -96,7 +112,7 @@ const Basket = () => {
                 Products
               </p>
               {
-                activeRestaurant.map((item) =>
+                data.map((item) =>
                   <div className="basketItem border-t border-b border-[#E0E0E0] flex justify-between py-[22px] px-[40px]">
                     <div className='flex gap-[36px]'>
                       <img
