@@ -193,11 +193,13 @@ export const profileClient = async (data: any) => {
 
 // ! basket client
 
-export const addBasket = async (data: any, token) => {
+export const addBasket = async (data: any) => {
     try {
+        let item = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
         const response = await instanceAxios.post('/api/basket/add', data, {
             headers: {
-                'Authorization': `Bearer ${token}`,
+                Authorization: `Bearer ${acsess_token.access_token}`,
             }
         });
         return response;

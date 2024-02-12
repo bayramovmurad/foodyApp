@@ -46,8 +46,8 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
         let parsedUser = JSON.parse(localUser);
         let fullName = parsedUser?.fullname;
         let str = " ";
-        str += parsedUser?.fullname?.split(" ")[0]?.[0] ?? ''; // ?? işareti ile undefined durumu kontrol ediliyor
-        str += parsedUser?.fullname?.split(" ")[1]?.[0] ?? ''; // ?? işareti ile undefined durumu kontrol ediliyor
+        str += parsedUser?.fullname?.split(" ")[0]?.[0] ?? ''; 
+        str += parsedUser?.fullname?.split(" ")[1]?.[0] ?? '';
         let avatar = str.toUpperCase();
 
         setIsFullName(fullName);

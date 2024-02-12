@@ -20,7 +20,6 @@ const Basket = () => {
   const getProductDetail = async () => {
     const res = await getProducts();
     const filterData = res?.data.result.data.filter((item: any) => item.rest_id == activeRestaurant.id);
-    console.log(filterData);
     setData(filterData);
   };
 
@@ -28,9 +27,10 @@ const Basket = () => {
     const basketObj = {
       product_id: id,
     }
-    let item = localStorage.getItem("token")
-    let acsess_token = JSON.parse(item)
-    const res = await addBasket(basketObj, acsess_token.access_token);
+    console.log(basketObj);
+    
+
+    const res = await addBasket(basketObj);
     console.log(res);
   }
 
