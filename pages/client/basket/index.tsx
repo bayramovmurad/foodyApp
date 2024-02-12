@@ -12,7 +12,6 @@ const Basket = () => {
   const { activeRestaurant } = useGlobalStore();
   const [data, setData] = useState([])
 
-console.log(activeRestaurant);
 
   useEffect(() => {
     getProductDetail()
@@ -20,20 +19,19 @@ console.log(activeRestaurant);
 
   const getProductDetail = async () => {
     const res = await getProducts();
-
-
-    const filterData = res?.data.result.data.filter((item: any) => item.rest_id == activeRestaurant[0]?.id);
-    // setData(filterData);
-    // console.log(filterData);
+    const filterData = res?.data.result.data.filter((item: any) => item.rest_id == activeRestaurant.id);
+    console.log(filterData);
+    setData(filterData);
   };
-
 
   const addBasketItem = async (id: any) => {
     const basketObj = {
       product_id: id,
     }
-    const res = await addBasket(basketObj);
-
+    let item = localStorage.getItem("token")
+    let acsess_token = JSON.parse(item)
+    const res = await addBasket(basketObj, acsess_token.access_token);
+    console.log(res);
   }
 
   return (
@@ -60,7 +58,7 @@ console.log(activeRestaurant);
           <div className='flex mb-2 border-b border-[#F2F2F2]  justify-between py-[20px] px-[50px]'>
             <div className="left flex flex-col gap-1">
               <p className='restaurantsName text-[#4F4F4F] text-[22px] font-bold'>
-                Papa John’s Pizza Restaurant
+                Papa John's Pizza Restaurant
               </p>
               <p className='place text-[#828282] text-[14px] font-medium'>
                 19 Nizami street, Sabail, Baku
@@ -112,7 +110,7 @@ console.log(activeRestaurant);
                 Products
               </p>
               {
-                data.map((item) =>
+                data.map((item: any) =>
                   <div className="basketItem border-t border-b border-[#E0E0E0] flex justify-between py-[22px] px-[40px]">
                     <div className='flex gap-[36px]'>
                       <img
@@ -162,7 +160,7 @@ console.log(activeRestaurant);
 
                   <div className='flex justify-center flex-col gap-[6px] ml-[12px]'>
                     <p className='text-[#4F4F4F] font-medium text-[16px]'>
-                      Papa John’s Pizza Restaurant
+                      Papa John's Pizza Restaurant
                     </p>
                     <p className='text-[#828282] font-medium text-[14px]'>
                       $15.80
@@ -204,7 +202,7 @@ console.log(activeRestaurant);
 
                   <div className='flex justify-center flex-col gap-[6px] ml-[12px]'>
                     <p className='text-[#4F4F4F] font-medium text-[16px]'>
-                      Papa John’s Pizza Restaurant
+                      Papa John's Pizza Restaurant
                     </p>
                     <p className='text-[#828282] font-medium text-[14px]'>
                       $15.80
