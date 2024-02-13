@@ -16,7 +16,7 @@ const Restaurants = () => {
     const [originalData,setOriginalData] = useState([])
     const [categoryData,setCategoryData] = useState([])
     const [restaurantsData,setRestaurantsData] = useState([])
-
+    const [loadingRestaurant, setLoadingRestaurant] = useState(false)
         
     const renderCategory = async () => {
         const response = await getCategory()
@@ -33,16 +33,16 @@ const Restaurants = () => {
 
 
     const renderRestaurant = async () => {
+        setLoadingRestaurant(true)
         const response = await getRestuarants()
         setRestaurantsData(response?.data.result.data);
         setOriginalData(response?.data.result.data)
+        setLoadingRestaurant(false)
     }
 
 
     const filterRestaurants = (title: string | null) => {
         let item = originalData.filter((item:any) => item.category_id == title)
-        console.log(originalData);
-        
         setRestaurantsData(item)
     }
 
@@ -70,7 +70,7 @@ const Restaurants = () => {
             <main className="p-[30px] flex justify-center">
                 <div className='max-w-[1440px] w-full flex gap-[40px]'>
                     <div className="left max-w-[251px] w-full py-[40px] pl-[25px] pr-[25px] bg-[#F3F4F6] flex flex-col gap-[25px]">
-                        <p className=' font-bold text-[18px]' onClick={() => setRestaurantsData(originalData)}>
+                        <p className=' font-bold text-[18px] cursor-pointer' onClick={() => setRestaurantsData(originalData)}>
                             All Data
                         </p>
                         {
@@ -91,6 +91,14 @@ const Restaurants = () => {
                             ))
                         }
                     </div>
+
+                    {
+                        loadingRestaurant ? (
+                            <div className="flex justify-center items-center w-full h-[400px]">
+                                <span className="loader">Loading</span>
+                            </div>
+                        ) : <></>
+                    }
 
                     <div className="cardBody grid grid-cols-4 gap-[40px]">
                         {

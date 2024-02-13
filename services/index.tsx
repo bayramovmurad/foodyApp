@@ -193,11 +193,75 @@ export const profileClient = async (data: any) => {
 
 // ! basket client
 
+export const getBasket = async () => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        const response = await instanceAxios.get(`/api/basket` , {
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+};
+
 export const addBasket = async (data: any) => {
     try {
-        let item = localStorage.getItem("token")
+        let item: any = localStorage.getItem("token")
         let acsess_token = JSON.parse(item)
         const response = await instanceAxios.post('/api/basket/add', data, {
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
+export const deleteBasket = async (data: any) => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        const response = await instanceAxios.delete('/api/basket/delete', {
+            data: data,
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
+export const clearBasket = async (data: any) => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        const response = await instanceAxios.delete('/api/basket/clear', {
+            data: data,
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
+// Orders
+
+export const addOrder = async (data: any) => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        const response = await instanceAxios.post('/api/order/add', data, {
             headers: {
                 Authorization: `Bearer ${acsess_token.access_token}`,
             }

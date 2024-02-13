@@ -8,12 +8,17 @@ import Label from '../../../shared/components/Label';
 import { toArr } from '../../../utils/toArr/index';
 
 import { useEffect, useState } from 'react';
+import { addOrder, getBasket } from '../../../services';
 interface FormDataTypes {
   adress: string;
   number: string;
 }
 
 const Checkout = () => {
+  const [basketData, setBasketData] = useState([])
+  const [checkoutTotalPrice, setCheckoutTotalPrice] = useState(0);
+  const [activePaymentType,setActivePaymentType] = useState(0)
+  const [activeBasketId,setActiveBasketId] = useState("")
   const [disabled, setDisabled] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataTypes>({
     adress: "",
@@ -33,11 +38,43 @@ const Checkout = () => {
       setDisabled(filteredItem);
   });
 
-  let saveData = (e: any) => {
+  let saveData = async (e: any) => {
       e.preventDefault();
-      
-      console.log("work");
+      const orderInfo = {
+        basket_id: activeBasketId,
+        delivery_address: formData.adress,
+        contact: formData.number,
+        payment_method: activePaymentType
+      }
+      const res = await addOrder(orderInfo)
+      console.log(orderInfo);
   };
+
+  const getBasketFunction = async () => {
+    const response = await getBasket()
+    setActiveBasketId(response?.data.result.data.id);
+    setBasketData(response?.data.result.data.items);
+  }
+
+  useEffect(() => {
+      getBasketFunction()
+  },[])
+
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [basketData]);
+  
+  const calculateTotalPrice = () => {
+      let totalPrice = 0;
+      basketData.forEach(item => {
+          totalPrice += item.price * item.count;
+      });
+      setCheckoutTotalPrice(totalPrice);
+  };
+
+  const paymentType = (e:any) => {
+    setActivePaymentType(e.target.value);
+  }
 
   return (
     <div className="bg-white">
@@ -78,14 +115,14 @@ const Checkout = () => {
                                   </label>
                                   <div className='flex gap-[70px] items-center mt-5'>
                                     <div className='flex gap-2'>
-                                      <input type="radio" id="contactChoice2" name="contact" value="phone" />
+                                      <input onChange={paymentType} type="radio" id="contactChoice2" name="contact" value="0" />
                                       <label htmlFor="contactChoice2" className='ml-2 text-[#828282] text-[14px]'>
                                         pay at the door
                                       </label>
                                     </div>
 
                                     <div className='flex gap-2 items-center'>
-                                      <input type="radio" id="contactChoice3" name="contact" value="mail" />
+                                      <input onChange={paymentType} type="radio" id="contactChoice3" name="contact" value="1" />
                                       <label htmlFor="contactChoice3" className='text-[#828282] text-[14px]'>
                                         pay at the door by credit card
                                       </label>
@@ -106,7 +143,7 @@ const Checkout = () => {
                                   callBack={saveData}
                               />
                           </div>
-                      </form>
+                    </form>
                 </div>
 
                 <div className="content bg-[hsl(220,14%,96%)] py-[42px] px-9 max-w-[397px] w-[100%] max-h-[372px] flex flex-col  text-center gap-[20px] items-center">
@@ -114,51 +151,30 @@ const Checkout = () => {
                       Your Order
                     </p>
 
-                    <div className="flex flex-col gap-[10px]">
-                        <div>
-                            <div className="orderItem flex gap-[40px] justify-between items-center">
-                                <p className='text-[#828282] text-[14px] font-normal flex items-center'>
-                                  <span className='text-[18px] font-medium mr-1'>
-                                      1
-                                  </span>
-                                  x Papa John’s Pizza Restaurant
-                                </p>
+                    <div className="flex flex-col w-full px-[5px] gap-[10px]">
+                        {
+                            basketData?.map((item:any) => (
+                              <div>
+                                  <div className="orderItem flex gap-[40px] justify-between items-center">
+                                      <p className='text-[#828282] text-[14px] font-normal flex items-center'>
+                                        <span className='text-[18px] font-medium mr-1'>
+                                            {
+                                              item.count
+                                            }
+                                        </span>x { 
+                                          item.name
+                                        }
+                                      </p>
 
-                                <p className='text-[#828282] text-[14px] font-normal'>
-                                  $8.00
-                                </p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="orderItem flex gap-[40px] justify-between items-center">
-                                <p className='text-[#828282] text-[14px] font-normal flex items-center'>
-                                  <span className='text-[18px] font-medium mr-1'>
-                                      1
-                                  </span>
-                                  x Papa John’s Pizza Restaurant
-                                </p>
-
-                                <p className='text-[#828282] text-[14px] font-normal'>
-                                  $8.00
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div className="orderItem flex gap-[40px] justify-between items-center">
-                                <p className='text-[#828282] text-[14px] font-normal flex items-center'>
-                                  <span className='text-[18px] font-medium mr-1'>
-                                      1
-                                  </span>
-                                  x Papa John’s Pizza Restaurant
-                                </p>
-
-                                <p className='text-[#828282] text-[14px] font-normal'>
-                                  $8.00
-                                </p>
-                            </div>
-                        </div>
+                                      <p className='text-[#828282] text-[14px] font-normal'>
+                                        {
+                                          item.price
+                                        }
+                                      </p>
+                                  </div>
+                              </div>
+                            ))
+                        }
                     </div>
                     
                     <div className="totalPrice border-t flex justify-between items-center p-[20px] border-[#E0E0E0] w-full ">
@@ -167,7 +183,9 @@ const Checkout = () => {
                         </p>
 
                         <p className='text-[#828282] font-sans text-14 font-normal leading-70 tracking-0.42'>
-                          $17.80
+                          {
+                            checkoutTotalPrice
+                          }
                         </p>
                     </div>
                 </div>
