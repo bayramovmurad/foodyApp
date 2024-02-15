@@ -72,7 +72,7 @@ const Basket = () => {
     
     const calculateTotalPrice = () => {
         let totalPrice = 0;
-        basketData.forEach(item => {
+        basketData?.forEach(item => {
             totalPrice += item.price * item.count;
         });
         setCheckoutTotalPrice(totalPrice);

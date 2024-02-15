@@ -50,7 +50,7 @@ const AddOffer: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             const offerData = {
                 "name": formData.name,
                 "description": formData.description,
-                "img_url": "IMG"
+                "img_url": IMG
             }
 
             const data = await createOffer(offerData)
@@ -117,12 +117,12 @@ const AddOffer: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                     <img
                         src={IMG}
                         alt='dsa'
-                        className='w-[120px] h-[120px] mt-2'
+                        className='w-[120px] h-[120px] mt-2 object-cover'
                     />
                 </p>
 
-                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>
-                    <input onChange={handleNewImg} className='hidden' id='productInput' type="file" />
+                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center relative'>
+                    <input onChange={handleNewImg} className='cursor-pointer opacity-0 h-full w-full absolute' id='productInput' type="file" />
 
                     <label htmlFor="productInput" className='cursor-pointer'>
                         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">

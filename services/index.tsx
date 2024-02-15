@@ -7,8 +7,6 @@ const instanceAxios = axios.create({
     },
 });
 
-
-
 //! Products 
 export const getProducts = async () => {
     try {

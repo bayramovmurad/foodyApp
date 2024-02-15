@@ -51,7 +51,7 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             const categoryData = {
                 "name": formData.name,
                 "slug": formData.slug,
-                "img_url": "image"
+                "img_url": IMG
             }
             
             const data = await createCategory(categoryData)
@@ -65,29 +65,31 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
 
     //! Upload Image 
 
-    const handleNewImg = (e: ChangeEvent<HTMLInputElement>) => {
+    function handleNewImg(e) {
         const file = e.target.files?.[0];
         if (file) {
-          const randomId = `${new Date().getTime()}_${Math.floor(Math.random() * 1000)}`;
-          const imageRef = ref(fileStorage, `images/${file.name + randomId}`);
-          uploadBytes(imageRef, file)
-            .then((snapshot) => {
-              getDownloadURL(snapshot.ref)
-                .then((downloadURL) => {
-                  setIMG(downloadURL);
+                const randomId = `${new Date().getTime()}_${Math.floor(
+                Math.random() * 1000
+                )}`;
+                const imageRef = ref(fileStorage, `images/${file.name + randomId}`);
+                uploadBytes(imageRef, file)
+                .then((snapshot) => {
+                    getDownloadURL(snapshot.ref)
+                    .then((downloadURL) => {
+                        console.log(downloadURL);
+                        setIMG(downloadURL)
+                    })
+                    .catch((error) => {
+                        console.error("Download URL alınırken bir hata oluştu: ", error);
+                    });
                 })
                 .catch((error) => {
-                  console.error(error);
+                    console.error("Dosya yüklenirken bir hata oluştu: ", error);
                 });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        } else {
-          console.error('No file selected');
-        }
-    };
-
+            } else {
+                console.error("No file selected");
+            }
+        } 
 
     return (
         <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
@@ -119,12 +121,12 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                     <img 
                         src={IMG}
                         alt='dsa'
-                        className='w-[120px] h-[120px] mt-2'
+                        className='w-[150px] h-[120px] mt-2 object-cover'
                     />
                 </p>
 
-                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>
-                    <input onChange={handleNewImg} className='hidden' id='productInput' type="file" />
+                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] relative w-full flex justify-center items-center'>
+                    <input onChange={handleNewImg} className=' cursor-pointer opacity-0 h-full w-full absolute' id='productInput' type="file" />
 
                     <label htmlFor="productInput" className='cursor-pointer'>
                         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">

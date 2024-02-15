@@ -115,7 +115,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
 
                         {
                             !isToken ? (
-                                <button className="bg-[#D63626] hover:bg-[#a93c3c] flex justify-center items-center text-center py-[6.96px] px-[18px] text-white  rounded-[30px] ml-[27px]">
+                                <button onClick={() => push("/client/register")} className="bg-[#D63626] hover:bg-[#a93c3c] flex justify-center items-center text-center py-[6.96px] px-[18px] text-white  rounded-[30px] ml-[27px]">
                                     {
                                         t("signup")
                                     }   

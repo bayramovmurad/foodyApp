@@ -66,12 +66,12 @@ const Login: NextPage = () => {
         <header className="w-full p-[30px] flex justify-center">
             <div className="max-w-[1373px] w-full rounded flex justify-between bg-[#EB5757] py-[30px] px-[40px]">
                 <div>
-                  <Image 
+                  {/* <Image 
                     src="/mate/logo/white/logo.svg" 
                     alt="logo"
                     width={134}
                     height={52}
-                  />
+                  /> */}
                 </div>
 
                 <Language />
@@ -109,15 +109,16 @@ const Login: NextPage = () => {
                           </div>
 
                           <Button
-                              value={"Log in"}
-                              color={"#FFF"}
-                              size={"18px"}
-                              background={"#EB5757"}
-                              width={"100%"}
-                              height={"53px"}
-                              radius={"4px"}
-                              weight={600}
-                              callBack={saveData}
+                            value={"Log in"}
+                            color={"#FFF"}
+                            size={"18px"}
+                            background={"#EB5757"}
+                            width={"100%"}
+                            height={"53px"}
+                            radius={"4px"}
+                            weight={600}
+                            callBack={saveData} 
+                            isDisabled={false}                          
                           />
                     </div>
                 </div>
