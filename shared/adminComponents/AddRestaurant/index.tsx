@@ -66,7 +66,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             const restaurantData = {
                 "name": formData.name,
                 "category_id": activeCategoryId,
-                "img_url": "string",
+                "img_url": IMG,
                 "cuisine": formData.cuisine,
                 "address": formData.address,
                 "delivery_min": formData.delivery_min,
@@ -153,10 +153,16 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             <div className='flex justify-between mt-[10px]'>
                 <p className='text-[#C7C7C7] text-lg not-italic font-medium leading-6'>
                     Upload your product image
+
+                    <img
+                        src={IMG}
+                        alt='dsa'
+                        className='w-[120px] h-[120px] mt-2 object-cover'
+                    />
                 </p>
 
-                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>
-                    <input onChange={handleNewImg} className='hidden' id='productInput' type="file" />
+                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full relative flex justify-center items-center'>
+                    <input onChange={handleNewImg} className='cursor-pointer opacity-0 h-full w-full absolute' id='productInput' type="file" />
 
                     <label htmlFor="productInput" className='cursor-pointer'>
                         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -182,7 +188,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                     Add your Product description and necessary information
                 </p>
 
-                <div className='rounded-[14px] bg-[#43445A] py-[20px] overflow-y-scroll h-[610px] px-[25px] gap-5 max-w-[536px] w-full flex flex-col justify-center items-center'>
+                <div className='rounded-[14px] bg-[#43445A] py-[20px] overflow-y-scroll h-[500px] px-[25px] gap-5 max-w-[536px] w-full flex flex-col items-center'>
                     <div className='flex flex-col w-full'>
                         <Label value={"Name"} forId={"name"} />
                         <Input type={"text"} id={"name"} name={"name"} placeholder={""} value={formData.name} onInputChange={handleInputChange} />

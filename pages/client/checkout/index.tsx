@@ -40,6 +40,10 @@ const Checkout = () => {
 
   let saveData = async (e: any) => {
       e.preventDefault();
+
+      if(formData.adress == "" || formData.number == "")[
+        
+      ]
       const orderInfo = {
         basket_id: activeBasketId,
         delivery_address: formData.adress,
@@ -47,6 +51,8 @@ const Checkout = () => {
         payment_method: activePaymentType
       }
       const res = await addOrder(orderInfo)
+      console.log("response",res);
+      
       console.log(orderInfo);
   };
 

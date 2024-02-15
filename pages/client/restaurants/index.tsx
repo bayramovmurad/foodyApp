@@ -16,7 +16,7 @@ const Restaurants = () => {
     const [originalData,setOriginalData] = useState([])
     const [categoryData,setCategoryData] = useState([])
     const [restaurantsData,setRestaurantsData] = useState([])
-    const [loadingRestaurant, setLoadingRestaurant] = useState(false)
+    const [loadingRestaurant, setLoadingRestaurant] = useState(true)
         
     const renderCategory = async () => {
         const response = await getCategory()
@@ -76,10 +76,10 @@ const Restaurants = () => {
                         {
                             categoryData?.map((item:any) => (
                                 <div key={item.id} onClick={() => filterRestaurants(item.id)} className="filterItem flex gap-[17px] cursor-pointer">
-                                    <Image
-                                        src="/client/minifood/pizza.svg"
+                                    <img
+                                        src={item.img_url}
                                         alt="pizza"
-                                        width={25}
+                                        width={35}
                                         height={28}
                                     />
                                     <p className="text-[#333] text-[20px] font-semibold">
@@ -102,7 +102,7 @@ const Restaurants = () => {
 
                     <div className="cardBody grid grid-cols-4 gap-[40px]">
                         {
-                            restaurantsData?.map((item) => (
+                            restaurantsData?.map((item:any) => (
                                 <RestaurantCard
                                     callBack={sendRestaurant}
                                     key={item.id}
@@ -111,6 +111,7 @@ const Restaurants = () => {
                             ))
                         }
                     </div>
+
                 </div>
             </main>
         

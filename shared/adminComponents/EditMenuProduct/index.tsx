@@ -106,7 +106,7 @@ const EditMenuProduct: React.FC<EditMenuProductProps> = ({ right, callBack, head
   useEffect(() => {
     let productInfo = activeData.filter((item: any) => item.id === activeEditId);
     setProductDetail(productInfo[0]);
-
+    setIMG(productInfo?.[0]?.img_url)
     if (productInfo[0]) {
       setFormData({
         name: productInfo[0].name || '',
@@ -154,6 +154,9 @@ const EditMenuProduct: React.FC<EditMenuProductProps> = ({ right, callBack, head
     }
   };
 
+  console.log(productDetail);
+  
+
   return (
     <div style={{ right: isActive ? '-100%' : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
       <ToastContainer />
@@ -180,12 +183,12 @@ const EditMenuProduct: React.FC<EditMenuProductProps> = ({ right, callBack, head
             <img
                 src={IMG}
                 alt='image'
-                className='w-[150px] h-[100px] '
+                className='w-[150px] h-[100px] object-cover'
             />
         </p>
 
-        <div className="rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center">
-          <input onChange={handleNewImg} className="hidden" id="productInput" type="file" />
+        <div className="rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center relative">
+          <input onChange={handleNewImg} className="cursor-pointer opacity-0 h-full w-full absolute" id="productInput" type="file" />
 
           <label htmlFor="productInput" className="cursor-pointer">
             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">

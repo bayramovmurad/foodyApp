@@ -23,8 +23,6 @@ interface FormDataTypes {
 
 const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     //! States
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [newImg, setNewImg] = useState<string | null>(null);
     const [IMG,setIMG] = useState("")
     const [activeRestaurantId,setActiveRestaurantId] = useState<string>("")
     const [restaurants, setRestaurants] = useState<string[]>([]);
@@ -99,8 +97,6 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
     const handleNewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
-        setSelectedFile(file);
-        setNewImg(URL.createObjectURL(file));
         const randomId = `${new Date().getTime()}_${Math.floor(
           Math.random() * 1000
         )}`;
@@ -153,12 +149,12 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
                   <img
                       src={IMG}
                       alt='image'
-                      className=''
+                      className='w-[150px] h-[120px] object-cover'
                   />
                 </p>
 
-                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center'>
-                      <input onChange={handleNewImg}  className='hidden' id='productInput' type="file" />
+                <div className='rounded-[14px] bg-[#43445A] py-[20px] max-w-[536px] w-full flex justify-center items-center relative'>
+                      <input onChange={handleNewImg}  className='cursor-pointer opacity-0 h-full w-full absolute' id='productInput' type="file" />
 
                       <label htmlFor="productInput" className='cursor-pointer'>
                         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -50,7 +50,9 @@ const Login: NextPage = () => {
   
           setTimeout(() => {
             push("/");
-          }, 1400);
+          }, 800);
+        }else{
+          toast.warning("Yanlis Email veya sifre");
         }
       }
     };
@@ -109,15 +111,16 @@ const Login: NextPage = () => {
                           </div>
 
                           <Button
-                              value={"Log in"}
-                              color={"#FFF"}
-                              size={"18px"}
-                              background={"#EB5757"}
-                              width={"100%"}
-                              height={"53px"}
-                              radius={"4px"}
-                              weight={600}
-                              callBack={saveData}
+                            value={"Log in"}
+                            color={"#FFF"}
+                            size={"18px"}
+                            background={"#EB5757"}
+                            width={"100%"}
+                            height={"53px"}
+                            radius={"4px"}
+                            weight={600}
+                            callBack={saveData} 
+                            isDisabled={false}                          
                           />
                     </div>
                 </div>
