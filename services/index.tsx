@@ -180,7 +180,13 @@ export const login = async (form: any) => {
 
 export const profileClient = async (data: any) => {
     try {
-        const response = await instanceAxios.put('/api/user', data);
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        const response = await instanceAxios.put('/api/user', data, {
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
         return response;
     } catch (error) {
         console.log("a");
@@ -259,7 +265,8 @@ export const addOrder = async (data: any) => {
     try {
         let item: any = localStorage.getItem("token")
         let acsess_token = JSON.parse(item)
-        const response = await instanceAxios.post('/api/order/add', data, {
+        
+        const response = await instanceAxios.post('/api/order/add', data , {
             headers: {
                 Authorization: `Bearer ${acsess_token.access_token}`,
             }
