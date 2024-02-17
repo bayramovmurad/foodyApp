@@ -320,3 +320,39 @@ export const deleteOrder = async (data:any) => {
         console.log(error)
     }
 }
+
+//!  History
+
+export const getOrderHistory = async () => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        
+        const response = await instanceAxios.get('/api/order/history', {
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const deleteOrderHistory = async (data:any) => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        
+        const response = await instanceAxios.delete('/api/order', {
+            data:data,
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}

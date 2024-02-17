@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Modal } from "react-bootstrap";
+import Modal from "../../components/Modal";
+import { getOrders } from "../../../services";
 
 const formatDate = (timestamp:any) => {
     const currentDate = new Date();
@@ -21,21 +22,33 @@ const formatDate = (timestamp:any) => {
     }
   };
   
-const OrderComponent = ({activeData}:any) => {
+const OrderComponent = ({activeData , callback}:any) => {
     const [deleteModal,setDeleteModal] = useState(false)
+    const [activeId,setActiveId] = useState("")
+    const [isShowModal,setIsShowModal] = useState<boolean>(false)
+    const [activeProducts,setActiveProducts] = useState([])
 
-    const deleteItem = (id: string): void => {
+    const deleteItem = (id:any): void => {
+        setActiveId(id)
         setDeleteModal(!deleteModal)
     }
 
     const response = (boolParam: boolean) => {
         if(boolParam){
-            console.log("id");
+            callback(activeId)
             setDeleteModal(!deleteModal)
         }else{
             setDeleteModal(!deleteModal)
         }
     }
+
+    const showOrders = async (id: any) => {
+        setIsShowModal(!isShowModal)
+        const res = await getOrders()
+        const activeOrder:any = res?.data.result.data.filter((item:any) => item.id == id)
+        console.log(activeOrder[0].products);
+        setActiveProducts(activeOrder[0].products);
+      }
 
     return (
         <div className="w-full">
@@ -74,10 +87,10 @@ const OrderComponent = ({activeData}:any) => {
                                         item.contact
                                     }
                                 </td>
-                                <td className="border text-center p-1 overflow-x-auto whitespace-nowrap flex justify-center items-center h-[61px]">
-                                    <img src="/adminImg/OrderPage/Eye.svg" alt="" />
+                                <td className="border cursor-pointer text-center p-1 overflow-x-auto whitespace-nowrap flex justify-center items-center h-[61px]">
+                                    <img onClick={() => showOrders(item.id)} src="/adminImg/OrderPage/Eye.svg" alt="" />
                                 </td>
-                                <td className="border text-center p-1 overflow-x-auto whitespace-nowrap h-[61px]">
+                                <td className="border cursor-pointer text-center p-1 overflow-x-auto whitespace-nowrap h-[61px]">
                                     <img onClick={() => deleteItem(item.id)}  src="/adminImg/OrderPage/Bin.svg" alt="" />
                                 </td>
                             </tr>
@@ -94,11 +107,81 @@ const OrderComponent = ({activeData}:any) => {
                       response={response}
                       modalResponseTitle={"delete"}
                   />
-                ) : (
-                  <>
-                  </>
-                )
+                ) : <></>
+            }
+
+{
+                isShowModal ? (
+                  <div className='fixed bg-[#00000040] w-full left-0 top-0 h-full flex justify-center items-center z-10'>
+                    <div className='bg-white rounded-lg px-5 py-4 w-[754px] relative z-20'>
+                      <table className='w-full'>
+                        <thead className='bg-white w-full flex mb-5'>
+                            <tr className='pt-6 w-full h-full flex justify-center text-center'>
+                                <th className='h-[30px] px-[12px] text-[#00072B] text-[14px] font-semibold'>
+                                  Image
+                                </th>
+                            </tr> 
+                            <tr className='pt-6 w-full h-full flex justify-center text-center'>
+                                <th className='h-[30px] px-[12px] text-[#00072B] text-[14px] font-semibold'>
+                                  Name
+                                </th>
+                            </tr>
+                            <tr className='pt-6 w-full h-full flex justify-center text-center'>
+                                <th className='h-[30px] px-[12px] text-[#00072B] text-[14px] font-semibold'>
+                                  Price
+                                </th>
+                            </tr>
+                            <tr className='pt-6 w-full h-full flex justify-center text-center'>
+                                <th className='h-[30px] px-[12px] text-[#00072B] text-[14px] font-semibold'>
+                                  Count
+                                </th>
+                            </tr>
+                            <tr className='pt-6 w-full h-full flex justify-center text-center'>
+                                <th className='h-[30px] w-full px-[12px] text-[#00072B] text-[14px] font-semibold'>
+                                  Amount
+                                </th>
+                            </tr>
+                        </thead>
+                          <tbody>
+                                {
+                                  activeProducts.map((item:any) => (
+                                    <tr className='flex justify-between pb-3 mb-1 border-b border-t pt-3 border-[#b8b2b2]'>
+                                      <td className='text-center w-full flex justify-center items-center'>
+                                        <img src={item.img_url} className='w-10 h-10' alt='image' />
+                                      </td>
+                                      <td className='text-center w-full flex items-center justify-center'>
+                                        {
+                                          item.name
+                                        }
+                                      </td>
+                                      <td className='text-center w-full flex items-center justify-center'>
+                                        {
+                                          item.price
+                                        }
+                                      </td>
+                                      <td className='text-center w-full flex items-center justify-center'>
+                                        {
+                                          item.count
+                                        }
+                                      </td>
+                                      <td className='text-center w-full flex items-center justify-center'>
+                                        {
+                                          item.amount
+                                        }
+                                      </td>
+                                    </tr>
+                                  ))
+                                }
+                          </tbody>
+                      </table>
+                      <button onClick={() => setIsShowModal(false)} className='absolute right-4 cursor-pointer text-[25px] top-0 font-medium'>
+                        x
+                      </button>
+                    </div>
+                  </div>
+                ) : <></>
               }
+
         </div>
     )
 }
