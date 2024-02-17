@@ -52,7 +52,7 @@ const AdminRestaurants: NextPage = () => {
 
   useEffect(() => {
     renderRestaurant();
-  }, [])
+  }, [isMenu])
 
   const renderRestaurant = async () => {
     try {

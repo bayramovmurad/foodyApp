@@ -9,12 +9,15 @@ import { toArr } from '../../../utils/toArr/index';
 
 import { useEffect, useState } from 'react';
 import { addOrder, getBasket } from '../../../services';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 interface FormDataTypes {
   adress: string;
   number: string;
 }
 
 const Checkout = () => {
+  const { push } = useRouter()
   const [basketData, setBasketData] = useState([])
   const [checkoutTotalPrice, setCheckoutTotalPrice] = useState(0);
   const [activePaymentType,setActivePaymentType] = useState(0)
@@ -41,20 +44,25 @@ const Checkout = () => {
   let saveData = async (e: any) => {
       e.preventDefault();
 
-      if(formData.adress == "" || formData.number == "")[
-        
-      ]
-      const orderInfo = {
-        basket_id: activeBasketId,
-        delivery_address: formData.adress,
-        contact: formData.number,
-        payment_method: activePaymentType
+      if(formData.adress == "" || formData.number == ""){
+        toast.warning("formu doldurun")
       }
-      const res = await addOrder(orderInfo)
-      console.log("response",res);
-      
-      console.log(orderInfo);
+      else{
+        const orderInfo = {
+          basket_id: activeBasketId,
+          delivery_address: formData.adress,
+          contact: formData.number,
+          payment_method: 0
+        }
+        const res:any = await addOrder(orderInfo)
+        if(res.status == 201){
+          push("/client/orders")
+          return
+        }
+      }
   };
+
+
 
   const getBasketFunction = async () => {
     const response = await getBasket()
@@ -72,7 +80,7 @@ const Checkout = () => {
   
   const calculateTotalPrice = () => {
       let totalPrice = 0;
-      basketData.forEach(item => {
+      basketData?.forEach(item => {
           totalPrice += item.price * item.count;
       });
       setCheckoutTotalPrice(totalPrice);
@@ -81,6 +89,7 @@ const Checkout = () => {
   const paymentType = (e:any) => {
     setActivePaymentType(e.target.value);
   }
+
 
   return (
     <div className="bg-white">
@@ -112,7 +121,7 @@ const Checkout = () => {
 
                               <div className='flex flex-col'>
                                   <Label value={"Contact Number"} forId={"number"} />
-                                  <Input type={"text"} id={"number"} name={"number"} placeholder={"+994"} value={formData.number} onInputChange={handleInputChange} />
+                                  <Input type={"number"} id={"number"} name={"number"} placeholder={"+994"} value={formData.number} onInputChange={handleInputChange} />
                               </div>
 
                               <div className='flex flex-col'>
@@ -143,7 +152,6 @@ const Checkout = () => {
                                   background={"#6FCF97"}
                                   width={"100%"}
                                   height={"53px"}
-                                  isDisabled={disabled}
                                   radius={"4px"}
                                   weight={600}
                                   callBack={saveData}
@@ -160,7 +168,7 @@ const Checkout = () => {
                     <div className="flex flex-col w-full px-[5px] gap-[10px]">
                         {
                             basketData?.map((item:any) => (
-                              <div>
+                              <div key={item.id}>
                                   <div className="orderItem flex gap-[40px] justify-between items-center">
                                       <p className='text-[#828282] text-[14px] font-normal flex items-center'>
                                         <span className='text-[18px] font-medium mr-1'>

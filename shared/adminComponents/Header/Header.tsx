@@ -5,11 +5,12 @@ import RightMenu from "../RightMenu"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
-const Header = () => {
+const Header = ({ callBackBool }:any) => {
   const { push } = useRouter()
   const [isMenu,setIsMenu] = useState(false)
 
   const addProduct = ():void => {
+    callBackBool()
     setIsMenu(!isMenu)
   }
 

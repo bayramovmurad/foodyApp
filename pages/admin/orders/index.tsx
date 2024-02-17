@@ -3,8 +3,34 @@ import Head from "next/head";
 import SideBar from "../../../shared/adminComponents/SideBar/SideBar";
 import Header from "../../../shared/adminComponents/Header/Header";
 import OrderComponent from "../../../shared/adminComponents/OrderComponent/OrderComponent";
+import { useEffect, useState } from "react";
+import { deleteOrder, getOrders } from "../../../services";
+import { toast } from "react-toastify";
 
 const AdminOrders: NextPage = () => {
+  const [activeData,setActiveData] = useState([])
+
+  const deleteOrderF = async (id:any) => {
+    console.log(id);
+    
+    const orderObj = {
+      order_id: id
+    }
+    
+    const res:any = await deleteOrder(orderObj)
+    renderOrders()
+    if(res.status == 204){toast.success("order delete")};
+  }
+
+  const renderOrders = async () => {
+    const res = await getOrders()
+    setActiveData(res?.data.result.data)
+  }
+
+  useEffect(() => {
+    renderOrders()
+  },[])
+
   return (
     <div>
       <Head>
@@ -23,7 +49,7 @@ const AdminOrders: NextPage = () => {
 
             </div>
             <div className="flex gap-x-10  gap-y-10 flex-wrap">
-              <OrderComponent />
+              <OrderComponent callback={deleteOrderF} activeData={activeData} />
             </div>
           </div>
         </div>

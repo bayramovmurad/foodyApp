@@ -10,7 +10,7 @@ interface ButtonProps {
     height: string;
     isDisabled: boolean;
     radius: string;
-    callBack: MouseEventHandler<HTMLButtonElement>;
+    callBack?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button: FC<ButtonProps> = ({

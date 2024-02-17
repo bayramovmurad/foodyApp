@@ -49,7 +49,7 @@ export const updateProduct = async (id: string | number, data: any) => {
 
 export const getRestuarants = async () => {
     try {
-        const response = await instanceAxios.get(`/api/restuarants`);
+        const response = await instanceAxios.get(`/api/restuarants/`);
         return response;
     } catch (error) {
         console.log(error)
@@ -182,7 +182,7 @@ export const profileClient = async (data: any) => {
     try {
         let item: any = localStorage.getItem("token")
         let acsess_token = JSON.parse(item)
-        const response = await instanceAxios.put('/api/user', data, {
+        const response = await instanceAxios.put('/api/auth/user', data, {
             headers: {
                 Authorization: `Bearer ${acsess_token.access_token}`,
             }
@@ -192,6 +192,17 @@ export const profileClient = async (data: any) => {
         console.log("a");
         console.log({ error })
     }
+}
+
+export const getProfileInfo = async () => {
+    let item: any = localStorage.getItem("token")
+    let acsess_token = JSON.parse(item)
+    const response = await instanceAxios.put('/api/auth/user', {
+        headers: {
+            Authorization: `Bearer ${acsess_token.access_token}`,
+        }
+    });
+    return response;
 }
 
 
@@ -266,13 +277,82 @@ export const addOrder = async (data: any) => {
         let item: any = localStorage.getItem("token")
         let acsess_token = JSON.parse(item)
         
-        const response = await instanceAxios.post('/api/order/add', data , {
+        const response = await instanceAxios.post('/api/order', data , {
             headers: {
                 Authorization: `Bearer ${acsess_token.access_token}`,
             }
         });
         return response;
     } catch (error) {
-        console.log({ error })
+        console.log(error)
+    }
+}
+
+export const getOrders = async () => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        
+        const response = await instanceAxios.get('/api/order', {
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteOrder = async (data:any) => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        
+        const response = await instanceAxios.delete('/api/order', {
+            data:data,
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//!  History
+
+export const getOrderHistory = async () => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        
+        const response = await instanceAxios.get('/api/order/history', {
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const deleteOrderHistory = async (data:any) => {
+    try {
+        let item: any = localStorage.getItem("token")
+        let acsess_token = JSON.parse(item)
+        
+        const response = await instanceAxios.delete('/api/order', {
+            data:data,
+            headers: {
+                Authorization: `Bearer ${acsess_token.access_token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
     }
 }

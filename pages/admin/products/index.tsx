@@ -10,6 +10,7 @@ import Header from '../../../shared/adminComponents/Header/Header';
 import Dropdown from '../../../shared/adminComponents/Dropdown';
 
 import { getProducts, deleteProduct, getRestuarants } from '../../../services/index';
+import RightMenu from '../../../shared/adminComponents/RightMenu';
 
 interface Product {
   id: string;
@@ -41,12 +42,9 @@ const AdminProducts: NextPage = () => {
     }
   };
 
-  useEffect(() => {`
-    23\
-    
-  `
+  useEffect(() => {
     renderProducts();
-  }, [isMenu]);
+  }, [isMenu,activeEditId]);
 
   //! Delete Products
   const deleteProductHandler = async (id: number | string): Promise<void> => {
@@ -99,6 +97,10 @@ const AdminProducts: NextPage = () => {
     renderRestaurants();
   }, []);
 
+  const callBackBool = () => {
+    setIsMenu(!isMenu);
+  }
+
   return (
     <div>
       <Head>
@@ -110,7 +112,7 @@ const AdminProducts: NextPage = () => {
       <div className="px-[19px] min-h-screen bg-[#1E1E30] relative">
         <EditMenuProduct activeData={activeData} activeEditId={activeEditId} headTitle={'Edit product'} callBack={addProduct} right={isMenu ? '0%' : '-100%'} />
 
-        <Header />
+        <Header callBackBool={callBackBool} />
         <div className="flex gap-x-4">
           <SideBar />
           <div className="flex flex-col w-full">

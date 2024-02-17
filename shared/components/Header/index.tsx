@@ -7,6 +7,10 @@ import OutlineButton from "../OutlineButton ";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router";
+import { getProfileInfo, getRestuarants } from "../../../services";
+import { useDebounce } from 'use-debounce'; 
+import { useGlobalStore } from "../../../provider/provider";
+import { toast } from 'react-toastify';
 
 interface headerTypes {
     isLogin: boolean,
@@ -17,26 +21,17 @@ interface headerTypes {
 }
 
 export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:headerTypes) => {
-    const { push } = useRouter()
+    const { push } = useRouter();
+    const { setActiveRestaurant } = useGlobalStore();
     const { t, i18n } = useTranslation();
-    const activeLanguage = i18n.language; 
-
-    const [isActive, setIsActive] = useState(false);
     const [isToken, setIsToken] = useState(false);
     const [isFullName, setIsFullName] = useState("");
-
-    const handleActive = () => {
-        setIsActive(!isActive);
-    };
-
-    const changeLanguage = (lng:string) => {
-        i18n.changeLanguage(lng);
-        setIsActive(false); 
-    };
-
-    const languages = ['en', 'az'].filter(lng => lng !== activeLanguage)
-
-    const [isActiveName, setIsActiveName] = useState(""); // Varsayılan değer olarak boş bir dize
+    const [isImage, setIsImage] = useState("");
+    const [isActiveName, setIsActiveName] = useState("");
+    const [isResultBox, setIsResultBox] = useState<boolean>(false);
+    const [restaurants, setRestaurants] = useState([]);
+    const [searchValue, setSearchValue] = useState(""); 
+    const [debouncedSearchValue] = useDebounce(searchValue, 500);
 
     useEffect(() => {
         const localItem: any = localStorage?.getItem("token");
@@ -46,21 +41,38 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
         let parsedUser = JSON.parse(localUser);
         let fullName = parsedUser?.fullname;
         let str = " ";
-        str += parsedUser?.fullname?.split(" ")[0]?.[0] ?? ''; 
-        str += parsedUser?.fullname?.split(" ")[1]?.[0] ?? '';
+        str += parsedUser?.fullname?.split(" ")[0]?.[0] ?? "";
+        str += parsedUser?.fullname?.split(" ")[1]?.[0] ?? "";
         let avatar = str.toUpperCase();
 
         setIsFullName(fullName);
         setIsActiveName(avatar);
-
+        setIsImage(parsedUser?.img_url);
         if (parsedItem?.access_token) {
-            setIsToken(true);
+        setIsToken(true);
         } else {
-            setIsActiveName("default value");
+        setIsActiveName("default value");
         }
     }, [isToken]);
 
-    return (
+    useEffect(() => {
+        const searchRestaurant = async () => {
+        if (debouncedSearchValue.length > 0) {
+            setIsResultBox(true);
+        } else {
+            setIsResultBox(false);
+        }
+
+        const res = await getRestuarants();
+        let restaurantsData = res?.data.result.data.filter((item: any) =>
+            item.name.toLowerCase().includes(debouncedSearchValue.toLowerCase())
+        );
+        setRestaurants(restaurantsData);
+        };
+
+        searchRestaurant();
+    }, [debouncedSearchValue]);  
+    return (    
         <header className="flex flex-col  rounded-s bg-[#f3f4f6] ">
             <div className="sw-full flex justify-center">
                 <div className="max-w-[1440px] w-full top flex justify-between pt-[36px] pb-[41px] pr-[89px] pl-[57px]">
@@ -102,14 +114,44 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
 
                     </div>
 
-                    <div className="right flex items-center gap-5">
+                    <div className="right flex items-center gap-5 relative">
                         <input 
                             type="search" 
                             placeholder={t('search')}
                             className="rounded-[10px] mr-5 bg-white pt-[14px] pr-[20px] pb-[12px] pl-[20px] text-[#000] placeholder:text[#000] outline-none"
+                            onChange={(e) => setSearchValue(e.target.value)}
                         />
 
-                    
+                        {
+                            isResultBox ? (
+                                <div className="absolute left-0 top-16 w-[300px] rounded-lg bg-white p-4">
+                                    {
+                                        restaurants.map((item:any) => (
+                                            <div className="flex items-center gap-4 border-b pb-2 pt-2" onClick={() => setActiveRestaurant(item) || push("/client/basket")}>
+                                                <img
+                                                    src={item.img_url}
+                                                    alt="img"
+                                                    className="w-[59px] h-[37px] "
+                                                />
+
+                                                <div>
+                                                    <p className="font-bold text-[14px]">
+                                                        {
+                                                            item.name
+                                                        }
+                                                    </p>
+                                                    <p className="text-[14px]">
+                                                        {
+                                                            item.cuisine
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            ) : <></>
+                        }
                         
                         <Language />
 
@@ -135,10 +177,11 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
 
                         {
                             isToken ? (
-                                <div onClick={() => push("/client/profile")} className="cursor-pointerm rounded-full w-10 h-10 text-lg text-white text-center flex justify-center items-center shadow-md bg-[#D63626] font-semibold hover:scale-95 transition-all duration-500">
+                                <div onClick={() => push("/client/profile")} className="cursor-pointerm relative rounded-full w-10 h-10 text-lg text-white text-center flex justify-center items-center shadow-md font-semibold hover:scale-95 transition-all duration-500">
                                     {
                                         isActiveName
                                     }
+                                    <img src={isImage} className="absolute w-full h-full rounded-full" alt="" />
                                 </div>  
                             ) : <></>
                         }

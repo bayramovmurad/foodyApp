@@ -41,8 +41,8 @@ const Restaurants = () => {
     }
 
 
-    const filterRestaurants = (title: string | null) => {
-        let item = originalData.filter((item:any) => item.category_id == title)
+    const filterRestaurants = (id: string | null) => {
+        let item = originalData.filter((item:any) => item.category_id == id)
         setRestaurantsData(item)
     }
 

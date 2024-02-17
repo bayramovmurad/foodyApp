@@ -1,10 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import FormTitle from '../../../shared/components/FormTitle/index';
 import Sidebar from '../../../shared/components/Sidebar/index';
 import Header from "../../../shared/components/Header/index";
 import Footer from '../../../shared/components/Footer/index';
 import Thead from '../../../shared/components/Thead/index';
 import TBody from '../../../shared/components/Tbody/index';
+import { deleteOrder, getOrders } from '../../../services';
 
 interface OrdersProps {}
 
@@ -17,46 +18,29 @@ interface OrderData {
   address: string;
 }
 
-const data: OrderData[] = [
-    {
-      id: 9177,
-      amount: 249.7,
-      time: "25 Dec 2021",
-      contact: "994-51-410-3130",
-      paymentMethod: "Cash On Delivery",
-      address: "29 Eve Street, 543 Evenue Road, Ny 87876 ",
-    },
-    {
-      id: 9178,
-      amount: 249.7,
-      time: "25 Dec 2021",
-      contact: "994-51-410-3130",
-      paymentMethod: "Cash On Delivery",
-      address: "29 Eve Street, 543 Evenue Road, Ny 87876 ",
-    },
-    {
-      id: 9179,
-      amount: 249.7,
-      time: "25 Dec 2021",
-      contact: "994-51-410-3130",
-      paymentMethod: "Cash On Delivery",
-      address: "29 Eve Street, 543 Evenue Road, Ny 87876 ",
-    },
-    {
-      id: 9200,
-      amount: 249.7,
-      time: "25 Dec 2021",
-      contact: "994-51-410-3130",
-      paymentMethod: "Cash On Delivery",
-      address: "29 Eve Street, 543 Evenue Road, Ny 87876 ",
-    }
-]
 
 const Orders: FC<OrdersProps> = () => {
-    const [activeData,setActiveData] = useState(data)
-    const deleteOrder = (id: number | string): void => {
-        setActiveData(activeData.filter((item) => item.id !== id))
+    const [activeData,setActiveData] = useState([])
+    
+    const deleteOrderF = async (id: number | string) => {
+        const deleteObj = {
+          "order_id": id
+        }
+        const response = await deleteOrder(deleteObj)
+        console.log(response);
+        renderOrders()
     }
+
+    const renderOrders = async () => {
+      const res = await getOrders()
+      console.log(res?.data.result.data);
+      
+      setActiveData(res?.data.result.data)
+    }
+
+    useEffect(() => {
+      renderOrders()
+    },[])
 
     return (
       <div className="bg-white">
@@ -90,7 +74,7 @@ const Orders: FC<OrdersProps> = () => {
                                 activeData.map((item: any) => (
                                     <TBody
                                         item={item}
-                                        deleteOrder={deleteOrder}
+                                        deleteOrder={deleteOrderF}
                                     />
                                 ))
                               }
