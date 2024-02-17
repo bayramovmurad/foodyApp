@@ -3,8 +3,20 @@ import Head from "next/head";
 import SideBar from "../../../shared/adminComponents/SideBar/SideBar";
 import Header from "../../../shared/adminComponents/Header/Header";
 import OrderComponent from "../../../shared/adminComponents/OrderComponent/OrderComponent";
+import { useEffect, useState } from "react";
+import { getOrders } from "../../../services";
 
 const AdminOrders: NextPage = () => {
+  const [activeData,setActiveData] = useState([])
+  const renderOrders = async () => {
+    const res = await getOrders()
+    setActiveData(res?.data.result.data)
+  }
+
+  useEffect(() => {
+    renderOrders()
+  },[])
+
   return (
     <div>
       <Head>
@@ -23,7 +35,7 @@ const AdminOrders: NextPage = () => {
 
             </div>
             <div className="flex gap-x-10  gap-y-10 flex-wrap">
-              <OrderComponent />
+              <OrderComponent activeData={activeData} />
             </div>
           </div>
         </div>

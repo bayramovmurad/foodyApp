@@ -6,8 +6,66 @@ import Button from '../../../shared/components/Button';
 
 
 import Image from 'next/image';
+import { addBasket, deleteBasket, getBasket } from '../../../services';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const userBasket = () => {
+  const { push } = useRouter()
+  const [basketData, setBasketData] = useState([])
+  const [checkoutTotalPrice, setCheckoutTotalPrice] = useState(0);
+
+  const getBasketFunction = async () => {
+    const response = await getBasket()
+    setBasketData(response?.data.result.data.items);
+  }
+  useEffect(() => {
+      getBasketFunction()
+  },[])
+
+
+
+  const addBasketItem = async (id: any) => {
+    const basketObj = {
+      product_id: id,
+    }
+    const res = await addBasket(basketObj);
+    if(res?.status == 201){
+      getBasketFunction()
+    }
+  }
+
+
+
+  const removeBasketItem = async (id: any) => {
+      const basketObj = {
+        product_id: id,
+      }
+      const res = await deleteBasket(basketObj);
+      if(res?.status == 200){
+        getBasketFunction()
+      }
+  }
+
+  
+  const calculateTotalPrice = () => {
+      let totalPrice = 0;
+      basketData?.forEach((item:any) => {
+          totalPrice += item.price * item.count;
+      });
+      setCheckoutTotalPrice(totalPrice);
+  };
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [basketData]);
+
+
+
+  const sendCheckout = () => {
+    push("/client/checkout")
+  }
+
+
   return (
     <div className="bg-white">
         <div className="p-[30px]">
@@ -41,102 +99,73 @@ const userBasket = () => {
                                 </defs>
                               </svg>
 
-                              3 items
+                              {
+                                basketData?.length
+                              } items
                             </div>
 
-                            <div className="checkoutItem border-t border-[#E0E0E0] flex justify-between relative py-[25px]">
-                                <div className='flex'>
-                                  <Image
-                                      src="/client/miniFood/pizza.svg" 
-                                      alt="" 
-                                      width={45}
-                                      height={45}
-                                  />
+                            
 
-                                  <div className='flex justify-center flex-col gap-[6px] ml-[12px] cursor-pointer'>
-                                    <p className='text-[#4F4F4F] font-medium text-[16px]'>
-                                      Papa John’s Pizza Restaurant
-                                    </p>
-                                    <p className='text-[#828282] font-medium text-[14px]'>
-                                      $15.80
-                                    </p>
-                                  </div>
+                            {
+                              basketData?.map((item:any) => (
+                                <div key={item.id} className="checkoutItem border-t border-[#E0E0E0] flex justify-between relative py-[25px]">
+                                    <div className='flex'>
+                                      <img
+                                          src={item.img_url}
+                                          alt="ads" 
+                                          width={105}
+                                          height={45}
+                                      />
+
+                                      <div className='flex justify-center flex-col gap-[6px] ml-[12px] cursor-pointer'>
+                                        <p className='text-[#4F4F4F] font-medium text-[16px]'>
+                                          {
+                                            item.name
+                                          }
+                                        </p>
+                                        <p className='text-[#828282] font-medium text-[14px]'>
+                                          {
+                                            item.price
+                                          }
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    <div className='countBox cursor-pointer mr-[100px] flex flex-col bg-[#fff] py-[4px] rounded-[50px] px-[7px]'>
+                                        <p  onClick={() => removeBasketItem(item.id)}>
+                                          -
+                                        </p>
+                                        <p>
+                                          {
+                                            item.count
+                                          }
+                                        </p>
+                                        <p onClick={() => addBasketItem(item.id)}>
+                                          +
+                                        </p>
+                                    </div>
+
+                                    <svg className='absolute cursor-pointer right-[20px] top-[20px]' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <g clip-path="url(#clip0_149_2159)">
+                                        <path d="M15.625 16.666H19.7916V18.7493H15.625V16.666ZM15.625 8.33268H22.9166V10.416H15.625V8.33268ZM15.625 12.4993H21.875V14.5827H15.625V12.4993ZM3.12498 18.7493C3.12498 19.8952 4.06248 20.8327 5.20831 20.8327H11.4583C12.6041 20.8327 13.5416 19.8952 13.5416 18.7493V8.33268H3.12498V18.7493ZM5.20831 10.416H11.4583V18.7493H5.20831V10.416ZM10.4166 4.16602H6.24998L5.20831 5.20768H2.08331V7.29102H14.5833V5.20768H11.4583L10.4166 4.16602Z" fill="#BDBDBD"/>
+                                      </g>
+                                      <defs>
+                                        <clipPath id="clip0_149_2159">
+                                          <rect width="25" height="25" fill="white"/>
+                                        </clipPath>
+                                      </defs>
+                                    </svg>
                                 </div>
+                              ))
+                            }
 
-                                <div className='countBox cursor-pointer mr-[100px] flex flex-col bg-[#fff] py-[4px] rounded-[50px] px-[7px]'>
-                                    <p>
-                                      -
-                                    </p>
-                                    <p>
-                                      0
-                                    </p>
-                                    <p>
-                                      +
-                                    </p>
-                                </div>
-
-                                <svg className='absolute cursor-pointer right-[20px] top-[20px]' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <g clip-path="url(#clip0_149_2159)">
-                                    <path d="M15.625 16.666H19.7916V18.7493H15.625V16.666ZM15.625 8.33268H22.9166V10.416H15.625V8.33268ZM15.625 12.4993H21.875V14.5827H15.625V12.4993ZM3.12498 18.7493C3.12498 19.8952 4.06248 20.8327 5.20831 20.8327H11.4583C12.6041 20.8327 13.5416 19.8952 13.5416 18.7493V8.33268H3.12498V18.7493ZM5.20831 10.416H11.4583V18.7493H5.20831V10.416ZM10.4166 4.16602H6.24998L5.20831 5.20768H2.08331V7.29102H14.5833V5.20768H11.4583L10.4166 4.16602Z" fill="#BDBDBD"/>
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_149_2159">
-                                      <rect width="25" height="25" fill="white"/>
-                                    </clipPath>
-                                  </defs>
-                                </svg>
-                            </div>
-
-                            <div className="checkoutItem border-t border-[#E0E0E0] flex justify-between relative py-[25px]">
-                                <div className='flex'>
-                                  <Image
-                                      src="/client/miniFood/pizza.svg" 
-                                      alt="" 
-                                      width={45}
-                                      height={45}
-                                  />
-
-                                  <div className='flex justify-center flex-col gap-[6px] ml-[12px] cursor-pointer'>
-                                    <p className='text-[#4F4F4F] font-medium text-[16px]'>
-                                      Papa John’s Pizza Restaurant
-                                    </p>
-                                    <p className='text-[#828282] font-medium text-[14px]'>
-                                      $15.80
-                                    </p>
-                                  </div>
-                                </div>
-
-                                <div className='countBox cursor-pointer mr-[100px] flex flex-col bg-[#fff] py-[4px] rounded-[50px] px-[7px]'>
-                                    <p>
-                                      -
-                                    </p>
-                                    <p>
-                                      0
-                                    </p>
-                                    <p>
-                                      +
-                                    </p>
-                                </div>
-
-                                <svg className='absolute cursor-pointer right-[20px] top-[20px]' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <g clip-path="url(#clip0_149_2159)">
-                                    <path d="M15.625 16.666H19.7916V18.7493H15.625V16.666ZM15.625 8.33268H22.9166V10.416H15.625V8.33268ZM15.625 12.4993H21.875V14.5827H15.625V12.4993ZM3.12498 18.7493C3.12498 19.8952 4.06248 20.8327 5.20831 20.8327H11.4583C12.6041 20.8327 13.5416 19.8952 13.5416 18.7493V8.33268H3.12498V18.7493ZM5.20831 10.416H11.4583V18.7493H5.20831V10.416ZM10.4166 4.16602H6.24998L5.20831 5.20768H2.08331V7.29102H14.5833V5.20768H11.4583L10.4166 4.16602Z" fill="#BDBDBD"/>
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_149_2159">
-                                      <rect width="25" height="25" fill="white"/>
-                                    </clipPath>
-                                  </defs>
-                                </svg>
-                            </div>
-
-                            <div className='bg-[#D63626] py-[8px] px-[20px] rounded-[100px] flex justify-between items-center mt-9 '>
+                            <div onClick={sendCheckout} className='bg-[#D63626] cursor-pointer py-[8px] px-[20px] rounded-[100px] flex justify-between items-center mt-9 '>
                                 <p className='text-white text-[22px] font-medium'>
                                   Checkout
                                 </p>
 
                                 <Button
-                                    value={"37.70"}
+                                    value={checkoutTotalPrice}
                                     color={"#D63626"}
                                     size={"20px"}
                                     background={"#FFFFFF"}

@@ -9,8 +9,6 @@ interface TitleTypes {
 }
 
 const Title = ({ value , size , weight , color , mwidth }:TitleTypes) => {
-  console.log(mwidth);
-  
   return (
     <p style={{fontSize:size,maxWidth:mwidth,color:color,fontWeight: weight}}>
         {

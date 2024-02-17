@@ -6,10 +6,11 @@ interface InputTypes {
     name: string,
     placeholder: string,
     value: string,
+    disabled?: any,
     onInputChange: (name: string, value: string) => void,
 }
 
-const InputComponent: FC<InputTypes> = ({ type , placeholder , id , value , name , onInputChange }) => {
+const InputComponent: FC<InputTypes> = ({ type , placeholder , id , value , disabled , name , onInputChange }) => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;

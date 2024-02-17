@@ -30,7 +30,7 @@ const CategoryComponent = ({ detail , deleteCategory , index , editCategory }) =
                 </span>
             </td>
             <td className="border-t text-center  p-1 w-[48px] h-[48px]" >
-                <img src={`${detail.img_url}`} />
+                <img className='w-10 h-10 object-cover' src={`${detail.img_url}`} />
             </td>
             <td className="border-t text-center  p-1 max-w-[290px] overflow-x-auto whitespace-nowrap">
                 {detail.name}

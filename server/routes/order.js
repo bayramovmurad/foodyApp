@@ -69,6 +69,7 @@ export async function handlerAddOrderPOST(req, res, col) {
   }
 
   const idToken = authHeader.split(" ")[1];
+  console.log("test");
 
   try {
     const decodedToken = verifyJWT(idToken);
@@ -76,6 +77,7 @@ export async function handlerAddOrderPOST(req, res, col) {
     const { basket_id, delivery_address, payment_method, contact } = req.body;
 
     console.log('"payment_method', payment_method);
+    console.log("test");
 
     // if (payment_method != 0 || payment_method != 1) {
     //   res

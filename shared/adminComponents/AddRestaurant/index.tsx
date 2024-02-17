@@ -130,7 +130,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     return (
         <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0 overflow-x-scroll  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
             <ToastContainer />
-            <button onClick={callBack} className="absolute left-[-30px] top-[50px]">
+            <button onClick={callBack} className="relative left-[-20px] top-[-10px]">
                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="27" height="27" rx="13.5" fill="#C74FEB" />
                     <g clipPath="url(#clip0_135_245)">
