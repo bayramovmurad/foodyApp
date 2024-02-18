@@ -11,6 +11,7 @@ import Dropdown from '../../../shared/adminComponents/Dropdown';
 
 import { getProducts, deleteProduct, getRestuarants } from '../../../services/index';
 import RightMenu from '../../../shared/adminComponents/RightMenu';
+import { useGlobalStore } from '../../../provider/provider';
 
 interface Product {
   id: string;
@@ -22,6 +23,7 @@ interface Product {
 }
 
 const AdminProducts: NextPage = () => {
+
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [activeData, setActiveData] = useState<Product[]>([]);

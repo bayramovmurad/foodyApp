@@ -102,7 +102,7 @@ const Basket = () => {
               alt="pizza"
               width={1373}
               height={448}
-              className="max-w-[1373px] w-full max-h-[400px]"
+              className="max-w-[1373px] w-full max-h-[400px] object-contain"
             />
             <div className='flex mb-2 border-b border-[#F2F2F2]  justify-between py-[20px] px-[50px]'>
               <div className="left flex flex-col gap-1">

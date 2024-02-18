@@ -3,8 +3,14 @@ import Head from "next/head";
 import Dashboard from "./dashboard";
 import Header from "../../shared/adminComponents/Header/Header";
 import SideBar from "../../shared/adminComponents/SideBar/SideBar";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const AdminDashboard: NextPage = () => {
+  const { push } = useRouter()
+  useEffect(() => {
+    push("/Admin/dashboard")
+  },[])
   return (
     <div>
       <Head>

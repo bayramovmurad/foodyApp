@@ -1,0 +1,62 @@
+.swiper {
+    width: 100%;
+    position: relative;
+    height: 73px;
+}
+
+.swiper-wrapper{
+    display: flex;
+    height: fit-content;
+    justify-content: space-between;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+
+.swiper-button-next::after {
+}
+
+
+.swiper-button-prev::after {
+}
+
+.swiper-button-prev {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,.25);
+    background: white;
+    cursor: pointer;
+    padding: 15px;
+    z-index: 100;
+    left: 9px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url("../../public/client/arrow/back.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.swiper-button-next {
+    background: white;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,.25);
+    cursor: pointer;
+    padding: 15px;
+    z-index: 100;
+    right: 9px;
+    position: absolute;
+    top: 12%;
+    transform: translateY(-50%);
+    background-image: url("../../public/client/arrow/back.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    rotate: 180deg;
+}

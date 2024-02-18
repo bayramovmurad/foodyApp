@@ -4,15 +4,18 @@ import Footer from '../shared/components/Footer/index'
 import Title from "../shared/components/Title";
 
 import Image from "next/image";
-import { use, useEffect, useState } from "react";
-import { getOffers } from "../services";
-
-
-
+import { useEffect, useState } from "react";
+import { Navigation, Pagination , Autoplay , Mousewheel, Keyboard } from 'swiper/modules';
+import { getOffers, getRestuarants } from "../services";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { useGlobalStore } from "../provider/provider";
+import { useRouter } from "next/router";
 
 const Home = () => {
+    const { push } = useRouter()
+    const { setActiveRestaurant } = useGlobalStore();
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [restaurantData, setRestaurantData] = useState([]);
 
     const getOfferData = async () => {
         const res = await getOffers();
@@ -22,8 +25,24 @@ const Home = () => {
     useEffect(() => {
         getOfferData();
     }, []);
-    console.log(data);
+
+
+    const getRestaurantData = async () => {
+        const res = await getRestuarants();
+        setRestaurantData(res?.data.result.data);
+    }
+
+    useEffect(() => {
+        getRestaurantData();
+    }, []);
     
+    const handleData = (item:any) => {
+        setActiveRestaurant(item)
+        push("/client/basket")
+    }
+
+    console.log(restaurantData);
+
     return (
         <div className="bg-white">
             <div className="p-[30px]">
@@ -37,6 +56,36 @@ const Home = () => {
             </div>
 
             <main className="p-[30px] mb-[300px]">
+                <section className=" relative" id="">
+                    <div className="banner bg-white h-[121px] py-4 px-4 max-w-[1440px] flex gap-4">
+                        <Swiper
+                          spaceBetween={20}
+                          slidesPerView={6}
+                          autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                          }}
+                          navigation={true}
+                          modules={[Autoplay, Pagination, Navigation]}
+                          className="mySwiper"
+                        >
+                            {
+                                restaurantData?.map((item:any) => (
+                                    <SwiperSlide>
+                                        <div onClick={() => handleData(item)} className="w-[73px] relative h-[73px]  text-[12px] text-center rounded-full flex justify-center items-center">
+                                            <img
+                                                src={item.img_url}
+                                                className="absolute w-[73px] border-[0.5px] border-[#dbdbdb] p-[2px] object-cover h-[73px] rounded-full z-5"
+                                            />
+                                        </div>
+                                    </SwiperSlide>
+                                ))
+                            }
+                        
+                        </Swiper>
+                    </div>
+                </section>
+
                 <section className="bg-white pt-[50px] w-full flex justify-center" id="features">
                     <div className="flex w-full flex-col justify-center items-center text-center max-w-[1440px] ">
                         <Title
