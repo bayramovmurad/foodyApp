@@ -15,6 +15,7 @@ const Basket = () => {
     const [data, setData] = useState([])
     const [basketData, setBasketData] = useState([])
     const [checkoutTotalPrice, setCheckoutTotalPrice] = useState(0);
+    const [clearId,setClearId] = useState("")
 
 
     useEffect(() => {
@@ -53,12 +54,15 @@ const Basket = () => {
       // }
       // console.log(basketObj);
       const res = await clearBasket(id);
-      console.log(id);
+      if(res?.status == 200){
+        getBasketFunction()
+      }
     }
 
     const getBasketFunction = async () => {
       const response = await getBasket()
       setBasketData(response?.data.result.data.items);
+      setClearId(response?.data.result.data.id);
     }
 
     useEffect(() => {
@@ -203,11 +207,24 @@ const Basket = () => {
                   </div>
               
                   <div className="checkoutBox max-w-[397px] max-h-[400px] overflow-y-scroll w-full py-[10px] px-[12px] bg-[#F3F4F6] rounded">
-                      <p className='text-[#D63626] text-[16px] font-medium mb-[12px]'>
-                        {
-                          basketData?.length
-                        } items
-                      </p>
+                      <div className='flex justify-between'>
+                        <p className='text-[#D63626] text-[16px] font-medium mb-[12px]'>
+                          {
+                            basketData?.length
+                          } items
+                        </p>
+
+                        <svg onClick={() => clearBasketItem(clearId)} className='cursor-pointer right-0 top-0' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_149_2159)">
+                            <path d="M15.625 16.666H19.7916V18.7493H15.625V16.666ZM15.625 8.33268H22.9166V10.416H15.625V8.33268ZM15.625 12.4993H21.875V14.5827H15.625V12.4993ZM3.12498 18.7493C3.12498 19.8952 4.06248 20.8327 5.20831 20.8327H11.4583C12.6041 20.8327 13.5416 19.8952 13.5416 18.7493V8.33268H3.12498V18.7493ZM5.20831 10.416H11.4583V18.7493H5.20831V10.416ZM10.4166 4.16602H6.24998L5.20831 5.20768H2.08331V7.29102H14.5833V5.20768H11.4583L10.4166 4.16602Z" fill="#BDBDBD" />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_149_2159">
+                              <rect width="25" height="25" fill="white" />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      </div>
 
                       {
                         basketData?.map((item:any) => (
@@ -249,16 +266,7 @@ const Basket = () => {
                                     </p>
                                   </div>
 
-                                  <svg onClick={() => clearBasketItem(item.id)} className='absolute cursor-pointer right-0 top-0' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_149_2159)">
-                                      <path d="M15.625 16.666H19.7916V18.7493H15.625V16.666ZM15.625 8.33268H22.9166V10.416H15.625V8.33268ZM15.625 12.4993H21.875V14.5827H15.625V12.4993ZM3.12498 18.7493C3.12498 19.8952 4.06248 20.8327 5.20831 20.8327H11.4583C12.6041 20.8327 13.5416 19.8952 13.5416 18.7493V8.33268H3.12498V18.7493ZM5.20831 10.416H11.4583V18.7493H5.20831V10.416ZM10.4166 4.16602H6.24998L5.20831 5.20768H2.08331V7.29102H14.5833V5.20768H11.4583L10.4166 4.16602Z" fill="#BDBDBD" />
-                                    </g>
-                                    <defs>
-                                      <clipPath id="clip0_149_2159">
-                                        <rect width="25" height="25" fill="white" />
-                                      </clipPath>
-                                    </defs>
-                                  </svg>
+                                  
                               </div>
                         ))
                       }

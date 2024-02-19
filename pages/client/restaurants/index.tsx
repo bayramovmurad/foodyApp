@@ -17,7 +17,7 @@ const Restaurants = () => {
     const [categoryData,setCategoryData] = useState([])
     const [restaurantsData,setRestaurantsData] = useState([])
     const [loadingRestaurant, setLoadingRestaurant] = useState(true)
-        
+    const [noProductTitle,setNoProductTitle] = useState("")
     const renderCategory = async () => {
         const response = await getCategory()
         setCategoryData(response?.data.result.data);
@@ -43,6 +43,9 @@ const Restaurants = () => {
 
     const filterRestaurants = (id: string | null) => {
         let item = originalData.filter((item:any) => item.category_id == id)
+        if(item.length == 0){
+            setNoProductTitle("Restoran tapilmadi .")
+        }
         setRestaurantsData(item)
     }
 
@@ -110,6 +113,12 @@ const Restaurants = () => {
                                 />  
                             ))
                         }
+
+                        <p className='w-full text-center font-semibold text-[20px]'>
+                            {
+                                noProductTitle
+                            }
+                        </p>
                     </div>
 
                 </div>
