@@ -10,7 +10,7 @@ import EditCategory from "../../../shared/adminComponents/EditCategory";
 import { useEffect, useState } from "react";
 import AddCategory from "../../../shared/adminComponents/AddCategory";
 import { getCategory , deleteCategory } from '../../../services/index'
-import { toast } from "react-toastify";
+import swal from "sweetalert";
 
 interface CategoryData {
   id: string | number;
@@ -59,7 +59,7 @@ const AdminCategory: NextPage = () => {
     const res: any = await deleteCategory(id);
     
     if (res?.status == 200 || res?.status == 201 || res?.status == 204) {
-      toast.success("category silindi")
+      swal("category silindi");
       renderCategory()
     }
   }; 

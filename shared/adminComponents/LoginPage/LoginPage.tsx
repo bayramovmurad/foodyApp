@@ -3,7 +3,7 @@ import Input from "../../components/Input"
 import Label from "../../components/Label"
 import Language from "../../components/Language"
 
-import { ToastContainer, toast } from 'react-toastify';
+import swal from 'sweetalert';
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
@@ -39,17 +39,16 @@ const LoginPage = () => {
     const saveData = () => {
         if(formData.username == "admin" && formData.password == "admin"){
             localStorage.setItem("adminToken","true")
-            toast.success("Düzgün Ad ve Şifrə");
+            swal("Düzgün Ad ve Şifrə");
             setTimeout(() => {
                 push("dashboard")
-            }, 500);
+            }, 2500);
         }else{
-            toast.error("Yanliş Ad ve ya Şifrə");
+            swal("Oops!", "Yanliş Ad ve ya Şifrə", "error");
         }
     }
     return (
         <div className="">
-            <ToastContainer />
             <div className="w-[102.96px] h-[22.06px] text-center pt-[57.23px] pl-[32.04px]"><span className="text-neutral-100 text-[28px] font-extrabold font-['Mukta'] leading-normal tracking-wide">Foody</span><span className="text-yellow-500 text-[28px] font-extrabold font-['Mukta'] leading-normal tracking-wide">.</span></div>
                 <div className="md:mt-[198px] mt-[75.23px]  lg:min-w-[830px] md:w-[700px] w-[320px] mx-auto  md:flex  ">
                     <div className="md:w-[425px] w-[320px] h-[411px] md:bg-gray-700 flex flex-col justify-center items-center">

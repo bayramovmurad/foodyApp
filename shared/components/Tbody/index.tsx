@@ -91,7 +91,7 @@ const TBody = ({ item , deleteOrder }:any) => {
               <td className='px-[12px] text-center'>
                     <p className='text-center text-[#00072B] font-normal text-[14px]'>
                         {
-                          item.payment_method
+                          item.payment_method == 0 ? "pay at the door" : "pay at the door by credit card"
                         }
                     </p>
               </td>

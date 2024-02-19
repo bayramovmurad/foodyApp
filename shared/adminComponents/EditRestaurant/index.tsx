@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback, ChangeEvent } from 'react';
-import { updateOffer } from '../../../services/index';
+import { getCategory, updateOffer, updateRestaurant } from '../../../services/index';
 import { fileStorage } from '../../../server/configs/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import Label from '../../components/Label';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import swal from 'sweetalert';
+import Dropdown from '../Dropdown';
 
 interface EditCategoryProps {
     right: string;
@@ -21,10 +22,15 @@ interface EditCategoryProps {
 const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle, activeEditId, activeData }) => {
     //! States
     const [IMG, setIMG] = useState<string>('');
+    const [activeCategoryId, setActiveCategoryId] = useState<string>("")
     const [isActive, setIsActive] = useState<boolean>(false);
+    const [restaurants, setRestaurants] = useState<string[]>([]);
     const [formData, setFormData] = useState<{
-        name: string;
-        description: string;
+        name: "",
+        cuisine: "",
+        delivery_min: "",
+        price: "",
+        address: ""
     }>({
         name: "",
         description: "",
@@ -41,17 +47,29 @@ const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle,
         []
     );
 
+    const filterProduct = async (title: string) => {
+        const data = await getCategory()
+        const restaurant = data?.data.result.data.filter((item: any) => item.name == title)
+        setActiveCategoryId(restaurant[0].id)
+    }
+
     //! Save object Function
     const saveData = async () => {
         if (formData.name === '' || formData.description === '') {
             swal("Oops","Formu Doldurun !","error");
         } else {
             const productData = {
-                name: formData.name,
-                description: formData.description,
-                img_url: IMG,
+                "name": formData.name,
+                "category_id": activeCategoryId,
+                "img_url": IMG,
+                "cuisine": formData.cuisine,
+                "address": formData.address,
+                "delivery_min": formData.delivery_min,
+                "delivery_price": formData.price
             };
-            const data = await updateOffer(activeEditId, productData);
+            const data = await updateRestaurant(activeEditId, productData);
+            console.log(productData);
+            
             if (data?.status === 200 || data?.status === 201) {
                 swal("Update olundu");
             }
@@ -61,9 +79,14 @@ const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle,
     //! Render Product Detail
     useEffect(() => {
         if (activeData) {
+            console.log(activeData);
+            
             setFormData({
                 name: activeData.name || '',
-                description: activeData.description || ''
+                cuisine: activeData.cuisine || '',
+                delivery_min: activeData.delivery_min || '',
+                price: activeData.delivery_price || '',
+                address: activeData.address || '',
             });
             setIMG(activeData.img_url || '')
         }
@@ -91,6 +114,23 @@ const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle,
             console.error('No file selected');
         }
     };
+
+    //! Render Category Function
+
+    const renderCategory = async () => {
+        try {
+            const data = await getCategory();
+            const restaurantNames = data?.data.result.data.map((item: any) => item.name);
+            setRestaurants(restaurantNames);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        renderCategory();
+    }, [])
+
 
     return (
         <div style={{ right: isActive ? '-100%' : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
@@ -143,14 +183,35 @@ const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle,
             <div className="flex justify-between mt-[50px] adminAddProduct">
                 <p className="text-[#C7C7C7] text-lg not-italic font-medium leading-6">Edit your Product description and necessary information</p>
 
-                <div className="rounded-[14px] bg-[#43445A] py-[20px] px-[25px] gap-5 max-w-[536px] w-full flex flex-col justify-center items-center">
+                <div className="rounded-[14px] bg-[#43445A] py-[20px] overflow-y-scroll h-[500px] px-[25px] gap-5 max-w-[536px] w-full flex flex-col items-center">
                     <div className='flex flex-col w-full'>
                         <Label value={"Name"} forId={"name"} />
                         <Input type={"text"} id={"name"} name={"name"} placeholder={""} value={formData.name} onInputChange={handleInputChange} />
                     </div>
                     <div className='flex flex-col w-full'>
-                        <Label value={"Description"} forId={"description"} />
-                        <Input type={"text"} id={"description"} name={"description"} placeholder={""} value={formData.description} onInputChange={handleInputChange} />
+                        <Label value={"Cuisine"} forId={"cusine"} />
+                        <Input type={"text"} id={"cusine"} name={"cuisine"} placeholder={""} value={formData.cuisine} onInputChange={handleInputChange} />
+                    </div>
+                    <div className='flex flex-col w-full'>
+                        <Label value={"Delivery Price"} forId={"price"} />
+                        <Input type={"text"} id={"price"} name={"price"} placeholder={""} value={formData.price} onInputChange={handleInputChange} />
+                    </div>
+                    <div className='flex flex-col w-full'>
+                        <Label value={"Delivery Min"} forId={"deliveryMIN"} />
+                        <Input type={"text"} id={"deliveryMIN"} name={"delivery_min"} placeholder={""} value={formData.delivery_min} onInputChange={handleInputChange} />
+                    </div>
+                    <div className='flex flex-col w-full'>
+                        <Label value={"Address"} forId={"address"} />
+                        <Input type={"text"} id={"address"} name={"address"} placeholder={""} value={formData.address} onInputChange={handleInputChange} />
+                    </div>
+                    <div className='w-full'>
+                        <Label value={"Category"} forId="" />
+
+                        <Dropdown
+                            filterItems={filterProduct}
+                            items={restaurants}
+                            className={"flex bg-[#5A5B70] rounded-[14px] h-[46px] mt-2 px-[18px] py-2 relative w-full"}
+                        />
                     </div>
                 </div>
             </div>
@@ -169,7 +230,7 @@ const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle,
                     callBack={callBack}
                 />
                 <Button
-                    value={'Update Offer'}
+                    value={'Update Restaurant'}
                     color={'#FFF'}
                     size={'18px'}
                     background={'#C035A2'}

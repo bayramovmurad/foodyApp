@@ -10,6 +10,7 @@ import Input from "../../../shared/components/Input";
 import Label from "../../../shared/components/Label";
 import Button from "../../../shared/components/Button";
 import type { NextPage } from "next";
+import swal from "sweetalert";
 
 interface FormDataTypes {
   fullname: string;
@@ -38,15 +39,14 @@ const Register: NextPage = () => {
     const isValidEmail = isEmail(formData.email);
 
     if (Object.values(formData).some(value => value === '')) {
-      toast.warning("Formu Doldurun");
+      swal("Oops","Formu Doldurun !","error");
     } else if (!isValidEmail) {
-      toast.warning("Duzgun Email Daxil Edin");
+      swal("Email Error","Duzgun Email Daxil Edin","error");
     } else {
       const response = await register(formData);
 
       if (response?.status === 201) {
-        toast.success("Register Olundu");
-
+        swal("Register Olundu");
         setTimeout(() => {
           push("/client/login");
         }, 1400);

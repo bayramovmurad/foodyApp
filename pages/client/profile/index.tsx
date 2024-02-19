@@ -10,6 +10,7 @@ import { toArr } from '../../../utils/toArr/index';
 import { profileClient } from '../../../services';
 import { fileStorage } from '../../../server/configs/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import swal from 'sweetalert';
 interface FormDataTypes {
   number: string;
   username: string;
@@ -43,23 +44,29 @@ const Profile: FC = () => {
 
     let saveData = async (e: any) => {
       e.preventDefault();
-      const userInformation: any = localStorage?.getItem("userInformation");
-      const parseData = JSON.parse(userInformation);
-      let data = {
-          name: parseData.fullname,
-          email: parseData.email,
-          username: formData.username,
-          img_url: IMG,
-          phone: 98312,
-          fullname: formData.fullname
+      if(formData.fullname == "" || formData.username == "" || formData.number == "") {
+        swal("Error","Formu Doldurun !","error")
+      }else{
+        const userInformation: any = localStorage?.getItem("userInformation");
+        const parseData = JSON.parse(userInformation);
+        let data = {
+            name: "parseDatafullname",
+            email: parseData.email,
+            username: formData.username,
+            img_url: IMG,
+            phone: formData.number,
+            fullname: formData.fullname
+        }
+        const res = await profileClient(data)
+        if(res?.status == 200){
+          swal("Profile update olundu")
+        };
+        const info:any = localStorage.getItem("userInformation")
+        let obj = JSON.parse(info)
+        obj.fullname = res?.data.user.fullname
+        obj.img_url = res?.data.user.img_url
+        localStorage.setItem("userInformation",JSON.stringify(obj))
       }
-      const res = await profileClient(data)
-      console.log(res);
-      const info:any = localStorage.getItem("userInformation")
-      let obj = JSON.parse(info)
-      obj.fullname = res?.data.user.fullname
-      obj.img_url = res?.data.user.img_url
-      localStorage.setItem("userInformation",JSON.stringify(obj))
     };
 
     const handleNewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,6 +141,13 @@ const Profile: FC = () => {
                             upload
                           </span>
                       </label>
+                </div>
+                <div>
+                  <img
+                    src={IMG}
+                    alt=''
+                    className='w-[76px] h-[71px] rounded-full ml-2'
+                  />
                 </div>
               </div>
 

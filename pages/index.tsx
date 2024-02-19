@@ -41,7 +41,6 @@ const Home = () => {
         push("/client/basket")
     }
 
-    console.log(restaurantData);
 
     return (
         <div className="bg-white">
@@ -72,7 +71,7 @@ const Home = () => {
                             {
                                 restaurantData?.map((item:any) => (
                                     <SwiperSlide>
-                                        <div onClick={() => handleData(item)} className="w-[73px] relative h-[73px]  text-[12px] text-center rounded-full flex justify-center items-center">
+                                        <div onClick={() => handleData(item)} className="cursor-pointer w-[73px] relative h-[73px]  text-[12px] text-center rounded-full flex justify-center items-center">
                                             <img
                                                 src={item.img_url}
                                                 className="absolute w-[73px] border-[0.5px] border-[#dbdbdb] p-[2px] object-cover h-[73px] rounded-full z-5"

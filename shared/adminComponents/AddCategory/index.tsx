@@ -5,9 +5,9 @@ import Button from '../../components/Button';
 import Dropdown from '../Dropdown';
 
 import { createCategory , createProduct } from '../../../services/index'
-import { ToastContainer, toast } from 'react-toastify';
 import { fileStorage } from '../../../server/configs/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import swal from 'sweetalert';
 
 interface MenuTypes {
     right: string,
@@ -45,8 +45,8 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     //! Save object Function
 
     const saveData = async () => {
-        if (formData.name == "" || formData.slug == "") {
-            toast.warning("Formu Doldurun !")
+        if (formData.name == "" || formData.slug == "" || IMG == "") {
+            swal("Error","Formu Doldurun !","error");
         } else {
             const categoryData = {
                 "name": formData.name,
@@ -58,7 +58,7 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             console.log(data);
             
             if (data?.status == 200 || data?.status == 201) {
-                toast.success("data elave olundu")
+                swal("data elave olundu");
             }
         }
     }
@@ -93,7 +93,6 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
 
     return (
         <div style={{ right: isActive ? "-100%" : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
-            <ToastContainer />
             <button onClick={callBack} className="absolute left-[-30px] top-[50px]">
                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="27" height="27" rx="13.5" fill="#C74FEB" />

@@ -5,7 +5,7 @@ import Header from "../../../shared/adminComponents/Header/Header";
 import OrderComponent from "../../../shared/adminComponents/OrderComponent/OrderComponent";
 import { useEffect, useState } from "react";
 import { deleteOrder, getOrders } from "../../../services";
-import { toast } from "react-toastify";
+import swal from "sweetalert";
 
 const AdminOrders: NextPage = () => {
   const [activeData,setActiveData] = useState([])
@@ -19,7 +19,9 @@ const AdminOrders: NextPage = () => {
     
     const res:any = await deleteOrder(orderObj)
     renderOrders()
-    if(res.status == 204){toast.success("order delete")};
+    if(res.status == 204){
+      swal("order delete");
+    };
   }
 
   const renderOrders = async () => {

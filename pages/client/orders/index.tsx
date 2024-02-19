@@ -6,6 +6,7 @@ import Footer from '../../../shared/components/Footer/index';
 import Thead from '../../../shared/components/Thead/index';
 import TBody from '../../../shared/components/Tbody/index';
 import { deleteOrder, getOrders } from '../../../services';
+import swal from 'sweetalert';
 
 interface OrdersProps {}
 
@@ -27,7 +28,7 @@ const Orders: FC<OrdersProps> = () => {
           "order_id": id
         }
         const response = await deleteOrder(deleteObj)
-        console.log(response);
+        swal("Order Silindi")
         renderOrders()
     }
 

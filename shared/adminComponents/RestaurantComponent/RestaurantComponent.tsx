@@ -11,7 +11,7 @@ interface ProductsComponentProps {
   deleteProduct: (id: string) => void;
 }
 
-const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct }) => {
+const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct , editCategory }) => {
   const [isMenu, setIsMenu] = useState<boolean>(false)
   const [deleteModal, setDeleteModal] = useState<boolean>(false)
 
@@ -44,7 +44,7 @@ const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct
             </div>
           </div>
           <div className="flex flex-col ml-auto gap-y-4">
-            <img src="/adminImg/RestaurantPage/Pen.svg" alt="" />
+            <img onClick={() => editCategory(detail.id)} src="/adminImg/RestaurantPage/Pen.svg" alt="" />
             <img onClick={() => deleteItem(detail.id)} className='cursor-pointer' src="/adminImg/RestaurantPage/Bin.svg" alt="" />
           </div>
         </div>

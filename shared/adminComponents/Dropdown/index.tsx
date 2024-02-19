@@ -23,7 +23,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) =>
   };
 
   const filterItem = () => {
-    let newData = items.filter((item) => item !== activeItem);
+    let newData = items?.filter((item) => item !== activeItem);
     return newData;
   };
 

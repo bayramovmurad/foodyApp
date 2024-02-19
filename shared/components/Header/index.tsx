@@ -127,7 +127,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                 <div className="absolute left-0 top-16 w-[300px] rounded-lg bg-white p-4">
                                     {
                                         restaurants.map((item:any) => (
-                                            <div className="flex items-center gap-4 border-b pb-2 pt-2" onClick={() => setActiveRestaurant(item) || push("/client/basket")}>
+                                            <div className="flex items-center gap-4 border-b pb-2 pt-2 cursor-pointer"  onClick={() => setActiveRestaurant(item) || push("/client/basket")}>
                                                 <img
                                                     src={item.img_url}
                                                     alt="img"

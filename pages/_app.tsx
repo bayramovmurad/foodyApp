@@ -13,10 +13,7 @@ import '../styles/swipper/swipper.css';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider>
-      <ToastContainer />
-
       <Component {...pageProps} />
-
     </Provider>
   )
 }

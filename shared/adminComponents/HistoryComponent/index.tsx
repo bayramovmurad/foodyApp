@@ -43,8 +43,8 @@ const OrderComponent = ({activeData}:any) => {
                     {
                         activeData?.map((item:any) => (
                             <tr>
-                                <td className="border text-center p-1 overflow-x-auto whitespace-nowrap"><p className="border px-2 py-1 rounded-lg"><p className=" whitespace-nowrap overflow-x-scroll max-w-28">{item.id}</p></p></td>
-                                <td className="border text-center p-1 overflow-x-auto whitespace-nowrap"><p className="border px-2 py-1 rounded-lg"><p className=" whitespace-nowrap overflow-x-scroll max-w-[150px]">{item.customer_id}</p></p></td>
+                                <td className="border text-center p-1 overflow-x-auto whitespace-nowrap w-32"><p className="border px-2 py-1 rounded-lg max-w-28"><p className=" whitespace-nowrap overflow-x-scroll max-w-28">{item.id}</p></p></td>
+                                <td className="border text-center p-1 overflow-x-auto whitespace-nowrap w-[160px]"><p className="border px-2 py-1 rounded-lg max-w-[150px]"><p className=" whitespace-nowrap overflow-x-scroll max-w-[150px]">{item.customer_id}</p></p></td>
                                 <td className="border text-center p-1 overflow-x-auto whitespace-nowrap max-w-[130px] px-[10px]" >{formatDate(item.created)}</td>
                                 <td className="border text-center p-1 overflow-x-auto whitespace-nowrap max-w-[177px] px-[10px]">{item.delivery_address}</td>
                                 <td className="border text-center p-1 overflow-x-auto whitespace-nowrap">{item.amount}</td>

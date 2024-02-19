@@ -8,8 +8,8 @@ import Image from "next/image";
 import { useState } from "react";
 import Button from "../../../shared/components/Button";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import { login } from "../../../services";
+import swal from "sweetalert";
 
 interface FormDataTypes {
   email: string;
@@ -33,7 +33,7 @@ const Login: NextPage = () => {
 
     const saveData = async () => {
       if (Object.values(formData).some(value => value === '')) {
-        toast.warning("Formu Doldurun");
+        swal("Error","Formu Doldurun","error");
       } else {
         const response:any = await login(formData);
         console.log(response);
@@ -46,13 +46,13 @@ const Login: NextPage = () => {
           localStorage.setItem("token", JSON.stringify(tokenObj));
           localStorage.setItem("userInformation", JSON.stringify(response?.data.user))  
     
-          toast.success("Login Olundu");
+          swal("Login Olundu");
   
           setTimeout(() => {
             push("/");
           }, 800);
         }else{
-          toast.warning("Yanlis Email veya sifre");
+          swal("Error","Yanlis Email veya sifre","error");
         }
       }
     };

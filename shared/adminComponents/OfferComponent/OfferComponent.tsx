@@ -36,8 +36,8 @@ const OfferComponent = ({ detail, deleteOffer, editCategory }: OfferComponentPro
                     {detail.id}
                 </span>
             </td>
-            <td className="border-t text-center  p-1 w-10" >
-                <img src={`${detail.img_url}`} />
+            <td className="border-t text-center  p-1 w-[40px] h-[40px]">
+                <img src={`${detail.img_url}`} className="w-[40px] object-cover h-[40px]" />
             </td>
             <td className="border-t text-center  p-1 max-w-[290px] overflow-x-auto whitespace-nowrap">
                 {detail.name}

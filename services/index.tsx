@@ -76,6 +76,15 @@ export const createRestaurant = async (data: any) => {
     }
 }
 
+export const updateRestaurant = async (id: string | number, data: any) => {
+    try {
+        const response = await instanceAxios.put(`/api/restuarants/${id}`, data);
+        return response;
+    } catch (error) {
+        console.log({ error })
+    }
+}
+
 //! Category
 
 export const getCategory = async () => {
@@ -254,15 +263,17 @@ export const deleteBasket = async (data: any) => {
     }
 }
 
-export const clearBasket = async (data: any) => {
+export const clearBasket = async (id: any) => {
     try {
         let item: any = localStorage.getItem("token")
         let acsess_token = JSON.parse(item)
         const response = await instanceAxios.delete('/api/basket/clear', {
-            data: data,
             headers: {
                 Authorization: `Bearer ${acsess_token.access_token}`,
-            }
+            },
+            data: {
+                "basket_id": id,
+            },
         });
         return response;
     } catch (error) {

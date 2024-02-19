@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import { ToastContainer, toast } from 'react-toastify';
 
 import ProductsComponent from '../../../shared/adminComponents/ProductsComponent/ProductsComponent';
 import EditMenuProduct from '../../../shared/adminComponents/EditMenuProduct';
@@ -12,6 +11,7 @@ import Dropdown from '../../../shared/adminComponents/Dropdown';
 import { getProducts, deleteProduct, getRestuarants } from '../../../services/index';
 import RightMenu from '../../../shared/adminComponents/RightMenu';
 import { useGlobalStore } from '../../../provider/provider';
+import swal from 'sweetalert';
 
 interface Product {
   id: string;
@@ -53,7 +53,7 @@ const AdminProducts: NextPage = () => {
     setIsLoading(false)
     const response: any = await deleteProduct(id);
     if (response.status === 204) {
-      toast.success('Product Silindi');
+      swal("Product Silindi");
       renderProducts();
       setIsLoading(false)
     }

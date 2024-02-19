@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 const AdminOrdersHistory: NextPage = () => {
   const [activeData,setActiveData] = useState([])
 
-
   const renderOrders = async () => {
     const res = await getOrderHistory()
     setActiveData(res?.data.result.data)

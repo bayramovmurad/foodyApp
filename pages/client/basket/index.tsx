@@ -48,13 +48,12 @@ const Basket = () => {
     }
 
     const clearBasketItem = async (id: any) => {
-      const basketObj = {
-        basket_id: id,
-      }
-      console.log(basketObj);
-      
-      const res = await clearBasket(basketObj);
-      console.log(res);
+      // const basketObj = {
+      //   basket_id: id,
+      // }
+      // console.log(basketObj);
+      const res = await clearBasket(id);
+      console.log(id);
     }
 
     const getBasketFunction = async () => {
@@ -77,6 +76,8 @@ const Basket = () => {
         });
         setCheckoutTotalPrice(totalPrice);
     };
+    console.log(basketData);
+    
 
     const checkoutFunction = () => {
       push("/client/checkout")
