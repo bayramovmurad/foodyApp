@@ -146,16 +146,15 @@ const Checkout = () => {
                               </div>
 
                               <Button
-                                  value={"Save"}
-                                  color={"#FFF"}
-                                  size={"18px"}
-                                  background={"#6FCF97"}
-                                  width={"100%"}
-                                  height={"53px"}
-                                  radius={"4px"}
-                                  weight={600}
-                                  callBack={saveData}
-                              />
+                  value={"Save"}
+                  color={"#FFF"}
+                  size={"18px"}
+                  background={"#6FCF97"}
+                  width={"100%"}
+                  height={"53px"}
+                  radius={"4px"}
+                  weight={600}
+                  callBack={saveData} isDisabled={false}                              />
                           </div>
                     </form>
                 </div>
