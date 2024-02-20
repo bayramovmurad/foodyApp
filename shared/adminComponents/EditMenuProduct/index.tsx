@@ -115,7 +115,7 @@ const EditMenuProduct = ({ right, callBack, headTitle, activeEditId, activeData 
   const editRestaurantName = () => {
     let productInfo = activeData.filter((item: any) => item.id === activeEditId);
     if(productInfo){
-      let activeRestaurantDetail = originialRestaurants?.filter((item: any) => item.id === productInfo[0].rest_id);
+      let activeRestaurantDetail:any = originialRestaurants?.filter((item: any) => item.id === productInfo[0].rest_id);
       console.log(activeRestaurantDetail?.[0]?.name);
       
       setActiveRestaurantName(activeRestaurantDetail?.[0]?.name);
