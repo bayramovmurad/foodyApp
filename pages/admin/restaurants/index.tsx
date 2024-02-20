@@ -11,9 +11,7 @@ import { deleteRestuarant, getCategory, getRestuarants } from "../../../services
 import swal from "sweetalert";
 import EditCategory from "../../../shared/adminComponents/EditRestaurant";
 
-
-
-interface Restaurants {
+interface Restaurant {
   id: number;
   name: string;
   restaurantName: string;
@@ -21,152 +19,149 @@ interface Restaurants {
 }
 
 const AdminRestaurants: NextPage = () => {
-    const [activeEditId, setActiveEditId] = useState<string>('');
-    const [activeData, setActiveData] = useState(null);
-    const [globalData, setGlobalData] = useState([]);
-    const [isEditMenu, setIsEditMenu] = useState<boolean>(false)
-    const [isMenu, setIsMenu] = useState<boolean>(false)
-    const [data, setData] = useState([]);
-    const [restaurants, setRestaurants] = useState<string[]>([]);
+  const [activeEditId, setActiveEditId] = useState<string>('');
+  const [activeData, setActiveData] = useState<Restaurant | null>(null);
+  const [globalData, setGlobalData] = useState<Restaurant[]>([]);
+  const [isEditMenu, setIsEditMenu] = useState<boolean>(false)
+  const [isMenu, setIsMenu] = useState<boolean>(false)
+  const [data, setData] = useState<Restaurant[]>([]);
+  const [restaurants, setRestaurants] = useState<string[]>([]);
 
+  //! Delete
 
-    //! Delete
+  const deleteRestaurants = async (id: number | string): Promise<void> => {
+    const res = await deleteRestuarant(id);
 
-    const deleteRestaurants = async (id: number | string) => {
-      const res = await deleteRestuarant(id);
-      
-      if (res?.status == 200 || res?.status == 201 || res?.status == 204) {
-        swal("Restoran Silindi");
-        renderRestaurant()
-      }
-    };
-
-    //! Filter Restaurant
-
-    const filterRestaurants = async (title: string) => {
-      try {
-        const res = await getCategory();
-        let categoryId = res?.data.result.data.filter((item:any) => item.name== title)
-        
-        
-        let newData = globalData.filter((item: any) => item.category_id === categoryId[0].id);
-        console.log(newData);
-        
-        setData(newData);
-      } catch (error) {
-        console.error(error);
-      }
+    if (res?.status == 200 || res?.status == 201 || res?.status == 204) {
+      swal("Restoran Silindi");
+      renderRestaurant()
     }
+  };
 
-    //! Add Restaurant
+  //! Filter Restaurant
 
-    const addRestaurant = (): void => {
-      setIsMenu(!isMenu);
+  const filterRestaurants = async (title: string): Promise<void> => {
+    try {
+      const res = await getCategory();
+      let categoryId = res?.data.result.data.filter((item: any) => item.name == title)
+
+
+      let newData = globalData.filter((item: any) => item.category_id === categoryId[0].id);
+      console.log(newData);
+
+      setData(newData);
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    // ! Render Restaurant 
+  //! Add Restaurant
 
-    useEffect(() => {
-      renderRestaurant();
-    }, [isMenu,isEditMenu])
+  const addRestaurant = (): void => {
+    setIsMenu(!isMenu);
+  }
 
-    const renderRestaurant = async () => {
-      try {
-        const res:any = await getRestuarants();
-        setData(res.data?.result.data)
-        setGlobalData(res?.data?.result.data)
-      } catch (error) {
-        console.log(error);
-      }
+  // ! Render Restaurant 
+
+  useEffect(() => {
+    renderRestaurant();
+  }, [isMenu, isEditMenu])
+
+  const renderRestaurant = async (): Promise<void> => {
+    try {
+      const res: any = await getRestuarants();
+      setData(res.data?.result.data)
+      setGlobalData(res?.data?.result.data)
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    const renderCategory = async () => {
-      const data = await getCategory();
-      const restaurant = data?.data.result.data.map((item: any) => item.name);
-      console.log(data?.data.result.data);
-      setRestaurants(restaurant);
-    }
+  const renderCategory = async (): Promise<void> => {
+    const data = await getCategory();
+    const restaurant = data?.data.result.data.map((item: any) => item.name);
+    console.log(data?.data.result.data);
+    setRestaurants(restaurant);
+  }
 
-    useEffect(() => {
-      renderCategory()
-    },[])
-
-
-    const editCategory = async (id: string) => {
-      isEditCategory()
-      setActiveEditId(id);
-      const response = await getRestuarants()
-      const item = response?.data.result.data.filter((item: any) => item.id == id)
-      setActiveData(item[0])
-    };
+  useEffect(() => {
+    renderCategory()
+  }, [])
 
 
-    const isEditCategory = (): void => {
-      setIsEditMenu(!isEditMenu);
-    };
+  const editCategory = async (id: string): Promise<void> => {
+    isEditCategory()
+    setActiveEditId(id);
+    const response = await getRestuarants()
+    const item = response?.data.result.data.filter((item: any) => item.id == id)
+    setActiveData(item[0])
+  };
 
-    return (
-      <div>
-        <Head>
-          <title>Create Next App</title>
-          <meta name="description" content="Generated by create next app" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
 
-        <div className="px-[19px] min-h-screen relative bg-[#1E1E30]">
-          <AddRestaurant headTitle={"Add Restaurant"} callBack={addRestaurant} right={isMenu ? "0%" : "-100%"} />
-          <EditCategory activeData={activeData} activeEditId={activeEditId} headTitle={'Edit Offer'} callBack={isEditCategory} right={isEditMenu ? '0%' : '-100%'} />
-          <Header />
+  const isEditCategory = (): void => {
+    setIsEditMenu(!isEditMenu);
+  };
 
-          <div className='flex gap-x-4 justify-between'>
-            <SideBar />
+  return (
+    <div>
+      <Head>
+        <title>Create Next App</title>
+        <meta name="description" content="Generated by create next app" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-            <div className="flex flex-col w-full">
-              <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
-                <h3 className="text-[#C7C7C7] text-xl font-semibold">
-                  Restaurants
-                </h3>
+      <div className="px-[19px] min-h-screen relative bg-[#1E1E30]">
+        <AddRestaurant headTitle={"Add Restaurant"} callBack={addRestaurant} right={isMenu ? "0%" : "-100%"} />
+        <EditCategory activeData={activeData} activeEditId={activeEditId} headTitle={'Edit Offer'} callBack={isEditCategory} right={isEditMenu ? '0%' : '-100%'} />
+        <Header />
 
-                <div className="flex gap-x-10">
-                  <Dropdown
-                    filterItems={filterRestaurants}
-                    items={restaurants}
-                    className={"flex bg-[#5A5B70] rounded-[14px] px-[18px] py-2 relative w-[199px] transition-all h-[35px]"}
-                  />
+        <div className='flex gap-x-4 justify-between'>
+          <SideBar />
 
-                  <Button
-                    value={"+ Add Restaurant"}
-                    color={"#FFF"}
-                    size={"14px"}
-                    background={"#C035A2"}
-                    width={"168px"}
-                    height={"35px"}
-                    isDisabled={false}
-                    radius={"14px"}
-                    weight={600}
-                    callBack={addRestaurant}
-                  />
-                </div>
+          <div className="flex flex-col w-full">
+            <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
+              <h3 className="text-[#C7C7C7] text-xl font-semibold">
+                Restaurants
+              </h3>
+
+              <div className="flex gap-x-10">
+                <Dropdown
+                  filterItems={filterRestaurants}
+                  items={restaurants}
+                  className={"flex bg-[#5A5B70] rounded-[14px] px-[18px] py-2 relative w-[199px] transition-all h-[35px]"}
+                />
+
+                <Button
+                  value={"+ Add Restaurant"}
+                  color={"#FFF"}
+                  size={"14px"}
+                  background={"#C035A2"}
+                  width={"168px"}
+                  height={"35px"}
+                  isDisabled={false}
+                  radius={"14px"}
+                  weight={600}
+                  callBack={addRestaurant}
+                />
               </div>
+            </div>
 
-              <div className="flex gap-x-10 gap-y-10 flex-wrap justify-between">
-                {
-                  data?.map((item) => (
-                    <RestaurantComponent
-                      detail={item}
-                      deleteProduct={deleteRestaurants}
-                      editCategory={editCategory}
-                    />
-                  ))
-                }
-              </div>
+            <div className="flex gap-x-10 gap-y-10 flex-wrap justify-between">
+              {
+                data?.map((item) => (
+                  <RestaurantComponent
+                    detail={item}
+                    deleteProduct={deleteRestaurants}
+                    editCategory={editCategory}
+                  />
+                ))
+              }
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
 
-    );
-  }
-
-
-  export default AdminRestaurants;
+export default AdminRestaurants;

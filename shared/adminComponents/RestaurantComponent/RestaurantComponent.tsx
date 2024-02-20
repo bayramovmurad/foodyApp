@@ -9,26 +9,27 @@ interface ProductsComponentProps {
     id: string;
   };
   deleteProduct: (id: string) => void;
+  editCategory: (id: string) => void;
 }
 
-const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct , editCategory }) => {
-  const [isMenu, setIsMenu] = useState<boolean>(false)
-  const [deleteModal, setDeleteModal] = useState<boolean>(false)
+const RestaurantComponent = ({ detail, deleteProduct , editCategory }:any) => {
+  const [isMenu, setIsMenu] = useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
   const deleteItem = (id: string): void => {
-    setDeleteModal(!deleteModal)
-  }
+    setDeleteModal(!deleteModal);
+  };
 
   const response = (boolParam: boolean): void => {
     if (boolParam) {
-      deleteProduct(detail.id)
-      setIsMenu(!isMenu)
-      setDeleteModal(!deleteModal)
+      deleteProduct(detail.id);
+      setIsMenu(!isMenu);
+      setDeleteModal(!deleteModal);
     } else {
-      setIsMenu(!isMenu)
-      setDeleteModal(!deleteModal)
+      setIsMenu(!isMenu);
+      setDeleteModal(!deleteModal);
     }
-  }
+  };
 
   return (
     <div>
@@ -65,6 +66,6 @@ const RestaurantComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct
         )
       }
     </div>
-  )
+  );
 }
 export default RestaurantComponent;

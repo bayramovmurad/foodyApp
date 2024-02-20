@@ -19,7 +19,7 @@ interface EditCategoryProps {
     } | null;
 }
 
-const EditCategory: React.FC<EditCategoryProps> = ({ right, callBack, headTitle, activeEditId, activeData }) => {
+const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }:any) => {
     //! States
     const [IMG, setIMG] = useState<string>('');
     const [activeCategoryId, setActiveCategoryId] = useState<string>("")
