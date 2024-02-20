@@ -346,7 +346,7 @@ const Basket = () => {
               </div>
               <div className='flex flex-col justify-center gap-3 max-w-[652px] w-full'>
                 {
-                  comments.map((item) => (
+                  comments.map((item:any) => (
                     <div className='flex justify-between items-center text-center py-2 border-b border-[#4F4F4F]'>
                       <p className='text-black font-semibold'>
                         {
