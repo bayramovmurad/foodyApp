@@ -1,5 +1,5 @@
 
-export function toArr(data: object | string | number | undefined): Array<any>{
+export function toArr(data: any): Array<any>{
     let convertedData = Object.entries(data)
     return convertedData
 }
