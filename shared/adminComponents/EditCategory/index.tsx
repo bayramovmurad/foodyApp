@@ -15,6 +15,7 @@ interface EditCategoryProps {
   activeData: {
     name: string;
     slug: string;
+    img_url: string
   } | null;
 }
 
