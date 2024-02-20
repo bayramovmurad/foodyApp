@@ -27,7 +27,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
     const [activeCategoryId, setActiveCategoryId] = useState<string>("")
     const [restaurants, setRestaurants] = useState<string[]>([]);
     const [isActive, setIsActive] = useState<boolean>(false)
-    const [formData, setFormData] = useState<FormDataTypes>({
+    const [formData, setFormData] = useState<any>({
         name: "",
         cuisine: "",
         delivery_min: "",
@@ -40,7 +40,7 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
 
     const handleInputChange = useCallback(
         (name: string, value: string) => {
-            setFormData((prevData) => ({
+            setFormData((prevData:any) => ({
                 ...prevData,
                 [name]: value,
             }));
