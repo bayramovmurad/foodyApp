@@ -2,13 +2,26 @@ import OutlineButton from '../../../shared/components/OutlineButton '
 import Button from "../../../shared/components/Button";
 import Header from "../../../shared/components/Header/index";
 import Footer from '../../../shared/components/Footer/index'
-import Image from "next/image";
 import { useGlobalStore } from '../../../provider/provider';
 import { addBasket, getProducts , getBasket , deleteBasket , clearBasket } from '../../../services';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-
-
+import { db } from '../../../server/configs/firebase'
+import {
+  doc,
+  onSnapshot,
+  updateDoc,
+  setDoc,
+  deleteDoc,
+  collection,
+  serverTimestamp,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
+} from 'firebase/firestore';
+import swal from 'sweetalert';
 const Basket = () => {
     const { back , push } = useRouter()
     const { activeRestaurant } = useGlobalStore();
@@ -16,7 +29,8 @@ const Basket = () => {
     const [basketData, setBasketData] = useState([])
     const [checkoutTotalPrice, setCheckoutTotalPrice] = useState(0);
     const [clearId,setClearId] = useState("")
-
+    const [commentValue,setCommentValue] = useState("")
+    const [comments,setComments] = useState([])
 
     useEffect(() => {
       getProductDetail()
@@ -49,10 +63,6 @@ const Basket = () => {
     }
 
     const clearBasketItem = async (id: any) => {
-      // const basketObj = {
-      //   basket_id: id,
-      // }
-      // console.log(basketObj);
       const res = await clearBasket(id);
       if(res?.status == 200){
         getBasketFunction()
@@ -80,12 +90,47 @@ const Basket = () => {
         });
         setCheckoutTotalPrice(totalPrice);
     };
-    console.log(basketData);
-    
 
     const checkoutFunction = () => {
       push("/client/checkout")
     }
+
+    const colletionRef = collection(db, 'comments');
+    
+    const addComment = () => {
+      if (commentValue.length == 0) {
+        swal("Error", "Comment Elave edin", "error");
+      } else {
+        let info: any = localStorage.getItem("userInformation");
+        const currentDate = new Date();
+        
+        const newSchool = {
+          id: activeRestaurant.id,
+          byName: JSON.parse(info).fullname,
+          comment: commentValue,
+          date: `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`
+        };
+        
+        const schoolRef = doc(colletionRef);
+        setDoc(schoolRef, newSchool);
+        setCommentValue("")
+      }
+    };
+
+ 
+    useEffect(() => {
+      const unsub = onSnapshot(colletionRef, (querySnapshot) => {
+        const items:any = [];
+        querySnapshot.forEach((doc) => {
+          items.push(doc.data());
+        });
+        let data = items.filter((item:any) => item.id == activeRestaurant.id)
+        setComments(data)
+      });
+      return () => {
+        unsub();
+      };
+    },[])
 
     return (
       <div className="bg-white">
@@ -109,6 +154,7 @@ const Basket = () => {
               height={448}
               className="max-w-[1373px] w-full max-h-[400px] object-contain"
             />
+
             <div className='flex mb-2 border-b border-[#F2F2F2]  justify-between py-[20px] px-[50px]'>
               <div className="left flex flex-col gap-1">
                 <p className='restaurantsName text-[#4F4F4F] text-[22px] font-bold'>
@@ -289,6 +335,42 @@ const Basket = () => {
                           />
                       </div>
                   </div>
+            </div>
+
+            <div className='mt-10 flex flex-col justify-center items-center gap-3'>
+              <div className='flex justify-center gap-3'>
+                <input onChange={(e) => setCommentValue(e.target.value)} value={commentValue} placeholder='Enter Comment' className='border-[#F3F4F6] outline-none px-3 border rounded-[10px] w-[470px] h-[40px] font-bold text-[#4F4F4F]'  type="text" />
+                <button onClick={addComment} className='bg-[#F3F4F6] w-[170px] h-[40px] rounded-[12px] font-bold text-[#4F4F4F]'>
+                  Add Comment
+                </button>
+              </div>
+              <div className='flex flex-col justify-center gap-3 max-w-[652px] w-full'>
+                {
+                  comments.map((item) => (
+                    <div className='flex justify-between items-center text-center py-2 border-b border-[#4F4F4F]'>
+                      <p className='text-black font-semibold'>
+                        {
+                          item.comment
+                        }
+                      </p>
+
+                      <div className='flex flex-col justify-end items-end'>
+                        <p className='text-black font-semibold text-[14px]'>
+                          by {
+                            item.byName
+                          }
+                        </p>
+
+                        <p className='text-[12px] text-gray-500'>
+                          {
+                            item.date
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
             </div>
           </div>
         </main>
