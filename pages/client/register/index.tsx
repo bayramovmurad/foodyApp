@@ -126,8 +126,7 @@ const Register: NextPage = () => {
                 height={"53px"}
                 radius={"4px"}
                 weight={600}
-                callBack={saveData}
-              />
+                callBack={saveData} isDisabled={false}              />
             </div>
           </div>
         </div>
