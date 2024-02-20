@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, FC } from 'react';
 
 interface DropdownProps {
   className: string;
@@ -6,16 +6,16 @@ interface DropdownProps {
   filterItems: (item: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) => {
+const Dropdown = ({ className, items, filterItems }:any) => {
   const [isActiveDropdown, setIsActiveDropdown] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string>('Select');
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleActive = () => {
+  const handleActive = (): void => {
     setIsActiveDropdown(!isActiveDropdown);
   };
 
-  const handleActiveItem = (item: string) => {
+  const handleActiveItem = (item: string): void => {
     setActiveItem(item);
     filterItems(item);
 
@@ -23,7 +23,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) =>
   };
 
   const filterItem = (): string[] => {
-    let newData = items?.filter((item) => item !== activeItem);
+    let newData = items?.filter((item: string) => item !== activeItem);
     return newData;
   };
 
@@ -32,7 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) =>
   }, [items, activeItem]);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent): void => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         setIsActiveDropdown(false);
       }
@@ -63,7 +63,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) =>
 
       {isActiveDropdown && (
         <div className="absolute top-[50px] w-full left-0 bg-[#5A5B70] px-[12px] rounded-[14px] py-2 cursor-pointer">
-          {filterItem().map((item, index) => (
+          {filterItem().map((item: string, index: number) => (
             <p key={index} onClick={() => handleActiveItem(item)} className="text-[#F2F2F2DE] mb-1">
               {item}
             </p>
