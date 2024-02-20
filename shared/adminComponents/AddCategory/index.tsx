@@ -65,7 +65,7 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
 
     //! Upload Image 
 
-    function handleNewImg(e) {
+    function handleNewImg(e:any) {
         const file = e.target.files?.[0];
         if (file) {
                 const randomId = `${new Date().getTime()}_${Math.floor(
