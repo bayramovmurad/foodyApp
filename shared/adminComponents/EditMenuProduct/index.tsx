@@ -22,15 +22,8 @@ interface FormDataTypes {
   activeData: any;
 }
 
-interface EditMenuProductProps {
-  activeData: Product[];
-  activeEditId: string;
-  headTitle: string;
-  callBack: () => void;
-  right: string;
-}
 
-const EditMenuProduct: React.FC<EditMenuProductProps> = ({ right, callBack, headTitle, activeEditId, activeData }) => {
+const EditMenuProduct = ({ right, callBack, headTitle, activeEditId, activeData }:any) => {
   //! States
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [newImg, setNewImg] = useState<string | null>(null);
@@ -40,7 +33,7 @@ const EditMenuProduct: React.FC<EditMenuProductProps> = ({ right, callBack, head
   const [originialRestaurants, setOriginialRestaurants] = useState([]);
   const [restaurants, setRestaurants] = useState<string[]>([]);
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [formData, setFormData] = useState<FormDataTypes>({
+  const [formData, setFormData] = useState<any>({
     name: '',
     description: '',
     price: '',
@@ -51,7 +44,7 @@ const EditMenuProduct: React.FC<EditMenuProductProps> = ({ right, callBack, head
   //! Input OnChange Function
   const handleInputChange = useCallback(
     (name: string, value: string) => {
-      setFormData((prevData) => ({
+      setFormData((prevData:any) => ({
         ...prevData,
         [name]: value,
       }));
