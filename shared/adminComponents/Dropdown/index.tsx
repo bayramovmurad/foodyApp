@@ -3,26 +3,26 @@ import React, { useEffect, useState, useRef } from 'react';
 interface DropdownProps {
   className: string;
   items: string[];
-  filterItems: any;
+  filterItems: (item: string) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) => {
   const [isActiveDropdown, setIsActiveDropdown] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string>('Select');
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleActive = () => {
     setIsActiveDropdown(!isActiveDropdown);
   };
 
-  const handleActiveItem = (item) => {
+  const handleActiveItem = (item: string) => {
     setActiveItem(item);
     filterItems(item);
 
     setIsActiveDropdown(false);
   };
 
-  const filterItem = () => {
+  const filterItem = (): string[] => {
     let newData = items?.filter((item) => item !== activeItem);
     return newData;
   };
@@ -32,8 +32,8 @@ const Dropdown: React.FC<DropdownProps> = ({ className, items, filterItems }) =>
   }, [items, activeItem]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         setIsActiveDropdown(false);
       }
     };
