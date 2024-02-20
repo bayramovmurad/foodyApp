@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Modal from '../../components/Modal';
 
-const CategoryComponent = ({ detail , deleteCategory , index , editCategory }) => {
+const CategoryComponent = ({ detail , deleteCategory , index , editCategory }:any) => {
     const [isMenu, setIsMenu] = useState<boolean>(false)
     const [deleteModal, setDeleteModal] = useState<boolean>(false)
 
