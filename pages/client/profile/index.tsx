@@ -22,14 +22,14 @@ const Profile: FC = () => {
     const [IMG,setIMG] = useState("")
     const [disabled, setDisabled] = useState<boolean>(false);
     const [activeEmail, setActiveEmail] = useState("");
-    const [formData, setFormData] = useState<FormDataTypes>({
+    const [formData, setFormData] = useState<any>({
       number: "",
       username: "",
       fullname: "",
     });
 
     const handleInputChange = (name: string, value: string) => {
-      setFormData((prevData) => ({
+      setFormData((prevData:any) => ({
         ...prevData,
         [name]: value,
       }));
@@ -185,8 +185,7 @@ const Profile: FC = () => {
                     // isDisabled={disabled}
                     radius={"4px"}
                     weight={600}
-                    callBack={saveData}
-                  />
+                    callBack={saveData} isDisabled={false}                  />
                 </div>
               </form>
             </div>
