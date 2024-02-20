@@ -99,7 +99,7 @@ const AdminProducts: NextPage = () => {
     renderRestaurants();
   }, []);
 
-  const callBackBool = () => {
+  const callBackBool = (): void => {
     setIsMenu(!isMenu);
   }
 

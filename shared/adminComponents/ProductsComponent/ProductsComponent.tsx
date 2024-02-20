@@ -1,33 +1,36 @@
 import React, { FC, useState } from 'react';
 import Modal from '../../components/Modal';
 
+interface ProductDetail {
+  id: string;
+  img_url: string;
+  name: string;
+  description: string;
+  price: number;
+}
+
 interface ProductsComponentProps {
-  detail: {
-    img_url: string;
-    name: string;
-    description: string;
-    price: number;
-    id: string;
-  };
+  detail: ProductDetail;
   deleteProduct: (id: string) => void;
+  editProduct: (id: string) => void;
 }
 
 const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct , editProduct }) => {
-  const [isMenu, setIsMenu] = useState<boolean>(false)
-  const [deleteModal, setDeleteModal] = useState<boolean>(false)
+  const [isMenu, setIsMenu] = useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
   const deleteItem = (id: string): void => {
-    setDeleteModal(!deleteModal)
+    setDeleteModal(!deleteModal);
   }
 
   const response = (boolParam: boolean): void => {
     if (boolParam) {
-      deleteProduct(detail.id)
-      setIsMenu(!isMenu)
-      setDeleteModal(!deleteModal)
+      deleteProduct(detail.id);
+      setIsMenu(!isMenu);
+      setDeleteModal(!deleteModal);
     } else {
-      setIsMenu(!isMenu)
-      setDeleteModal(!deleteModal)
+      setIsMenu(!isMenu);
+      setDeleteModal(!deleteModal);
     }
   }
   return (
