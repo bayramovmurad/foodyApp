@@ -33,7 +33,10 @@ const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }:a
         address: ""
     }>({
         name: "",
-        description: "",
+        cuisine: "",
+        delivery_min: "",
+        price: "",
+        address: ""
     });
 
     //! Input OnChange Function
@@ -55,7 +58,7 @@ const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }:a
 
     //! Save object Function
     const saveData = async () => {
-        if (formData.name === '' || formData.description === '') {
+        if (formData.name === '') {
             swal("Oops","Formu Doldurun !","error");
         } else {
             const productData = {
