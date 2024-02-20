@@ -1,10 +1,6 @@
 import React from 'react'
 
-interface titleTypes {
-    value: string
-}
-
-const FormTitle = ({ value }: titleTypes) => {
+const FormTitle = ({ value }: any) => {
   return (
     <p className="text-[#4F4F4F] text-[30px] font-semibold">
         {
