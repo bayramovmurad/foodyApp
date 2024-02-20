@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../Button';
 
-const formatDate = (timestamp) => {
+const formatDate = (timestamp:any) => {
   const currentDate = new Date();
   const date = new Date(timestamp);
   const timeDifference = currentDate.getTime() - date.getTime();
@@ -21,7 +21,7 @@ const formatDate = (timestamp) => {
   }
 };
 
-const RestaurantCard = ({ detail , callBack }) => {
+const RestaurantCard = ({ detail , callBack }:any) => {
   let formattedDate = formatDate(detail.created);
 
   return (
