@@ -62,8 +62,8 @@ const Home = () => {
                 <section className=" relative" id="">
                     <div className="banner bg-white h-[121px] py-4 px-4 max-w-[1440px] flex gap-4">
                         <Swiper
-                          spaceBetween={20}
-                          slidesPerView={6}
+                          spaceBetween={10}
+                          slidesPerView={7}
                           autoplay={{
                             delay: 2500,
                             disableOnInteraction: false,

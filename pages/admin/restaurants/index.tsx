@@ -26,6 +26,7 @@ const AdminRestaurants: NextPage = () => {
   const [isMenu, setIsMenu] = useState<boolean>(false)
   const [data, setData] = useState<Restaurant[]>([]);
   const [restaurants, setRestaurants] = useState<string[]>([]);
+  const [noTitle,setNoTitle] = useState(false)
 
   //! Delete
 
@@ -47,9 +48,13 @@ const AdminRestaurants: NextPage = () => {
 
 
       let newData = globalData.filter((item: any) => item.category_id === categoryId[0].id);
-      console.log(newData);
-
       setData(newData);
+      
+      if(newData.length == 0){
+        setNoTitle(true)
+      }else{
+        setNoTitle(false)
+      }
     } catch (error) {
       console.error(error);
     }
@@ -157,6 +162,13 @@ const AdminRestaurants: NextPage = () => {
                 ))
               }
             </div>
+
+            <p className='text-white text-[24px] font-bold text-center'>
+              {
+                noTitle ? "Product Yoxdur" : ""
+              }
+            </p>
+
           </div>
         </div>
       </div>
