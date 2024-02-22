@@ -99,7 +99,7 @@ const AdminOffers: NextPage = () => {
                 <table className="border-collapse bg-white w-full">
                   <thead>
                     <tr>
-                      <th className=" border-t p-5">ID</th>
+                      <th className=" border-t p-5">D</th>
                       <th className=" border-t p-5">Imagea</th>
                       <th className=" border-t p-5">Name</th>
                       <th className=" border-t p-5">Slug</th>
