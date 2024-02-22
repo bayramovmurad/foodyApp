@@ -41,7 +41,7 @@ const LoginPage = () => {
             localStorage.setItem("adminToken","true")
             swal("Düzgün Ad ve Şifrə");
             setTimeout(() => {
-                push("dashboard")
+                push("Dashboard")
             }, 2500);
         }else{
             swal("Oops!", "Yanliş Ad ve ya Şifrə", "error");
