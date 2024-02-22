@@ -45,7 +45,7 @@ const Register: NextPage = () => {
     } else {
       const response = await register(formData);
 
-      if (response?.status === 201) {
+      if (response?.status === 200) {
         swal("Register Olundu");
         setTimeout(() => {
           push("/client/login");

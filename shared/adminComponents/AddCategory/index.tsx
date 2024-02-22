@@ -59,6 +59,9 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             
             if (data?.status == 200 || data?.status == 201) {
                 swal("data elave olundu");
+                setTimeout(() => {
+                    callBack();
+                }, 700);
             }
         }
     }

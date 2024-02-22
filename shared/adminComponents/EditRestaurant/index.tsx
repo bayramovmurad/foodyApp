@@ -19,7 +19,7 @@ interface EditCategoryProps {
     } | null;
 }
 
-const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }:any) => {
+const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }: any) => {
     //! States
     const [IMG, setIMG] = useState<string>('');
     const [activeCategoryId, setActiveCategoryId] = useState<string>("")
@@ -58,8 +58,8 @@ const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }:a
 
     //! Save object Function
     const saveData = async () => {
-        if (formData.name === '') {
-            swal("Oops","Formu Doldurun !","error");
+        if (formData.name === '' || formData.cuisine === '' || formData.delivery_min === '' || formData.price === '' || IMG === '' || formData.address === '' || activeCategoryId == "") {
+            swal("Oops", "Formu Doldurun !", "error");
         } else {
             const productData = {
                 "name": formData.name,
@@ -72,9 +72,12 @@ const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }:a
             };
             const data = await updateRestaurant(activeEditId, productData);
             console.log(productData);
-            
+
             if (data?.status === 200 || data?.status === 201) {
                 swal("Update olundu");
+               setTimeout(() => {
+                   callBack();
+               }, 700);
             }
         }
     };
@@ -83,7 +86,7 @@ const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }:a
     useEffect(() => {
         if (activeData) {
             console.log(activeData);
-            
+
             setFormData({
                 name: activeData.name || '',
                 cuisine: activeData.cuisine || '',
@@ -137,7 +140,7 @@ const EditCategory = ({ right, callBack, headTitle, activeEditId, activeData }:a
 
     return (
         <div style={{ right: isActive ? '-100%' : right }} className="fixed top-0  h-screen w-[70vw] z-10 bg-[#38394E] py-[25px] pl-[25px] pr-[60px]  transition-all">
-          
+
             <button onClick={callBack} className="absolute left-[-30px] top-[50px]">
                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="27" height="27" rx="13.5" fill="#C74FEB" />

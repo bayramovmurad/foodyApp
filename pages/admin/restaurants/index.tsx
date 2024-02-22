@@ -112,7 +112,7 @@ const AdminRestaurants: NextPage = () => {
 
       <div className="px-[19px] min-h-screen relative bg-[#1E1E30]">
         <AddRestaurant headTitle={"Add Restaurant"} callBack={addRestaurant} right={isMenu ? "0%" : "-100%"} />
-        <EditCategory activeData={activeData} activeEditId={activeEditId} headTitle={'Edit Offer'} callBack={isEditCategory} right={isEditMenu ? '0%' : '-100%'} />
+        <EditCategory activeData={activeData} activeEditId={activeEditId} headTitle={'Edit Restaurant'} callBack={isEditCategory} right={isEditMenu ? '0%' : '-100%'} />
         <Header />
 
         <div className='flex gap-x-4 justify-between'>

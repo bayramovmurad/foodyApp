@@ -55,6 +55,9 @@ const EditCategory= ({ right, callBack, headTitle, activeEditId, activeData }:an
       const data = await updateCategory(activeEditId, productData);
       if (data?.status === 200 || data?.status === 201) {
         swal("Update olundu");
+        setTimeout(() => {
+          callBack();
+        }, 700);
       }
     }
   };
