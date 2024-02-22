@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
         <div className="w-full flex justify-around gap-[30px]">
           <div className="bg-[#27283C] rounded-[14px] max-w-[472px] max-h-[472px] w-full px-[24px] py-[16px] flex text-left flex-col gap-14">
             <p className="text-[#C7C7C7] text-[20px] font-medium">
-              Orders
+              Ordersa
             </p>
 
             <div className="w-full flex justify-center items-center">

@@ -100,7 +100,7 @@ const AdminOffers: NextPage = () => {
                   <thead>
                     <tr>
                       <th className=" border-t p-5">ID</th>
-                      <th className=" border-t p-5">Image</th>
+                      <th className=" border-t p-5">Imagea</th>
                       <th className=" border-t p-5">Name</th>
                       <th className=" border-t p-5">Slug</th>
                       <th className=" border-t p-5"></th>
