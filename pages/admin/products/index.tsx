@@ -30,6 +30,7 @@ const AdminProducts: NextPage = () => {
   const [globalData, setGlobalData] = useState<Product[]>([]);
   const [restaurants, setRestaurants] = useState<string[]>([]);
   const [activeEditId, setActiveEditId] = useState<string>('');
+  const [noTitle,setNoTitle] = useState(false)
 
   //! render Products
   const renderProducts = async (): Promise<void> => {
@@ -68,6 +69,12 @@ const AdminProducts: NextPage = () => {
       if (restaurant) {
         let newData = globalData.filter((item: any) => item.rest_id === restaurant.id);
         setActiveData(newData);
+
+        if(newData.length == 0){
+          setNoTitle(true)
+        }else{
+          setNoTitle(false)
+        }
       }
     } catch (error) {
       console.error(error);
@@ -94,6 +101,9 @@ const AdminProducts: NextPage = () => {
       console.error(err);
     }
   };
+
+  console.log(noTitle);
+  
 
   useEffect(() => {
     renderRestaurants();
@@ -144,7 +154,15 @@ const AdminProducts: NextPage = () => {
                   editProduct={editProduct}
                 />
               ))}
+
+
+             
             </div>
+            <p className='text-white text-[24px] font-bold text-center'>
+              {
+                noTitle ? "Product Yoxdur" : ""
+              }
+            </p>
           </div>
         </div>
       </div>

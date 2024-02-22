@@ -74,6 +74,9 @@ const EditMenuProduct = ({ right, callBack, headTitle, activeEditId, activeData 
       const data = await updateProduct(activeEditId, productData);
       if (data?.status === 200 || data?.status === 201) {
         swal("Update olundu");
+        setTimeout(() => {
+          callBack()
+        },1000)
       }
     }
   };
@@ -99,6 +102,8 @@ const EditMenuProduct = ({ right, callBack, headTitle, activeEditId, activeData 
   useEffect(() => {
     let productInfo = activeData.filter((item: any) => item.id === activeEditId);
     setProductDetail(productInfo[0]);
+    console.log(productInfo[0]);
+    
     setIMG(productInfo?.[0]?.img_url)
     if (productInfo[0]) {
       setFormData({

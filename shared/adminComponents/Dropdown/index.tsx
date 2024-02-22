@@ -62,7 +62,7 @@ const Dropdown = ({ className, items, filterItems }:any) => {
       </div>
 
       {isActiveDropdown && (
-        <div className="absolute top-[50px] w-full left-0 bg-[#5A5B70] px-[12px] rounded-[14px] py-2 cursor-pointer">
+        <div className="absolute top-[50px] w-full h-[100px] overflow-y-scroll left-0 bg-[#5A5B70] px-[12px] rounded-[14px] py-2 cursor-pointer">
           {filterItem().map((item: string, index: number) => (
             <p key={index} onClick={() => handleActiveItem(item)} className="text-[#F2F2F2DE] mb-1">
               {item}
