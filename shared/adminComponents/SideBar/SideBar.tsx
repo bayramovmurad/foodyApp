@@ -14,10 +14,10 @@ const SideBar: FC = () => {
   const handleSelect = (item: string) => {
     if(item !== "Logout"){
       setSelectedItem(item);
-      push(`/Admin/${item}`);
+      push(`/admin/${item}`);
     }else{
       localStorage.removeItem('adminToken')
-      push("/Admin/login")
+      push("/admin/login")
     }
   };
 
