@@ -367,3 +367,14 @@ export const deleteOrderHistory = async (data:any) => {
         console.log(error)
     }
 }
+
+// ! Refresh Token
+
+export const refreshToken = async (data:any) => {
+    try {
+        const response = await instanceAxios.delete('/api/auth/refresh',data);
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}

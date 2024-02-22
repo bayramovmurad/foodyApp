@@ -2,10 +2,12 @@ import Description from "../../../shared/components/Description";
 import Header from "../../../shared/components/Header/index";
 import Footer from '../../../shared/components/Footer/index'
 import Title from "../../../shared/components/Title";
+import { useTranslation } from "react-i18next";
 
-import Image from "next/image";
 
 const About = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="bg-white">
         <div className="p-[30px]">
@@ -22,7 +24,7 @@ const About = () => {
             <div className="max-w-[1440px] w-full flex px-[50px] py-[25px] justify-between gap-[20px]">
                 <div className="flex flex-col gap-5">
                   <Title  
-                      value={"About Us"}
+                      value={t("about")}
                       size={"45px"}
                       weight={600}
                       color={"#000"}
@@ -30,7 +32,7 @@ const About = () => {
                   />
 
                   <Description
-                      value={"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."}
+                      value={t("aboutD")}
                       mwidth={"565px"}
                       size={"20px"}
                       weight={500}

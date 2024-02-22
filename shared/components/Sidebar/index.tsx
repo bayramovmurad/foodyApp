@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import { useState , useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
+    const { t } = useTranslation()
     const [selectedItem, setSelectedItem] = useState<string | null>(null);
     const router = useRouter();
     const { asPath } = router;
@@ -50,7 +52,9 @@ const Sidebar = () => {
                         )
                     }
                     <span className={`${selectedItem == "profile" ? "text-[#D63626]" : ""} font-semibold text-[#828282] text-[20px]`}>
-                        Profile
+                        {
+                            t("profile")
+                        }
                     </span>
                 </div>
 
@@ -81,7 +85,9 @@ const Sidebar = () => {
                         )
                     }
                     <span className={`${selectedItem == "userbasket" ? "text-[#D63626]" : ""} font-semibold text-[#828282] text-[20px]`}>
-                        Your Basket 
+                        {
+                            t("yourbasket")
+                        }
                     </span>
                 </div>
 
@@ -112,7 +118,9 @@ const Sidebar = () => {
                         )
                     }
                     <span className={`${selectedItem == "orders" ? "text-[#D63626]" : ""} font-semibold text-[#828282] text-[20px]`}>
-                        Your Orders 
+                        {
+                            t("yourorder")
+                        }
                     </span>
                 </div>
 
@@ -143,7 +151,9 @@ const Sidebar = () => {
                         )
                     }
                     <span className={`${selectedItem == "checkout" ? "text-[#D63626]" : ""} font-semibold text-[#828282] text-[20px]`}>
-                        Checkout
+                        {
+                            t("Checkouts")
+                        }
                     </span>
                 </div>
 
@@ -159,7 +169,9 @@ const Sidebar = () => {
                         </defs>
                     </svg>
                     <span className={`font-semibold text-[#828282] text-[20px]`}>
-                        Logout
+                        {
+                            t("logout")
+                        }
                     </span>
                 </div>
         </div>

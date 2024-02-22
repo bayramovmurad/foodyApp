@@ -71,7 +71,10 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
         };
 
         searchRestaurant();
-    }, [debouncedSearchValue]);  
+    }, [debouncedSearchValue]); 
+
+        
+
     return (    
         <header className="flex flex-col  rounded-s bg-[#f3f4f6] ">
             <div className="sw-full flex justify-center">

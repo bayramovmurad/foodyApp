@@ -24,7 +24,9 @@ const Footer = ({ isTop }:FooterTypes) => {
 
                   <div className="flex flex-col items-center gap-[40px] justify-center">
                       <p className="text-[#fff] text-[50px] font-[500] text-center">
-                        Discover Restaurants Near From you
+                        {
+                          t("discover")
+                        }
                       </p>
 
                       <Button

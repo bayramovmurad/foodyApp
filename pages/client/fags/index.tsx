@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import Description from '../../../shared/components/Description';
 import Header from '../../../shared/components/Header/index';
 import Footer from '../../../shared/components/Footer/index';
-import Title from '../../../shared/components/Title';
 
-import Image from 'next/image';
 import FormTitle from '../../../shared/components/FormTitle';
+import { useTranslation } from 'react-i18next';
 
 interface FaqOption {
   id: number;
@@ -41,6 +39,7 @@ const faqOption: FaqOption[] = [
 ];
 
 const Fags: React.FC = () => {
+  const { t } = useTranslation()
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
 
   const toggleItem = (itemId: number) => {
@@ -66,7 +65,7 @@ const Fags: React.FC = () => {
       <main className="p-[30px] flex justify-center">
         <div className="max-w-[1440px] w-full flex flex-col px-[50px] py-[25px] gap-[40px] justify-center items-center  ">
           <FormTitle
-            value={'F.A.Q'}
+            value={t("faq")}
             size={'55px'}
             weight={500}
             color={'#000'}

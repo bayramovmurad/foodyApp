@@ -11,6 +11,7 @@ import { profileClient } from '../../../services';
 import { fileStorage } from '../../../server/configs/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import swal from 'sweetalert';
+import { useTranslation } from 'react-i18next';
 interface FormDataTypes {
   number: string;
   username: string;
@@ -19,6 +20,7 @@ interface FormDataTypes {
 }
 
 const Profile: FC = () => {
+    const { t } = useTranslation()
     const [IMG,setIMG] = useState("")
     const [disabled, setDisabled] = useState<boolean>(false);
     const [activeEmail, setActiveEmail] = useState("");
@@ -118,14 +120,14 @@ const Profile: FC = () => {
 
             <div className="content h-full bg-[#F3F4F6] pt-[42px] pb-[70px] px-9 w-full flex flex-col">
               <FormTitle
-                value={"Profile"}
+                value={t("profile")}
               />
 
               <div className='flex justify-center items-center mb-8'>
                 <div className='bg-white w-[146px] h-[141px] rounded-[50%] flex flex-col cursor-pointer justify-center items-center'>
                       <input onChange={handleNewImg} className='cursor-pointer opacity-0 h-[145px] w-[145px] absolute' id='productInput' type="file" />
 
-                      <label htmlFor="productInput" className='cursor-pointer'>
+                      <label htmlFor="productInput" className='cursor-pointer flex flex-col justify-center items-center'>
                           <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clipPath="url(#clip0_7374_4504)">
                               <path d="M48.375 25.1C46.675 16.475 39.1 10 30 10C22.775 10 16.5 14.1 13.375 20.1C5.85 20.9 0 27.275 0 35C0 43.275 6.725 50 15 50H47.5C54.4 50 60 44.4 60 37.5C60 30.9 54.875 25.55 48.375 25.1ZM35 32.5V42.5H25V32.5H17.5L29.125 20.875C29.625 20.375 30.4 20.375 30.9 20.875L42.5 32.5H35Z" fill="#6FCF97" />
@@ -137,8 +139,10 @@ const Profile: FC = () => {
                             </defs>
                           </svg>
 
-                          <span className='text-[#929292] text-[18px] font-medium'>
-                            upload
+                          <span className='text-[#929292] text-[18px] text-center font-medium'>
+                            {
+                              t('upload')
+                            }
                           </span>
                       </label>
                 </div>
@@ -154,29 +158,29 @@ const Profile: FC = () => {
               <form className='flex justify-between gap-12 max-h-[330px] h-full' action="">
                 <div className="left h-full w-full flex flex-col gap-4 justify-between">
                   <div className='flex flex-col'>
-                    <Label value={"Contact"} forId={"number"} />
+                    <Label value={t("contact")} forId={"number"} />
                     <Input type={"text"} id={"number"} name={"number"} placeholder={"+994"} value={formData.number} onInputChange={handleInputChange} />
                   </div>
 
                   <div className='flex flex-col'>
-                    <Label value={"Username"} forId={"username"} />
+                    <Label value={t("username")} forId={"username"} />
                     <Input type={"text"} id={"username"} name={"username"} placeholder={"Rahimli Sarkhan"} value={formData.username} onInputChange={handleInputChange} />
                   </div>
 
                   <div className='flex flex-col'>
-                    <Label value={"Full Name"} forId={"fullname"} />
+                    <Label value={t("fullname")} forId={"fullname"} />
                     <Input type={"text"} id={"fullname"} name={"fullname"} placeholder={"Sarkhan Rahimli"} value={formData.fullname} onInputChange={handleInputChange} />
                   </div>
                 </div>
 
                 <div className="right h-full w-full flex flex-col gap-6">
                   <div className='flex flex-col'>
-                    <Label value={"Email"} forId={"Email"} />
+                    <Label value={t("email")} forId={"Email"} />
                     <Input type={"email"} id={"Email"} name={"email"} disabled={true} placeholder={activeEmail} value="" onInputChange={handleInputChange} />
                   </div>
 
                   <Button
-                    value={"Save"}
+                    value={t("save")}
                     color={"#FFF"}
                     size={"18px"}
                     background={"#6FCF97"}

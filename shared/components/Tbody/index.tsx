@@ -75,7 +75,7 @@ const TBody = ({ item , deleteOrder }:any) => {
                     </p>
               </td>
               <td className='px-[12px] text-center flex items-center justify-center h-full'>
-                  <p className='max-w-[183px] text-[#00072B] text-[14px] font-normal text-center'>
+                  <p className='max-w-[183px] text-[#00072B] text-[14px] font-normal flex items-center h-[50px] text-center'>
                     {
                       item.delivery_address
                     }

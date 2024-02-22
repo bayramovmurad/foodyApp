@@ -22,8 +22,11 @@ import {
   limit,
 } from 'firebase/firestore';
 import swal from 'sweetalert';
+import { useTranslation } from 'react-i18next';
 const Basket = () => {
+    const { t } = useTranslation()
     const { back , push } = useRouter()
+
     const { activeRestaurant } = useGlobalStore();
     const [data, setData] = useState([])
     const [basketData, setBasketData] = useState([])
@@ -196,7 +199,7 @@ const Basket = () => {
 
                   <div onClick={() => back()}>
                     <Button
-                      value={"Go Back"}
+                      value={t("goback")}
                       color={"#FFF"}
                       size={"14px"}
                       background={"#D63626"}
@@ -214,7 +217,9 @@ const Basket = () => {
             <div className='flex justify-between'>
                   <div className="basketList max-w-[846px] flex flex-col w-full rounded bg-[#F3F4F6] py-[40px] px-[2px]">
                     <p className='text-[#4F4F4F] text-center text-[25px] font-bold mb-[40px]'>
-                      Products
+                      {
+                        t("products")
+                      }
                     </p>
                     {
                       data.map((item: any) =>
@@ -319,7 +324,9 @@ const Basket = () => {
 
                       <div  onClick={() => checkoutFunction()} className='bg-[#D63626] py-[2px] cursor-pointer px-[4px] rounded-[100px] flex justify-between items-center mt-9 '>
                           <p className='text-white text-[16px] font-medium ml-3'>
-                            Checkout
+                            {
+                              t('Checkouts')
+                            }
                           </p>
 
                           <Button

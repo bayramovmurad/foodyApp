@@ -10,8 +10,12 @@ import { getOffers, getRestuarants } from "../services";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useGlobalStore } from "../provider/provider";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
+
+
 
 const Home = () => {
+    const { t } = useTranslation();
     const { push } = useRouter()
     const { setActiveRestaurant } = useGlobalStore();
     const [data, setData] = useState([]);
@@ -88,7 +92,7 @@ const Home = () => {
                 <section className="bg-white pt-[50px] w-full flex justify-center" id="features">
                     <div className="flex w-full flex-col justify-center items-center text-center max-w-[1440px] ">
                         <Title
-                            value="Features"
+                            value={t("features")}
                             size={"40px"}
                             weight={900}
                             color={"#181617"}
@@ -96,7 +100,7 @@ const Home = () => {
                         />
 
                         <Description
-                            value="Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
+                            value={t("lorem")}
                             mwidth={"780px"}
                             size={"22px"}
                             weight={400}
@@ -215,7 +219,7 @@ const Home = () => {
                 <section className="bg-white pt-[50px] w-full flex justify-center" id="features">
                     <div className="flex w-full flex-col justify-center items-center text-center max-w-[1440px] ">
                         <Title
-                            value="Our Popular Update New Foods"
+                            value={t("popular")}
                             size={"40px"}
                             weight={900}
                             color={"#181617"}
@@ -223,7 +227,7 @@ const Home = () => {
                         />
 
                         <Description
-                            value="Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
+                            value={t("lorem")}
                             mwidth={"780px"}
                             size={"22px"}
                             weight={400}

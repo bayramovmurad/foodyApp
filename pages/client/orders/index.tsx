@@ -7,6 +7,7 @@ import Thead from '../../../shared/components/Thead/index';
 import TBody from '../../../shared/components/Tbody/index';
 import { deleteOrder, getOrders } from '../../../services';
 import swal from 'sweetalert';
+import { useTranslation } from 'react-i18next';
 
 interface OrdersProps {}
 
@@ -21,6 +22,7 @@ interface OrderData {
 
 
 const Orders: FC<OrdersProps> = () => {
+    const { t } = useTranslation()
     const [activeData,setActiveData] = useState([])
     
     const deleteOrderF = async (id: number | string) => {
@@ -61,7 +63,7 @@ const Orders: FC<OrdersProps> = () => {
 
                   <div className="content bg-[#F3F4F6] py-[42px] px-9 w-full">
                       <FormTitle
-                          value={"Your Orders"}
+                          value={t("yourorder")}
                       />
 
                       <table className='w-full mt-[60px]'>

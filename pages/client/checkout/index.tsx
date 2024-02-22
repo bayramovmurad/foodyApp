@@ -9,14 +9,16 @@ import { toArr } from '../../../utils/toArr/index';
 
 import { useEffect, useState } from 'react';
 import { addOrder, getBasket } from '../../../services';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
+import swal from 'sweetalert';
 interface FormDataTypes {
   adress: string;
   number: string;
 }
 
 const Checkout = () => {
+  const { t } = useTranslation()
   const { push } = useRouter()
   const [basketData, setBasketData] = useState([])
   const [checkoutTotalPrice, setCheckoutTotalPrice] = useState(0);
@@ -43,9 +45,10 @@ const Checkout = () => {
 
   let saveData = async (e: any) => {
       e.preventDefault();
-
-      if(formData.adress == "" || formData.number == ""){
-        toast.warning("formu doldurun")
+      console.log(activeBasketId);
+    
+      if(formData.adress == "" || formData.number == "" || activeBasketId == ""){
+        swal("Error","Formu Doldurun","error")
       }
       else{
         const orderInfo = {
@@ -55,9 +58,12 @@ const Checkout = () => {
           payment_method: 0
         }
         const res:any = await addOrder(orderInfo)
-        if(res.status == 201){
-          push("/client/orders")
+        if(res?.status == 201){
+            push("/client/orders")
+
           return
+        }else{
+          swal("Error","Something went wrong","error")
         }
       }
   };
@@ -109,59 +115,69 @@ const Checkout = () => {
 
                 <div className="content bg-[#F3F4F6] py-[42px] px-9 max-w-[618px] w-[100%] max-h-[515px]">
                     <FormTitle
-                        value={"Checkout"}
+                        value={t('Checkouts')}
                     />
 
                     <form className='flex justify-between gap-12 max-w-full h-full mt-8' action="">
                           <div className="left h-full w-full flex flex-col gap-6">
                               <div className='flex flex-col'>
-                                  <Label value={"Delivery Address"} forId={"adress"} />
+                                  <Label value={t("adresss")} forId={"adress"} />
                                   <Input type={"text"} id={"adress"} name={"adress"} placeholder={"Ataturk 45 Ganclik Baku"} value={formData.adress} onInputChange={handleInputChange} />
                               </div>
 
                               <div className='flex flex-col'>
-                                  <Label value={"Contact Number"} forId={"number"} />
+                                  <Label value={t("number")} forId={"number"} />
                                   <Input type={"number"} id={"number"} name={"number"} placeholder={"+994"} value={formData.number} onInputChange={handleInputChange} />
                               </div>
 
                               <div className='flex flex-col'>
                                   <label className="text-[#4F4F4F] text-[18px] font-semibold mb-1" htmlFor="">
-                                    Payment Method
+                                      {
+                                        t("method")
+                                      }
                                   </label>
                                   <div className='flex gap-[70px] items-center mt-5'>
                                     <div className='flex gap-2'>
                                       <input onChange={paymentType} type="radio" id="contactChoice2" name="contact" value="0" />
                                       <label htmlFor="contactChoice2" className='ml-2 text-[#828282] text-[14px]'>
-                                        pay at the door
+                                        {
+                                          t("atdoor")
+                                        }
                                       </label>
                                     </div>
 
                                     <div className='flex gap-2 items-center'>
                                       <input onChange={paymentType} type="radio" id="contactChoice3" name="contact" value="1" />
                                       <label htmlFor="contactChoice3" className='text-[#828282] text-[14px]'>
-                                        pay at the door by credit card
+                                        {
+                                          t("credit")
+                                        }
                                       </label>
                                     </div>
                                   </div>
                               </div>
 
                               <Button
-                  value={"Save"}
-                  color={"#FFF"}
-                  size={"18px"}
-                  background={"#6FCF97"}
-                  width={"100%"}
-                  height={"53px"}
-                  radius={"4px"}
-                  weight={600}
-                  callBack={saveData} isDisabled={false}                              />
+                                  value={t("save")}
+                                  color={"#FFF"}
+                                  size={"18px"}
+                                  background={"#6FCF97"}
+                                  width={"100%"}
+                                  height={"53px"}
+                                  radius={"4px"}
+                                  weight={600}
+                                  callBack={saveData} 
+                                  isDisabled={false}                              
+                              />
                           </div>
                     </form>
                 </div>
 
                 <div className="content bg-[hsl(220,14%,96%)] py-[42px] px-9 max-w-[397px] w-[100%] max-h-[372px] flex flex-col  text-center gap-[20px] items-center">
                     <p className='text-[#828282] text-[18px] font-medium'>
-                      Your Order
+                      {
+                        t("yourorder")
+                      }
                     </p>
 
                     <div className="flex flex-col w-full px-[5px] gap-[10px]">
@@ -192,7 +208,9 @@ const Checkout = () => {
                     
                     <div className="totalPrice border-t flex justify-between items-center p-[20px] border-[#E0E0E0] w-full ">
                         <p className='text-[#828282] font-roboto text-18 font-medium leading-70 tracking-0.54'>
-                          Total
+                          {
+                            t("total")
+                          }
                         </p>
 
                         <p className='text-[#828282] font-sans text-14 font-normal leading-70 tracking-0.42'>
