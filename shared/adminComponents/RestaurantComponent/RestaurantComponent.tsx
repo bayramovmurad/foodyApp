@@ -37,11 +37,11 @@ const RestaurantComponent = ({ detail, deleteProduct , editCategory }:any) => {
         <div className="w-[247px] h-[83px bg-white rounded-md flex p-3 items-center" >
           <div className="flex gap-x-[15px]">
             <div>
-              <img className='max-w-[65px] max-h-[57px]' src={detail.img_url} alt="" />
+              <img className='max-w-[65px] max-h-[57px] h-full object-cover' src={detail.img_url} alt="" />
             </div>
             <div>
               <p className="text-gray-800 text-lg font-medium leading-normal tracking-tight">{detail.name}</p>
-              <span className="font-semibold  text-neutral-400 text-sm">{detail.address}</span>
+              <p className="font-semibold  text-neutral-400 text-sm whitespace-nowrap overflow-x-scroll w-[80px] ">{detail.address}</p>
             </div>
           </div>
           <div className="flex flex-col ml-auto gap-y-4">

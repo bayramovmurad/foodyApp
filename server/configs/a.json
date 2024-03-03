@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "foodyapp-a959a",
+  "private_key_id": "3fffc3cb064fe548b37b38087b9b0ffe9dcf8f7a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDgA2GUmiWLrG6z\n/+lV/Wq8FyUUbJuYPanoxxdNJmqZAO+8Hh/voQmlX6D01vDymRFXA8m0ZFowOvl6\nvJTvjpFDDgI2MsdM8osOS33rVZA81DaTVhlNxbSl/w1HaJpzActVjDFcEUvqjIhI\nxRiCmLDyBmfJgi00KrqghkiTlbGDsFwH2KaxShu/FYsZjHtNcIzgM87Qz+KzhPLj\nwikPqUS+mZZPh46SWB1oU8835DE+gn6KM7CBt7z2Xmaa61EWsqPMJtkWlYclGFoD\nU5S28TYTNZRkLXg1S5gQjAOZZFm08csdxGkXoCyl2rzF9so+cAjaR7US04ZDaIL6\nQZOl4yunAgMBAAECggEACgMiAjjOMyB0BY02GiGh+sx+sUYrbCdcEpXiF5DUfzMu\nA+FFec809anBBsBxSNPeP7PhI4lqszDSRBHtXDRUj26EWx9zjfUMkbPTvx12Er9E\nvdrBdcWU4z3I6PymuTuGzDOLDzuMrOvhZCiUWwiaZq7c8QI6+qkVlKV71UYsXB+D\n4aUZbwCNr4tayUw43IxfY2dByUPx2IDwEEk3RoXghmE5rYU6JjQn7R6l35akQduN\nF9SU8zuQUu7QDlWal47yGL/0Z7HZNOu1Btj2YFUXRP8japhSbSU/zkj44lZlLS57\n2EZbbSFpj6tTukXbdk3h2gJFoLJEMcwp7nCdnPkNIQKBgQD0PFZAC4eyQVQDtRHq\nK3WlRz+5SH9IXiTC/++KrdryUDepQyuYB+lcFTxC1/kmu32XKpsUUzXSWlsDYeRp\ne+ay+rnBhLzKrwp54Mh5lzs9NefgUSZie01HYA197faTvpa/Wm2kT1XSHbFu9luT\nli90iVAysun1OIZs8CG9MhXF4QKBgQDqza5xLzxfX7AbpeFJvCgnFO2DRZim4SRq\nkmrQoQJ6q2hJTacq9K45G2YtT1ct1bLi2oxZmfmsoXpolbZCJfGYXrLdbFTKQsn1\nS3Xr+gQ6JGxqnIacDvFA7QV6LdRj+9VEpn6xBGeKwNVajC/PtESz2NCA9uoOifEC\nzZzLyD4ShwKBgD6qCHswOiXLSzIUUD9j3TCF4ly4tCeuOAJsRlqvlsCbQlzEZjgA\nt6gvrqF75mpAqs2RWe7SFrodAsMQZ9mEt8FuQSDc3M+oL6jruqQv4DwpS5ArYgzc\nlAxfIbcQyjZILUd1fTIuRNe/VJoizYZFf3GIFbKcYxjO4vaqeg2f/yQhAoGAUnfP\nLv2yLKVFC1DloaouSBu3mAWXqfUlfzDRx1jlsAQH6scVUacCkhgneP6G1hhabgbo\niIfmA1Xr0lPS4cTF6AhKti5YUXnHyRmp3ym+1lT4pzE2rhUpcu5MoC78i+llbGk1\n0iKD4137EYRvPnpILwqVoNYYOucD+UISMhiwhH0CgYEAl0dHXHOmtF+BMtf91vIs\nplZMMyvV2rvCrfW23Vq3Q6C82okoyxFCSDoUR94X7eauowJt3ud5Cr3NsbBtqZRc\nzvucsshOlHS8Antm1JjtjI2vow9u+1lEiijJBbDx6EHgiZ9+TS/9VKdIHo4zUVmM\nYcTaJYqZy9o1jNhXHptBEZQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-27ze8@foodyapp-a959a.iam.gserviceaccount.com",
+  "client_id": "114826334227751367454",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-27ze8%40foodyapp-a959a.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -36,7 +36,6 @@ const Orders: FC<OrdersProps> = () => {
 
     const renderOrders = async () => {
       const res = await getOrders()
-      console.log(res?.data.result.data);
       
       setActiveData(res?.data.result.data)
     }

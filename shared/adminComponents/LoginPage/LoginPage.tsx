@@ -61,7 +61,7 @@ const LoginPage = () => {
                             <Input type={"text"} id={"username"} name={"username"} placeholder={`${t('loginUserName')}`} value={formData.username} onInputChange={handleInputChange} />
                         </div>
                         <div className="max-w-[318.80px] w-full mb-[26px] login">
-                            <Input type={"password"} id={"username"} name={"password"} placeholder={`${t('Şifrə')}`} value={formData.password} onInputChange={handleInputChange} />
+                            <Input type={"password"} id={"username"} name={"password"} placeholder={t('loginPassword')} value={formData.password} onInputChange={handleInputChange} />
                         </div>
                         <div className="max-w-[318.80px] w-full mb-[26px] login">
                             <Button

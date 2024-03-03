@@ -10,9 +10,13 @@ import { getOffers, deleteOffer } from '../../../services/index'
 import type { NextPage } from "next";
 import Head from "next/head";
 import swal from "sweetalert";
+import { off } from "process";
+import { useTranslation } from "react-i18next";
 
 
 const AdminOffers: NextPage = () => {
+  const { t } = useTranslation()
+
   const [offers, setOffers] = useState([])
   const [isMenu, setIsMenu] = useState<boolean>(false)
   const [addIsMenu, setAddIsMenu] = useState<boolean>(false)
@@ -78,7 +82,11 @@ const AdminOffers: NextPage = () => {
           <SideBar />
           <div className="flex flex-col w-full">
             <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
-              <h3 className="text-[#C7C7C7] text-xl font-semibold">Offer</h3>
+              <h3 className="text-[#C7C7C7] text-xl font-semibold">
+                {
+                  t("Offer")
+                }
+              </h3>
 
               <Button
                 value={"+ Add Offer"}
@@ -95,9 +103,17 @@ const AdminOffers: NextPage = () => {
             </div>
 
             <div className="flex gap-x-10  gap-y-10 flex-wrap">
+              {offers.length == 0 ? (
+                <div className="flex justify-center items-center w-full h-[400px]">
+                  <span className="loader">Loading</span>
+                </div>
+              ) : (
+                <></>
+              )}
+
               <div className="w-full">
                 <table className="border-collapse bg-white w-full">
-                  <thead>
+                  {offers.length > 0 ? <thead>
                     <tr>
                       <th className=" border-t p-5">ID</th>
                       <th className=" border-t p-5">Imagea</th>
@@ -105,7 +121,7 @@ const AdminOffers: NextPage = () => {
                       <th className=" border-t p-5">Slug</th>
                       <th className=" border-t p-5"></th>
                     </tr>
-                  </thead>
+                  </thead> : <></>} 
                   {
                     <tbody>
                       {

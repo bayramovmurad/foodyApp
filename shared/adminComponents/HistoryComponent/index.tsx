@@ -19,24 +19,30 @@ const formatDate = (timestamp:any) => {
     } else {
       return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
     }
-  };
+};
   
 const OrderComponent = ({activeData}:any) => {
 
     return (
         <div className="w-full">
             <table className="border-collapse bg-white w-full">
-                <thead>
-                    <tr>
-                        <th className=" border p-5">ID</th>
-                        <th className=" border p-5">Customer ID</th>
-                        <th className=" border p-5">Time</th>
-                        <th className=" border p-5">Delivery Address</th>
-                        <th className=" border p-5">Amount</th>
-                        <th className=" border p-5">Payment Method</th>
-                        <th className=" border p-5">Contact</th>
-                    </tr>
-                </thead>
+                {
+                    activeData?.length > 0 ? (
+                        <thead>
+                            <tr>
+                                <th className=" border p-5">ID</th>
+                                <th className=" border p-5">Customer ID</th>
+                                <th className=" border p-5">Time</th>
+                                <th className=" border p-5">Delivery Address</th>
+                                <th className=" border p-5">Amount</th>
+                                <th className=" border p-5">Payment Method</th>
+                                <th className=" border p-5">Contact</th>
+                            </tr>
+                        </thead>
+                    ) : (
+                        <></>
+                    )
+                }
 
 
                 <tbody>

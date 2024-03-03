@@ -53,19 +53,23 @@ const OrderComponent = ({activeData , callback}:any) => {
     return (
         <div className="w-full">
             <table className="border-collapse bg-white w-full">
-                <thead>
-                    <tr>
-                        <th className=" border p-5">ID</th>
-                        <th className=" border p-5">Customer ID</th>
-                        <th className=" border p-5">Time</th>
-                        <th className=" border p-5">Delivery Address</th>
-                        <th className=" border p-5">Amount</th>
-                        <th className=" border p-5">Payment Method</th>
-                        <th className=" border p-5">Contact</th>
-                        <th className=" border p-5">Eyes</th>
-                        <th className=" border p-5">Bin</th>
-                    </tr>
-                </thead>
+                {activeData?.length > 0 ?
+                    (
+                      <thead>
+                          <tr>
+                              <th className=" border p-5">ID</th>
+                              <th className=" border p-5">Customer ID</th>
+                              <th className=" border p-5">Time</th>
+                              <th className=" border p-5">Delivery Address</th>
+                              <th className=" border p-5">Amount</th>
+                              <th className=" border p-5">Payment Method</th>
+                              <th className=" border p-5">Contact</th>
+                              <th className=" border p-5">Eyes</th>
+                              <th className=" border p-5">Bin</th>
+                          </tr>
+                      </thead>
+                    ) : <></>
+                  }
 
 
                 <tbody>

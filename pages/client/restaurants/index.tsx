@@ -10,7 +10,7 @@ import { getCategory , getRestuarants } from '../../../services/index'
 import { useGlobalStore } from '../../../provider/provider';
 import { useRouter } from 'next/router';
 
-const Restaurants = () => {
+export default function Restaurants() {
     const { push } = useRouter()
     const { setActiveRestaurant } = useGlobalStore();
     const [originalData,setOriginalData] = useState([])
@@ -45,6 +45,8 @@ const Restaurants = () => {
         let item = originalData.filter((item:any) => item.category_id == id)
         if(item.length == 0){
             setNoProductTitle("Restoran tapilmadi .")
+        }else{
+            setNoProductTitle("")
         }
         setRestaurantsData(item)
     }
@@ -52,10 +54,16 @@ const Restaurants = () => {
     const sendRestaurant = (detail:any) => {
         try {
             setActiveRestaurant(detail)
-            push("/client/basket")
+            
+            push(`/client/basket`)
         }catch (err) { 
             console.log({ err });
         }
+    }
+
+    const allData = () => {
+        setRestaurantsData(originalData)
+        setNoProductTitle("")
     }
     
     return (
@@ -73,7 +81,7 @@ const Restaurants = () => {
             <main className="p-[30px] flex justify-center">
                 <div className='max-w-[1440px] w-full flex gap-[40px]'>
                     <div className="left max-w-[251px] w-full py-[40px] pl-[25px] pr-[25px] bg-[#F3F4F6] flex flex-col gap-[25px]">
-                        <p className=' font-bold text-[18px] cursor-pointer' onClick={() => setRestaurantsData(originalData)}>
+                        <p className=' font-bold text-[18px] cursor-pointer' onClick={allData}>
                             All Data
                         </p>
                         {
@@ -84,8 +92,9 @@ const Restaurants = () => {
                                         alt="pizza"
                                         width={35}
                                         height={28}
+                                        className='w-[35px] h-[35px] rounded-full'
                                     />
-                                    <p className="text-[#333] text-[20px] font-semibold">
+                                    <p className="text-[#333] text-[20px] font-semibold whitespace-nowrap max-w-[120px] overflow-x-scroll">
                                         {
                                             item.name
                                         }
@@ -132,4 +141,3 @@ const Restaurants = () => {
     );
 };
 
-export default Restaurants;

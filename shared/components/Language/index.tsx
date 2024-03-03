@@ -30,7 +30,7 @@ const Language = () => {
 
                     {
                         isActive ? (
-                            <div className={`flex flex-col absolute py-1 bg-white ${isActive ? "top-[50px] px-1" : ''}`}>
+                            <div className={`flex flex-col absolute py-1 bg-white ${isActive ? "top-[50px] px-1" : ''} z-10`}>
                                 {languages.map(lng => (
                                     <div className="cursor-pointer" key={lng} onClick={() => changeLanguage(lng)}>
                                         <img 

@@ -1,0 +1,12 @@
+.burgerImage{
+    animation: bounce 2s infinite alternate;
+}
+
+@keyframes bounce {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(30px);
+    }
+}

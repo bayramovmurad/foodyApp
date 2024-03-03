@@ -5,9 +5,10 @@ import Header from "../../../shared/adminComponents/Header/Header";
 import OrderComponent from "../../../shared/adminComponents/HistoryComponent/index";
 import { useEffect, useState } from "react";
 import { deleteOrder, getOrderHistory, getOrders } from "../../../services";
-import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const AdminOrdersHistory: NextPage = () => {
+  const { t } = useTranslation()
   const [activeData,setActiveData] = useState([])
 
   const renderOrders = async () => {
@@ -33,10 +34,24 @@ const AdminOrdersHistory: NextPage = () => {
           <SideBar />
           <div className="flex flex-col w-full">
             <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
-              <h3 className="text-[#C7C7C7] text-xl font-semibold">History</h3>
+              <h3 className="text-[#C7C7C7] text-xl font-semibold">
+                {
+                  t("History")
+                }
+              </h3>
 
             </div>
             <div className="flex gap-x-10  gap-y-10 flex-wrap">
+              {
+                activeData?.length == 0 ? (
+                  <div className="flex justify-center items-center w-full h-[400px]">
+                    <span className="loader">Loading</span>
+                  </div>
+                ) : (
+                  <></>
+                )
+              }
+
               <OrderComponent activeData={activeData} />
             </div>
           </div>

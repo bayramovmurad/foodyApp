@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
 import Image from "next/image";
 import { register } from "../../../services";
@@ -37,19 +36,23 @@ const Register: NextPage = () => {
 
   const saveData = async () => {
     const isValidEmail = isEmail(formData.email);
-
+    console.log("a");
+    
     if (Object.values(formData).some(value => value === '')) {
       swal("Oops","Formu Doldurun !","error");
     } else if (!isValidEmail) {
       swal("Email Error","Duzgun Email Daxil Edin","error");
     } else {
       const response = await register(formData);
-
-      if (response?.status === 200) {
+      console.log(response);
+             
+      if (response?.status === 201) {
         swal("Register Olundu");
         setTimeout(() => {
           push("/client/login");
         }, 1400);
+      }else {
+        swal("Email Error","Something went wrong !","error");
       }
     }
   };
@@ -62,7 +65,6 @@ const Register: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ToastContainer />
 
       <header className="w-full p-[30px] flex justify-center">
         <div className="max-w-[1373px] w-full rounded flex justify-between bg-[#EB5757] py-[30px] px-[40px]">

@@ -38,8 +38,8 @@ const ProductsComponent: FC<ProductsComponentProps> = ({ detail, deleteProduct ,
       {
         <div className="bg-white rounded-md w-[196px] h-[273px] flex p-[15px] flex-col">
           <img src={detail.img_url} className='w-[160px] h-[158px] object-cover' alt="" />
-          <p className="text-left text-gray-800 text-lg font-medium leading-normal tracking-tight">{detail.name}</p>
-          <span className="text-left font-semibold  text-neutral-400 text-sm">{detail.description}</span>
+          <p className="text-left text-gray-800 text-lg font-medium leading-normal tracking-tight whitespace-nowrap overflow-x-scroll max-w-[150px]">{detail.name}</p>
+          <p className="text-left font-semibold  text-neutral-400 text-sm whitespace-nowrap overflow-x-scroll max-w-[130px]">{detail.description}</p>
           <div className="flex justify-between">
             <span className="text-teal-500">
               {

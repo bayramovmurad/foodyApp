@@ -12,6 +12,7 @@ import { getProducts, deleteProduct, getRestuarants } from '../../../services/in
 import RightMenu from '../../../shared/adminComponents/RightMenu';
 import { useGlobalStore } from '../../../provider/provider';
 import swal from 'sweetalert';
+import { useTranslation } from 'react-i18next';
 
 interface Product {
   id: string;
@@ -23,7 +24,7 @@ interface Product {
 }
 
 const AdminProducts: NextPage = () => {
-
+  const { t } = useTranslation()
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [activeData, setActiveData] = useState<Product[]>([]);
@@ -40,8 +41,6 @@ const AdminProducts: NextPage = () => {
       setGlobalData(data?.data.result.data);
     } catch (err) {
       console.error(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -129,7 +128,7 @@ const AdminProducts: NextPage = () => {
           <SideBar />
           <div className="flex flex-col w-full">
             <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
-              <h3 className="text-[#C7C7C7] text-xl font-semibold">Products</h3>
+              <h3 className="text-[#C7C7C7] text-xl font-semibold">{t("Products")}</h3>
               <Dropdown
                 filterItems={filterProduct}
                 items={restaurants}
@@ -137,7 +136,7 @@ const AdminProducts: NextPage = () => {
               />
             </div>
 
-            {isLoading ? (
+            {activeData.length == 0 ? (
               <div className="flex justify-center items-center w-full h-[400px]">
                 <span className="loader">Loading</span>
               </div>

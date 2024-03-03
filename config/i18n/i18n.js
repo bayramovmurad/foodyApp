@@ -10,6 +10,7 @@ const resources = {
 				"loginSaveTitle": "Sign In",
 				"save": "Save",
 				"total": "Total",
+				"score": "Average Site Score", 
 				
 				"profile": "Profile",
 				"upload": 'upload',
@@ -50,7 +51,18 @@ const resources = {
 				"number": "Contact Number",
 				"method": "Payment Method",
 				'atdoor': "pay at the door",
-				"credit": "pay at the door by credit card"
+				"credit": "pay at the door by credit card",
+				"Dashboard": "Dashboard",
+				"Products": "Products",
+				"Restaurants": "Restaurants",
+				"Category": "Category",
+				"Orders": "Orders",
+				"Offer": "Offer",
+				"History": "History",
+				"Logout": "Logout",
+				"Select": "Select",
+				"cOffer": "Add Advertising",
+				"Request": "Requests"
 			}
 	},
 	az: {
@@ -66,6 +78,7 @@ const resources = {
 				"aboutD": "Lorem ipsum layoutların və vizual maketlərin önizlənməsi üçün qrafik, çap və nəşriyyat sənayesində geniş istifadə olunan yertutan mətndir. Lorem ipsum layoutların və vizual maketlərin önizlənməsi üçün qrafik, çap və nəşriyyat sənayesində geniş istifadə olunan yertutan mətndir. Lorem ipsum yertutandır. planların və vizual maketlərin önizlənməsi üçün qrafik, çap və nəşriyyat sənayesində geniş istifadə olunan mətn.",
 				"home": "Ana Səhifə",
 				"restaurants": "Restoranlar",
+				"score": "Ortalama Saytin Puani", 
 				"about": "Haqqımızda",
 				"howitworks": "Necə işləyir",
 				"programming":  "Proqramlaşdırma",
@@ -103,6 +116,17 @@ const resources = {
 				'atdoor': "qapıda ödəyin",
 				"credit": "kredit kartı ilə qapıda ödəyin",
 				"total": "Ümumi",
+				"Dashboard": "İdarə paneli",
+				"Products": "Məhsullar",
+				"Restaurants": "Restoranlar",
+				"Category": "Kateqoriya",
+				"Orders": "Sifarişlər",
+				"Offer": "Təklif",
+				"History": "Tarix",
+				"Logout": "Çıxış",
+				"Select": "Seçin",
+				"cOffer": "Reklam Elave edin",
+				"Request": "Sorğular"
 			}
 	}
 }

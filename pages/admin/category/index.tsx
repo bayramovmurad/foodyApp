@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import AddCategory from "../../../shared/adminComponents/AddCategory";
 import { getCategory , deleteCategory } from '../../../services/index'
 import swal from "sweetalert";
+import { useTranslation } from "react-i18next";
 
 interface CategoryData {
   id: string | number;
@@ -20,6 +21,7 @@ interface CategoryData {
 }
 
 const AdminCategory: NextPage = () => {
+  const { t } = useTranslation()
   const [categoryData,setCategory] = useState<CategoryData[]>([])
   const [isMenu, setIsMenu] = useState<boolean>(false)
   const [isEditMenu, setIsEditMenu] = useState<boolean>(false)
@@ -83,7 +85,11 @@ const AdminCategory: NextPage = () => {
 
           <div className="flex flex-col w-full">
             <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
-              <h3 className="text-[#C7C7C7] text-xl font-semibold">Category</h3>
+              <h3 className="text-[#C7C7C7] text-xl font-semibold">
+                {
+                  t("Category")
+                }
+              </h3>
 
               <Button
                 value={"+ Add Category"}
@@ -99,18 +105,32 @@ const AdminCategory: NextPage = () => {
               />
             </div>
 
+
+            {categoryData.length == 0 ? (
+              <div className="flex justify-center items-center w-full h-[400px]">
+                <span className="loader">Loading</span>
+              </div>
+            ) : (
+              <></>
+            )}
+
             <div className="flex gap-x-10  gap-y-10 flex-wrap">
               <div className="w-full">
                 <table className="border-collapse bg-white w-full">
-                  <thead>
-                    <tr>
-                      <th className="border-t p-5 w-[237px]">ID</th>
-                      <th className="border-t p-5">Image</th>
-                      <th className="border-t p-5">Name</th>
-                      <th className="border-t p-5">Slug</th>
-                      <th className="border-t p-5"></th>
-                    </tr>
-                  </thead>
+                  {
+                    categoryData.length > 0 ? (
+                      <thead>
+                        <tr>
+                          <th className="border-t p-5 w-[237px]">ID</th>
+                          <th className="border-t p-5">Image</th>
+                          <th className="border-t p-5">Name</th>
+                          <th className="border-t p-5">Slug</th>
+                          <th className="border-t p-5"></th>
+                        </tr>
+                      </thead>
+                    ) : <></> 
+                  }
+                  
                   {
                     <tbody>
                       {

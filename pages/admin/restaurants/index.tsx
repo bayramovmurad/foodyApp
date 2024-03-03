@@ -10,6 +10,7 @@ import Button from "../../../shared/components/Button";
 import { deleteRestuarant, getCategory, getRestuarants } from "../../../services";
 import swal from "sweetalert";
 import EditCategory from "../../../shared/adminComponents/EditRestaurant";
+import { useTranslation } from "react-i18next";
 
 interface Restaurant {
   id: number;
@@ -19,6 +20,7 @@ interface Restaurant {
 }
 
 const AdminRestaurants: NextPage = () => {
+  const { t } = useTranslation()
   const [activeEditId, setActiveEditId] = useState<string>('');
   const [activeData, setActiveData] = useState<Restaurant | null>(null);
   const [globalData, setGlobalData] = useState<Restaurant[]>([]);
@@ -126,7 +128,7 @@ const AdminRestaurants: NextPage = () => {
           <div className="flex flex-col w-full">
             <div className="flex justify-between px-8 py-5 bg-[#27283c] mb-[52px] rounded-lg">
               <h3 className="text-[#C7C7C7] text-xl font-semibold">
-                Restaurants
+                {t("Restaurants")}
               </h3>
 
               <div className="flex gap-x-10">

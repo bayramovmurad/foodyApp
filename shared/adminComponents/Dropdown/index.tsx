@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface DropdownProps {
   className: string;
@@ -7,8 +8,9 @@ interface DropdownProps {
 }
 
 const Dropdown = ({ className, items, filterItems }:any) => {
+  const { t } = useTranslation()
   const [isActiveDropdown, setIsActiveDropdown] = useState<boolean>(false);
-  const [activeItem, setActiveItem] = useState<string>('Select');
+  const [activeItem, setActiveItem] = useState<string>("Select");
   const ref = useRef<HTMLDivElement>(null);
 
   const handleActive = (): void => {

@@ -7,11 +7,11 @@ import OutlineButton from "../OutlineButton ";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router";
-import { getProfileInfo, getRestuarants } from "../../../services";
+import { getBasket, getProfileInfo, getRestuarants } from "../../../services";
 import { useDebounce } from 'use-debounce'; 
 import { useGlobalStore } from "../../../provider/provider";
-import { toast } from 'react-toastify';
-
+import swal from "sweetalert";
+import styles from './style.module.css'
 interface headerTypes {
     isLogin: boolean,
     isBasket: boolean,
@@ -32,6 +32,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
     const [restaurants, setRestaurants] = useState([]);
     const [searchValue, setSearchValue] = useState(""); 
     const [debouncedSearchValue] = useDebounce(searchValue, 500);
+    const [basketData, setBasketData] = useState([])
 
     useEffect(() => {
         const localItem: any = localStorage?.getItem("token");
@@ -49,9 +50,9 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
         setIsActiveName(avatar);
         setIsImage(parsedUser?.img_url);
         if (parsedItem?.access_token) {
-        setIsToken(true);
+            setIsToken(true);
         } else {
-        setIsActiveName("default value");
+            setIsActiveName("default value");
         }
     }, [isToken]);
 
@@ -73,7 +74,15 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
         searchRestaurant();
     }, [debouncedSearchValue]); 
 
-        
+
+    const getBasketFunction = async () => {
+        const response = await getBasket()
+        setBasketData(response?.data.result.data.items);
+    }
+
+      useEffect(() => {
+        getBasketFunction()
+    },[basketData])
 
     return (    
         <header className="flex flex-col  rounded-s bg-[#f3f4f6] ">
@@ -113,6 +122,11 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                     t('faq')
                                 }
                             </li>
+                            <li onClick={() => push("/client/offer")} className="cursor-pointer text-[#828282] hover:text-[#D63626]">
+                                {
+                                    t('cOffer')
+                                }
+                            </li>
                         </ul>
 
                     </div>
@@ -127,9 +141,9 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
 
                         {
                             isResultBox ? (
-                                <div className="absolute left-0 top-16 w-[300px] rounded-lg bg-white p-4">
+                                <div className="absolute left-0 top-16 w-[300px] rounded-lg z-20 bg-white p-4">
                                     {
-                                        restaurants.map((item:any) => (
+                                        restaurants?.map((item:any) => (
                                             <div className="flex items-center gap-4 border-b pb-2 pt-2 cursor-pointer"  onClick={() => setActiveRestaurant(item) || push("/client/basket")}>
                                                 <img
                                                     src={item.img_url}
@@ -143,7 +157,7 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                                             item.name
                                                         }
                                                     </p>
-                                                    <p className="text-[14px]">
+                                                    <p className="text-[14px] w-[150px] overflow-x-scroll whitespace-nowrap">
                                                         {
                                                             item.cuisine
                                                         }
@@ -151,6 +165,9 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                                 </div>
                                             </div>
                                         ))
+                                    }
+                                    {
+                                        restaurants?.length == 0 ? <p>Tapilmadi</p> : <></>
                                     }
                                 </div>
                             ) : <></>
@@ -172,8 +189,14 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
 
                         {
                             isToken ? (
-                                <div onClick={() => push("/client/basket")} className="w-[40px] h-[40px] rounded-[100px] bg-[#EB5757] cursor-pointer flex justify-center pt-[1px]">
+                                <div onClick={() => push("/client/basket")} className="w-[40px] h-[40px] relative rounded-[100px] bg-[#EB5757] cursor-pointer flex justify-center pt-[1px]">
                                     <img className="w-[32px] h-[32px]" src="/client/basket/basket.svg" alt="" />
+                                    
+                                    <p className=" w-[16px] h-[16px] flex justify-center items-center text-[11px] text-white absolute right-[-4px] top-[-4px] bg-[#753030] z-10 rounded-full">
+                                        {
+                                            basketData?.length
+                                        }
+                                    </p>
                                 </div>
                             ) : <></>
                         }
@@ -198,6 +221,8 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                 </p>
                             ) : <></>
                         }
+
+
                     </div>
                 </div>  
             </div>
@@ -256,10 +281,22 @@ export const Header = ({ isLogin , isBasket , isAvatar , isName , isBottom }:hea
                                     />
                                 </div>
                             </div>
-                            <img 
-                                src="/client/burger/burger.svg" 
-                                alt="" 
-                            />
+                            <div className="relative flex justify-center items-center">
+                                <img 
+                                    src="/client/burger/burger.svg" 
+                                    className="z-[3] relative"
+                                    alt="" 
+                                />
+                                
+                                <img 
+                                    src="/client/basket/black.svg" 
+                                    className="w-[529px] h-[476px] absolute top-0 z-[2]"
+                                    alt="" 
+                                />
+                                
+                                <img className={`${styles.burgerImage} absolute top-0 z-10`} src="/client/basket/boxs.svg" alt="" />
+                            </div>
+
                         </div>
                     </div> 
                 ) : <>

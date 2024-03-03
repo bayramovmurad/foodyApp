@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 const AdminDashboard: NextPage = () => {
   const { push } = useRouter()
   useEffect(() => {
-    push("/Admin/dashboard")
+    push("/Admin/Dashboard")
   },[])
   return (
     <div>

@@ -12,6 +12,7 @@ import { fileStorage } from '../../../server/configs/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import swal from 'sweetalert';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
 interface FormDataTypes {
   number: string;
   username: string;
@@ -20,6 +21,7 @@ interface FormDataTypes {
 }
 
 const Profile: FC = () => {
+    const { push } = useRouter()
     const { t } = useTranslation()
     const [IMG,setIMG] = useState("")
     const [disabled, setDisabled] = useState<boolean>(false);
@@ -60,8 +62,13 @@ const Profile: FC = () => {
             fullname: formData.fullname
         }
         const res = await profileClient(data)
+        console.log(res);
         if(res?.status == 200){
           swal("Profile update olundu")
+
+          setTimeout(() => {
+            push("/")
+          },1000)
         };
         const info:any = localStorage.getItem("userInformation")
         let obj = JSON.parse(info)
@@ -100,6 +107,11 @@ const Profile: FC = () => {
       const userInformation: any = localStorage?.getItem("userInformation");
       const parseData = JSON.parse(userInformation);
       setActiveEmail(parseData.email)
+      setFormData({
+        number: parseData.phone,
+        username: parseData.username,
+        fullname: parseData.fullname,
+      })
     },[activeEmail])
 
     return (

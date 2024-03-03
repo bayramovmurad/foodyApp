@@ -55,26 +55,41 @@ const RightMenu: React.FC<MenuTypes> = ({ right , callBack , headTitle }) => {
       setActiveRestaurantId(restaurant[0].id)
     }
 
-    //! Save object Function
+    //! Create Product Function
     
     const saveData = async () => {
       if(formData.name == "" || formData.description == "" || activeRestaurantId == "" || formData.price == "" || IMG == ""){
         swal("Error","Formu Doldurun","error");
       }else{
         const productData = {
-            "name": formData.name,
-            "description": formData.description,
-            "img_url": IMG,
-            "rest_id": activeRestaurantId,
-            "price": formData.price
+            name: formData.name,
+            description: formData.description,
+            img_url: IMG,
+            rest_id: activeRestaurantId,
+            price: formData.price
         }
 
         const data = await createProduct(productData)
+
         if(data?.status == 200 || data?.status == 201){
           swal("data elave olundu");
+          
+          setFormData({
+            name: "",
+            description: "",
+            price: "",
+          })
+
+          setIMG("")
+
+          setTimeout(() => {
+            callBack();
+          }, 700);
         }
       }
     }
+
+
 
     //! Render Restaurants Function
 

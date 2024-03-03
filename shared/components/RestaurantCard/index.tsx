@@ -29,7 +29,7 @@ const RestaurantCard = ({ detail , callBack }:any) => {
       <img 
         src={detail.img_url} 
         alt="" 
-        className='w-[174px] h-[161px]'
+        className='w-full h-[161px]'
       />
 
       <p className="text-[22px] font-bold text-[#4F4F4F] mt-1">
@@ -42,12 +42,12 @@ const RestaurantCard = ({ detail , callBack }:any) => {
 
       <div className='w-full flex justify-between mt-[12px] items-center'>
         <p className='text-[#4F4F4F] text-[16px] font-bold'>
-          {detail.price} Delivery
+          {detail.delivery_price} ₼ Del
         </p>
         <Button
-          value={formattedDate}
+          value={detail.delivery_min + " Min"}
           color={"#FFF"}
-          size={"9px"}
+          size={"10px"}
           background={"#D63626"}
           width={"80px"}
           height={"31px"}

@@ -59,6 +59,11 @@ const AddCategory: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             
             if (data?.status == 200 || data?.status == 201) {
                 swal("data elave olundu");
+                setFormData({
+                    name: "",
+                    slug: "",
+                })
+                setIMG("")
                 setTimeout(() => {
                     callBack();
                 }, 700);

@@ -53,6 +53,12 @@ const AddOffer: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                 "img_url": IMG
             }
 
+            setFormData({
+                name: "",
+                description: "",
+            })
+            setIMG("")
+
             const data = await createOffer(offerData)
             if (data?.status == 200 || data?.status == 201) {
                 swal("Offer Elave olundu");
@@ -174,7 +180,7 @@ const AddOffer: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
                     callBack={callBack}
                 />
                 <Button
-                    value={"Create  Category"}
+                    value={"Create Offer"}
                     color={"#FFF"}
                     size={"18px"}
                     background={"#C035A2"}

@@ -17,6 +17,7 @@ interface FormDataTypes {
 }
 
 const Login: NextPage = () => {
+    let date:Date | any= new Date()
     const { push } = useRouter()
     const [formData, setFormData] = useState<FormDataTypes>({
         email: "",
@@ -32,11 +33,13 @@ const Login: NextPage = () => {
 
 
     const saveData = async () => {
+      console.log("a");
+      
       if (Object.values(formData).some(value => value === '')) {
         swal("Error","Formu Doldurun","error");
       } else {
         const response:any = await login(formData);
-        console.log(response);
+        console.log(response,formData);
         
         if (response?.status === 200) {
           const tokenObj = {
@@ -45,8 +48,9 @@ const Login: NextPage = () => {
           };
           localStorage.setItem("token", JSON.stringify(tokenObj));
           localStorage.setItem("userInformation", JSON.stringify(response?.data.user))  
-    
+          localStorage.setItem("loginDate", date.getTime());
           swal("Login Olundu");
+          
   
           setTimeout(() => {
             push("/");
@@ -105,9 +109,9 @@ const Login: NextPage = () => {
                               <Label value={"Email"} forId={"email"} />
                               <Input type={"text"} id={"email"} name={"email"} placeholder={"Enter Email"} value={formData.email} onInputChange={handleInputChange} />
                           </div>
-                          <div className='customInput flex flex-col justify-start text-left mt-5 mb-[72px]'>
+                          <div className='customInput relative flex flex-col justify-start text-left mt-5 mb-[72px]'>
                               <Label value={"Password"} forId={"Password"} />
-                              <Input type={"text"} id={"Password"} name={"password"} placeholder={"Enter Password"} value={formData.password} onInputChange={handleInputChange} />
+                              <Input type={"password"} id={"Password"} name={"password"} placeholder={"Enter Password"} value={formData.password} onInputChange={handleInputChange} />
                           </div>
 
                           <Button

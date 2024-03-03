@@ -79,6 +79,15 @@ const AddRestaurant: React.FC<MenuTypes> = ({ right, callBack, headTitle }) => {
             console.log(data);
             if (data?.status == 200 || data?.status == 201) {
                 swal("Restoran elave olundu");
+
+                setFormData({
+                    name: "",
+                    cuisine: "",
+                    delivery_min: "",
+                    price: "",
+                    address: ""
+                })
+                setIMG("")
             }
         }
     }

@@ -26,6 +26,8 @@ export const deleteProduct = async (id: number | string) => {
     }
 };
 
+
+
 export const createProduct = async (data: any) => {
     try {
         const response = await instanceAxios.post(`/api/products`, data);
@@ -34,6 +36,8 @@ export const createProduct = async (data: any) => {
         console.log({ error })
     }
 }
+
+
 
 export const updateProduct = async (id: string | number, data: any) => {
     try {
