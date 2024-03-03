@@ -24,3 +24,7 @@ Foody App
       Developed using Next.js for efficient SEO and server-side rendering.
       Styled with Tailwind CSS for a clean and responsive design.
       Implemented in TypeScript for improved type safety and developer productivity.
+
+
+  Vercel:
+      https://foody-ten-mu.vercel.app/
